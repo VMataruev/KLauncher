@@ -1,0 +1,50 @@
+.main_wrapper {
+    background-color: var(--background-main);
+    width: 100%;
+    min-height: 100svh;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    color: var(--white-text);
+    padding: 20px;
+}
+
+.mod_box {
+    display: flex;
+    flex-direction: column;
+    color: var(--white-text);
+    gap: 12px;
+    padding: 20px;
+}
+
+.mod_box_header {
+    display: flex;
+    gap: 12px;
+}
+
+.mod_box_body {
+    display: flex;
+    gap: 20px;
+}
+
+.mod_box_imgs_box {
+    width: 50%;
+    overflow: hidden;
+}
+
+.mod_box_imgs_box img {
+    width: 100%;
+    overflow: hidden;
+}
+
+.mod_box_tags {
+    display: flex;
+}
+
+.mod_box_tags_tag {
+    display: flex;
+    gap: 8px;
+}
+
