@@ -101,3 +101,10 @@
     line-clamp: 2; 
     -webkit-box-orient: vertical;
 }
+
+.loading {
+    color: var(--white-text);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

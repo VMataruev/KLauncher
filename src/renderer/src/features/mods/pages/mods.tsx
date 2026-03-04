@@ -26,6 +26,7 @@ function Mods(): React.JSX.Element {
     }
 
     const [mods, setMods] = useState<Mod[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         const fetchMods = async () => {
@@ -35,6 +36,8 @@ function Mods(): React.JSX.Element {
                 console.log(res.mods)
             } catch (error) {
                 console.log(error)
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -77,21 +80,23 @@ function Mods(): React.JSX.Element {
 
             <div className={styles.mods_wrapper}>
 
-                {mods.map(mod => (
-                    <div className={styles.mod_box} key={mod.modid} onClick={() => handleModClick(mod.modid)}>
-                        {mod.logo ? (<img className={styles.mod_img} src={mod.logo} alt="" />) : (<img className={styles.mod_img} src="https://mods.vintagestory.at/web/img/mod-default.png" alt="" />)}
-                        <div className={styles.mod_info_box}>
-                            <div className={styles.mod_text_info}>
-                                <div className={styles.mod_name}>{mod.name}</div>
-                                <div className={styles.mod_description}>{mod.summary}</div>
-                            </div>
-                            <div className={styles.mod_numbers_info}>
-                                <div className={styles.mod_downloads}>{mod.downloads}</div>
-                                <div className={styles.mod_comments}>{mod.comments}</div>
+                {loading ? <div className={styles.loading}>loading</div> : (
+                    mods.map(mod => (
+                        <div className={styles.mod_box} key={mod.modid} onClick={() => handleModClick(mod.modid)}>
+                            {mod.logo ? (<img className={styles.mod_img} src={mod.logo} alt="" />) : (<img className={styles.mod_img} src="https://mods.vintagestory.at/web/img/mod-default.png" alt="" />)}
+                            <div className={styles.mod_info_box}>
+                                <div className={styles.mod_text_info}>
+                                    <div className={styles.mod_name}>{mod.name}</div>
+                                    <div className={styles.mod_description}>{mod.summary}</div>
+                                </div>
+                                <div className={styles.mod_numbers_info}>
+                                    <div className={styles.mod_downloads}>{mod.downloads}</div>
+                                    <div className={styles.mod_comments}>{mod.comments}</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                ))}
+                    ))
+                )}
 
 
                 {/* <div className={styles.mod_box}>
