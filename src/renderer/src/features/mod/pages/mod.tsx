@@ -41,7 +41,7 @@ function Mod(): React.JSX.Element {
                     <button>button</button>
                 </div>
 
-                <div className={styles.mod_box}>
+                <div className={styles.mod_box} key={mod.modid}>
                     <div className={styles.mod_box_header}>
                         <div>Description</div>
                         <div>Files</div>
