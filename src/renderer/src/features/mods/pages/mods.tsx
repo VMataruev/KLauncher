@@ -3,6 +3,7 @@ import styles from "../styles/style.module.css"
 import { useNavigate } from "react-router-dom"
 // import img from "../../../assets/mod_img.jpg"
 
+const BLOCK_SIZE = 20; // сколько модов загружаем за один раз
 
 function Mods(): React.JSX.Element {
 
@@ -26,6 +27,8 @@ function Mods(): React.JSX.Element {
     }
 
     const [mods, setMods] = useState<Mod[]>([]);
+    const [displayedMods, setDisplayedMods] = useState<Mod[]>([]);
+    const [hasMore, setHasMore] = useState(true);
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
@@ -33,6 +36,8 @@ function Mods(): React.JSX.Element {
             try {
                 const res = await window.api.getRequest("http://mods.vintagestory.at/api/mods");
                 setMods(res.mods);
+                setDisplayedMods(res.mods.slice(0, BLOCK_SIZE));
+                setHasMore(res.mods.length > BLOCK_SIZE);
                 console.log(res.mods)
             } catch (error) {
                 console.log(error)
@@ -43,7 +48,29 @@ function Mods(): React.JSX.Element {
 
         fetchMods();
         
-    }, [])
+    }, []);
+
+    const loadMore = () => {
+        const currentLength = displayedMods.length;
+        const nextMods = mods.slice(currentLength, currentLength + BLOCK_SIZE);
+        setDisplayedMods([...displayedMods, ...nextMods]);
+        if (currentLength + BLOCK_SIZE >= mods.length) setHasMore(false);
+    };
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (
+            window.innerHeight + window.scrollY >= document.body.offsetHeight - 200 &&
+            hasMore
+            ) {
+            loadMore();
+            }
+        };
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, [displayedMods, hasMore]);
+
+    
 
     const navigate = useNavigate();
     const handleModClick = (modid: number) => {
@@ -81,7 +108,7 @@ function Mods(): React.JSX.Element {
             <div className={styles.mods_wrapper}>
 
                 {loading ? <div className={styles.loading}>loading</div> : (
-                    mods.map(mod => (
+                    displayedMods.map(mod => (
                         <div className={styles.mod_box} key={mod.modid} onClick={() => handleModClick(mod.modid)}>
                             {mod.logo ? (<img className={styles.mod_img} src={mod.logo} alt="" />) : (<img className={styles.mod_img} src="https://mods.vintagestory.at/web/img/mod-default.png" alt="" />)}
                             <div className={styles.mod_info_box}>
