@@ -10,6 +10,11 @@
     /* background-color: #171615; */
     color: var(--white-text);
     padding: 8px;
+    position: sticky;
+    top: 42px;
+    z-index: 1000;
+    background-color: var(--background-main);
+    border-radius: 12px;
 }
 
 
@@ -33,8 +38,8 @@
 }
 
 .mod_box {
-    aspect-ratio: 1 / 1;
-    max-width: 250px;
+    /* aspect-ratio: 1 / 1;
+    max-width: 250px; */
     background-color: #2e2c2a;
     display: flex;
     flex-direction: column;

@@ -3,7 +3,7 @@ import styles from "../styles/style.module.css"
 import { useNavigate } from "react-router-dom"
 // import img from "../../../assets/mod_img.jpg"
 
-const BLOCK_SIZE = 20; // сколько модов загружаем за один раз
+const BLOCK_SIZE = 40; // сколько модов загружаем за один раз
 
 function Mods(): React.JSX.Element {
 
