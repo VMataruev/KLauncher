@@ -1,0 +1,45 @@
+.page_wrapper {
+    padding: 20px 100px 0px 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.page_header {
+    display: flex;
+}
+
+.releases_v {
+    display: flex;
+}
+
+.checkbox_box {
+    display: flex;
+}
+
+.installs {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.install {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.left_box {
+    display: flex;
+}
+
+.img {
+    max-width: 80px;
+}
+
+.name_verison_box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

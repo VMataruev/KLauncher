@@ -1,0 +1,28 @@
+.page_wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.page_header {
+    display: flex;
+    justify-content: center;
+}
+
+.page_body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 8px;
+}
+
+.foler_box_change {
+    display: flex;
+}
+
+.page_basement {
+    display: flex;
+    margin-left: auto;
+}
