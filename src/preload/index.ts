@@ -3,7 +3,9 @@ import { electronAPI } from '@electron-toolkit/preload'
 
 // Custom APIs for renderer
 const api = {
-  getRequest: <T = any>(url: string): Promise<T> => ipcRenderer.invoke('get-request', url)
+  getRequest: <T = any>(url: string): Promise<T> => ipcRenderer.invoke('get-request', url),
+  selectFolder: () => ipcRenderer.invoke('select-folder'),
+  getVersions: () => ipcRenderer.invoke('get-versions')
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

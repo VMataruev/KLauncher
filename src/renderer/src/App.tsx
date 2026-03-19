@@ -4,7 +4,7 @@ import Installations from "./features/installations/pages/installations";
 import Mods from './features/mods/pages/mods';
 import Mod from './features/mod/pages/mod'
 import Settings from './features/settings/pages/settings';
-import Made_installation from './features/made_installation/pages/made_installation';
+import Made_installation from './features/installations/pages/made_installation';
 
 function App(): React.JSX.Element {
   const location = useLocation();
