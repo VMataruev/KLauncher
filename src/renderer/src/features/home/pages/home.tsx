@@ -25,7 +25,16 @@ function Home(): React.JSX.Element {
     };
   };
   
+    const [data, setData] = useState<any>(null);
 
+  const login = async (): Promise<void> => {
+    await window.api.openLogin();
+  };
+
+  const loadData = async (): Promise<void> => {
+    const result = await window.api.getData();
+    setData(result);
+  };
   
 
   return (
@@ -53,6 +62,12 @@ function Home(): React.JSX.Element {
 
 
         <div className={styles.body}>
+              <div>
+      <button onClick={login}>Войти</button>
+      <button onClick={loadData}>Получить данные</button>
+
+      <pre>{JSON.stringify(data, null, 2)}</pre>
+    </div>
           
         </div>
 

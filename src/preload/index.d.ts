@@ -9,6 +9,8 @@ declare global {
     setStore: (key, value) => Promise<string>
     getStore: (key) => Promise<any>
     deleteStore: (key) => Promise<string>
+    openLogin: () => Promise<any>
+    getData: <T = any>() => Promise<T>  
   }
   interface Window {
     electron: ElectronAPI
