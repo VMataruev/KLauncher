@@ -1,7 +1,7 @@
 import { ipcMain } from "electron";
 import axios from "axios";
 
-ipcMain.handle('get-request', async (event, url: string) => {
+ipcMain.handle('get-request', async (_event, url: string) => {
     try {
         const res = await axios.get(url);
         console.log(res.data);

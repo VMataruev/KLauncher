@@ -1,7 +1,32 @@
-import img from "../../../assets/play-btn-img.png"
+// import img from "../../../assets/play-btn-img.png"
+import { useEffect, useState } from 'react';
 import styles from '../styles/style.module.css'
+import { Link } from 'react-router-dom';
 
 function Home(): React.JSX.Element {
+
+  const [ userName, setUserName ] = useState<string>();
+
+  useEffect(() => {
+    const fetchUserName = async () => {
+      const res = await window.api.getStore('user_info.playername');
+      setUserName(res);
+    }
+
+    fetchUserName();
+  }, );
+
+  const logout = async () => {
+    try {
+      await window.api.deleteStore('user_info');
+      setUserName(undefined);
+    } catch (error) {
+      console.log(error);
+    };
+  };
+  
+
+  
 
   return (
     <>
@@ -45,7 +70,7 @@ function Home(): React.JSX.Element {
             {/* <img src={img} alt="" /> */}
           </div>
 
-          <div className="user_info">KillerBunny</div>
+          {userName ? <div>{userName} <button onClick={() => logout()}>log out</button></div> : <Link to='/auth'>Authorize</Link>}
         </div>
       </div>
     </>

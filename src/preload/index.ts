@@ -5,7 +5,11 @@ import { electronAPI } from '@electron-toolkit/preload'
 const api = {
   getRequest: <T = any>(url: string): Promise<T> => ipcRenderer.invoke('get-request', url),
   selectFolder: () => ipcRenderer.invoke('select-folder'),
-  getVersions: () => ipcRenderer.invoke('get-versions')
+  getVersions: () => ipcRenderer.invoke('get-versions'),
+  login: (url, body: { email: string; password: string; twofacode?: string; preLoginToken?: string }) => ipcRenderer.invoke('vs-login', url, body),
+  setStore: (key, value) => ipcRenderer.invoke('set-store', key, value),
+  getStore: (key) => ipcRenderer.invoke('get-store', key),
+  deleteStore: (key) => ipcRenderer.invoke('delete-store', key)
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to
