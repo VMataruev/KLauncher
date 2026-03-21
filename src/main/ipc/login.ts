@@ -17,7 +17,7 @@ ipcMain.handle("vs-login", async (_event, url, body: { email: string; password: 
   })
 
   const res = await request.json()
-  
+
   store.set('user_info', res);
 
   return res
