@@ -4,7 +4,7 @@ import { fetchProtectedData } from './api';
 
 export function createAuthWindow(): BrowserWindow {
   const win = new BrowserWindow({
-    width: 900,
+    width: 1800,
     height: 700,
     webPreferences: {
       partition: 'persist:authSession',

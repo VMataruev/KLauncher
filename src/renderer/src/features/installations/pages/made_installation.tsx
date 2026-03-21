@@ -8,44 +8,79 @@ function Made_installation(): React.JSX.Element {
         try {
             const selectedPath = await window.api.selectFolder();
             setFolderPath(selectedPath);
+            setInstallationBuild((prev) => ({
+                ...prev,
+                folder: selectedPath
+            }));
 
         } catch (error) {
             console.log('Cant select foler', error);
         }
-    }
-
-    // Загрузка версий при монтировании компонента
-    useEffect(() => {
-        const loadVersions = async () => {
-            const result = await window.api.getVersions();
-            // console.log('Versions loaded:', result);
     };
 
-        loadVersions();
-    }, []); // Пустой массив зависимостей = выполнить один раз при монтировании
+    const [data, setData] = useState<any>(null);
+    useEffect(() => {
+        const loadData = async (): Promise<void> => {
+            const res = await window.api.getData();
+            setData(res);
+            console.log(res);
+        }
+        loadData();
+    }, [])
+
+    const [ installationBuild, setInstallationBuild] = useState({
+        img: "",
+        name: "",
+        version: "",
+        version_link: "",
+        mods: [],
+        folder: null as string | null
+    });
+
+    const test = () => {
+        console.log(installationBuild);
+    }
+    
 
     return(
         <div className={styles.page_wrapper}>
             <div className={styles.page_header}>
                 <div>Installation create</div>
             </div>
+            <button onClick={() => test()}>test</button>
 
             <div className={styles.page_body}>
                 <div className={styles.icon_box}>
                     <select name="" id="">
-                        <option value="">img</option>
+                        <option value="">Temporal Gear</option>
                     </select>
                 </div>
 
                 <div className={styles.name_box}>
                     <div className={styles.name}>Name</div>
-                    <input type="text" />
+                    <input type="text" onChange={(e) => {setInstallationBuild((prev) => ({
+                        ...prev,
+                        name: e.target.value
+                    }))}} />
                 </div>
                 
                 <div className={styles.version_box}>
                     <div className={styles.version}>Version</div>
-                    <select name="" id="">
-                        <option value="">version</option>
+
+                    <select name="" id="" onChange={(e) => {
+                        const select = e.target;
+                        const option = select.options[select.selectedIndex];
+                        const link = option.getAttribute('data-link');
+                        
+                        setInstallationBuild((prev) => ({
+                        ...prev,
+                        version: e.target.value,
+                        version_link: link || ""
+                    }))}}>
+
+                        {data ? data.map((version) => (
+                            <option key={version.name} data-link={version.link}>{version.name}</option>
+                        )) : <></>}
                     </select>
                 </div>
 

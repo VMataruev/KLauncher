@@ -1,40 +1,45 @@
 // import img from "../../../assets/play-btn-img.png"
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styles from '../styles/style.module.css'
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 function Home(): React.JSX.Element {
 
   const [ userName, setUserName ] = useState<string>();
 
-  useEffect(() => {
-    const fetchUserName = async () => {
-      const res = await window.api.getStore('user_info.playername');
-      setUserName(res);
-    }
+  // useEffect(() => {
+  //   const fetchUserName = async () => {
+  //     const res = await window.api.getStore('user_info.playername');
+  //     setUserName(res);
+  //   }
 
-    fetchUserName();
-  }, );
+  //   fetchUserName();
+  // }, );
 
-  const logout = async () => {
-    try {
-      await window.api.deleteStore('user_info');
-      setUserName(undefined);
-    } catch (error) {
-      console.log(error);
-    };
-  };
+  // const logout = async () => {
+  //   try {
+  //     await window.api.deleteStore('user_info');
+  //     setUserName(undefined);
+  //   } catch (error) {
+  //     console.log(error);
+  //   };
+  // };
   
-    const [data, setData] = useState<any>(null);
+  // const [data, setData] = useState<any>(null);
 
   const login = async (): Promise<void> => {
-    await window.api.openLogin();
+    try {
+      await window.api.openLogin();
+      setUserName("Logged in");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const loadData = async (): Promise<void> => {
-    const result = await window.api.getData();
-    setData(result);
-  };
+  // const loadData = async (): Promise<void> => {
+  //   const result = await window.api.getData();
+  //   setData(result);
+  // };
   
 
   return (
@@ -62,13 +67,10 @@ function Home(): React.JSX.Element {
 
 
         <div className={styles.body}>
-              <div>
-      <button onClick={login}>Войти</button>
-      <button onClick={loadData}>Получить данные</button>
-
-      <pre>{JSON.stringify(data, null, 2)}</pre>
-    </div>
-          
+            {/* <div>
+              <button onClick={loadData}>Получить данные</button>
+              <pre>{JSON.stringify(data, null, 2)}</pre>
+            </div> */}
         </div>
 
 
@@ -85,7 +87,8 @@ function Home(): React.JSX.Element {
             {/* <img src={img} alt="" /> */}
           </div>
 
-          {userName ? <div>{userName} <button onClick={() => logout()}>log out</button></div> : <Link to='/auth'>Authorize</Link>}
+          {/* {userName ? <div>{userName} <button onClick={() => logout()}>log out</button></div> : <Link to='/auth'>Authorize</Link>} */}
+          {userName ? <div>{userName}</div> : <button onClick={login}>Войти</button>}
         </div>
       </div>
     </>
