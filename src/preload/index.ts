@@ -5,6 +5,7 @@ import { electronAPI } from '@electron-toolkit/preload'
 const api = {
   getRequest: <T = any>(url: string): Promise<T> => ipcRenderer.invoke('get-request', url),
   selectFolder: () => ipcRenderer.invoke('select-folder'),
+  openFolder: (folderpath) => ipcRenderer.invoke('open-folder', folderpath),
   getVersions: () => ipcRenderer.invoke('get-versions'),
   login: (url, body: { email: string; password: string; twofacode?: string; preLoginToken?: string }) => ipcRenderer.invoke('vs-login', url, body),
   setStore: (key, value) => ipcRenderer.invoke('set-store', key, value),

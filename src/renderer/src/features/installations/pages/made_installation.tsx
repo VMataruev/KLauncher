@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
-import styles from '../styles/made_installation.module.css'
+import styles from '../styles/made_installation.module.css';
+import { v4 as uuidv4 } from 'uuid';
+import { useNavigate } from "react-router-dom";
 
 function Made_installation(): React.JSX.Element {
     
@@ -18,17 +20,8 @@ function Made_installation(): React.JSX.Element {
         }
     };
 
-    const [data, setData] = useState<any>(null);
-    useEffect(() => {
-        const loadData = async (): Promise<void> => {
-            const res = await window.api.getData();
-            setData(res);
-            console.log(res);
-        }
-        loadData();
-    }, [])
-
     const [ installationBuild, setInstallationBuild] = useState({
+        id: uuidv4(),
         img: "",
         name: "",
         version: "",
@@ -37,8 +30,52 @@ function Made_installation(): React.JSX.Element {
         folder: null as string | null
     });
 
-    const test = () => {
+    const [data, setData] = useState<any>(null);
+    useEffect(() => {
+        const loadData = async (): Promise<void> => {
+            const res = await window.api.getData();
+            setData(res);
+            // console.log(res);
+            setInstallationBuild((prev) => ({
+                ...prev,
+                version: res[0].name,
+                version_link: res[0].link
+            }))
+        }
+        loadData();
+    }, [])
+    
+
+    const [ buildStatus, setBuildStatus ] = useState<string>();
+    const navigate = useNavigate();
+
+    const storeBuild = async ()  => {
         console.log(installationBuild);
+        // if (!installationBuild.img) {
+        //     return setBuildStatus("choose img first");
+        // };
+
+        if (!installationBuild.name) {
+            return setBuildStatus("choose name first");
+        };
+
+        if (!installationBuild.version) {
+            return setBuildStatus("choose version first");
+        };
+
+        if (!installationBuild.version_link) {
+            return setBuildStatus("choose version_link first");
+        };
+
+        if (!installationBuild.folder) {
+            return setBuildStatus("choose folder first");
+        };
+
+        await window.api.setStore(`installations.${installationBuild.id}`, installationBuild);
+        // const installations = await window.api.getStore("installations");
+        // console.log(installations);
+        navigate("/installations");
+        return setBuildStatus("Installation added");
     }
     
 
@@ -47,11 +84,11 @@ function Made_installation(): React.JSX.Element {
             <div className={styles.page_header}>
                 <div>Installation create</div>
             </div>
-            <button onClick={() => test()}>test</button>
 
             <div className={styles.page_body}>
                 <div className={styles.icon_box}>
                     <select name="" id="">
+                        <option value="">Temporal Gear</option>
                         <option value="">Temporal Gear</option>
                     </select>
                 </div>
@@ -95,12 +132,14 @@ function Made_installation(): React.JSX.Element {
                         <button onClick={handleSelectFolder}>Observe</button>
                     </div>
                 </div>
+
+                {buildStatus ? <div>{buildStatus}</div> : <></>}
                 
             </div>
 
             <div className={styles.page_basement}>
                 <button>Cancel</button>
-                <button>Install</button>
+                <button onClick={() => storeBuild()}>Install</button>
             </div>
         </div>
     )

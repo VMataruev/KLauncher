@@ -4,6 +4,7 @@ declare global {
   interface Api {
     getRequest: <T = any>(url: string) => Promise<T>
     selectFolder: () => Promise<string | null>
+    openFolder: (folderpath) => Promise<string | null>
     getVersions: () => Promise<string | null>
     login: (url, body: { email: string; password: string; twofacode?: string; preLoginToken?: string }) => Promise<any>
     setStore: (key, value) => Promise<string>

@@ -1,8 +1,36 @@
 import styles from '../styles/styles.module.css'
 import img from '../../../assets/mod_img.jpg'
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 function Installations(): React.JSX.Element {
+
+  type Installation = {
+    id: string;
+    img: string;
+    name: string;
+    version: string;
+    version_link: string;
+    mods: string[];
+    folder: string | null;
+  };
+
+  const [ installations, setInstallations ] = useState<Record<string, Installation>>({});
+  useEffect(() => {
+    const loadData = async () => {
+      const res = await window.api.getStore("installations");
+      setInstallations(res);
+      console.log(res);
+    };
+
+    loadData();
+  }, []);
+
+  const openFolder = async (folderpath) => {
+    console.log(folderpath);
+    await window.api.openFolder(folderpath);
+  }
+  
 
   return (
     <>
@@ -43,20 +71,26 @@ function Installations(): React.JSX.Element {
           </div>
 
           <div className={styles.installs}>
-            <div className={styles.install}>
-              <div className={styles.left_box}>
-                <img src={img} alt="" className={styles.img}/>
-                <div className={styles.name_verison_box}>
-                  <div className={styles.name}>name</div>
-                  <div className={styles.version}>version</div>
+
+            { installations ?
+              Object.values(installations).map(installation => (
+                <div className={styles.install}>
+                  <div className={styles.left_box}>
+                    <img src={img} alt="" className={styles.img}/>
+                    <div className={styles.name_verison_box}>
+                      <div className={styles.name}>{installation.name}</div>
+                      <div className={styles.version}>{installation.version}</div>
+                    </div>
+                  </div>
+                  <div className={styles.right_box}>
+                    <button>Play</button>
+                    <button onClick={() => openFolder(installation.folder)}>Folder</button>
+                    <button>More</button>
+                  </div>
                 </div>
-              </div>
-              <div className={styles.right_box}>
-                <button>Play</button>
-                <button>Folder</button>
-                <button>More</button>
-              </div>
-            </div>
+              ))
+              : <></>
+            }
 
           </div>
 
