@@ -2,7 +2,7 @@ import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import Home from "./features/home/pages/home";
 import Installations from "./features/installations/pages/installations";
 import Mods from './features/mods/pages/mods';
-import Mod from './features/mod/pages/mod'
+import Mod from './features/mods/pages/mod'
 import Settings from './features/settings/pages/settings';
 import Made_installation from './features/installations/pages/made_installation';
 import Auth from './features/auth/pages/auth';

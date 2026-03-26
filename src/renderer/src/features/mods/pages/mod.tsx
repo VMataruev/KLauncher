@@ -1,4 +1,4 @@
-import styles from '../styles/style.module.css'
+import styles from '../styles/mod.module.css'
 import { useEffect, useState } from "react";
 // import img from '../../../assets/background.png'
 import "slick-carousel/slick/slick.css";
