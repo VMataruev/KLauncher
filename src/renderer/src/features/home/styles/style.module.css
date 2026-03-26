@@ -36,10 +36,10 @@
 
 .play_btn {
   /* background-image: url("./play-btn-img.png"); */
-  background-repeat: no-repeat;
+  /* background-repeat: no-repeat;
   background-size: cover;
   outline: none;
   border: none;
   background-color: transparent;
-  color: white;
+  color: white; */
 }

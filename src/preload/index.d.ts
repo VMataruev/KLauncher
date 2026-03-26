@@ -12,6 +12,8 @@ declare global {
     deleteStore: (key) => Promise<string>
     openLogin: () => Promise<any>
     getData: <T = any>() => Promise<T>  
+    isFolderEmpty: (folderPath) => Promise<boolean>
+    download_and_install_game: (url: string, outputPath: string) => Promise
   }
   interface Window {
     electron: ElectronAPI

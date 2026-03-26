@@ -12,7 +12,9 @@ const api = {
   getStore: (key) => ipcRenderer.invoke('get-store', key),
   deleteStore: (key) => ipcRenderer.invoke('delete-store', key),
   openLogin: (): Promise<void> => ipcRenderer.invoke('open-login'),
-  getData: <T = any>(): Promise<T> => ipcRenderer.invoke('get-data')
+  getData: <T = any>(): Promise<T> => ipcRenderer.invoke('get-data'),
+  isFolderEmpty: (folderPath) => ipcRenderer.invoke('isFolderEmpty', folderPath),
+  download_and_install_game: (url: string, outputPath: string) => ipcRenderer.invoke('download_and_install_game', url, outputPath)
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

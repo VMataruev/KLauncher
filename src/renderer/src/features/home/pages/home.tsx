@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import styles from '../styles/style.module.css'
 // import { Link } from 'react-router-dom';
+import { playButton } from '../features/playButton';
 
 function Home(): React.JSX.Element {
 
@@ -52,15 +53,21 @@ function Home(): React.JSX.Element {
   };
 
 
+  const [ installationID, setInstallationID ] = useState<string>();
   const [ installations, setInstallations ] = useState<Record<string, Installation>>({});
   useEffect(() => {
     const getInstallations = async () => {
       const res = await window.api.getStore("installations");
       setInstallations(res);
-      console.log(res);
+      const first = Object.values(res)[0] as Installation;
+      setInstallationID(first.id);
+      // console.log(first.id);
+      // console.log(res);
     };
     getInstallations();
   }, []);
+
+  
   
   
 
@@ -84,7 +91,7 @@ function Home(): React.JSX.Element {
 
         <div className={styles.basement}>
           
-          <select name="installations" id="" className={styles.installations}>
+          <select name="installations" id="" onChange={(e) => setInstallationID(e.target.value)} className={styles.installations}>
             {installations ?
             Object.values(installations).map(version => (
               <>
@@ -98,7 +105,7 @@ function Home(): React.JSX.Element {
           
 
           <div className={styles.play}>
-            <button className={styles.play_btn}>play</button>
+            <button className={styles.play_btn} onClick={() => playButton(installationID)}>play</button>
             {/* <img src={img} alt="" /> */}
           </div>
 
