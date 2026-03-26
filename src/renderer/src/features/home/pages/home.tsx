@@ -1,5 +1,5 @@
 // import img from "../../../assets/play-btn-img.png"
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from '../styles/style.module.css'
 // import { Link } from 'react-router-dom';
 
@@ -40,28 +40,35 @@ function Home(): React.JSX.Element {
   //   const result = await window.api.getData();
   //   setData(result);
   // };
+
+  type Installation = {
+    id: string;
+    img: string;
+    name: string;
+    version: string;
+    version_link: string;
+    mods: string[];
+    folder: string | null;
+  };
+
+
+  const [ installations, setInstallations ] = useState<Record<string, Installation>>({});
+  useEffect(() => {
+    const getInstallations = async () => {
+      const res = await window.api.getStore("installations");
+      setInstallations(res);
+      console.log(res);
+    };
+    getInstallations();
+  }, []);
+  
   
 
   return (
     <>
       <div className={styles.main_wrapper}>
         <div className={styles.header}>
-          {/* <div className="link_box">
-            <a href="" >Играть</a>
-            <div className="page-indicator page-active"></div>
-          </div>
-          <div className="link_box">
-            <a href="">Установки</a>
-            <div className="page-indicator page-deactive"></div>
-          </div>
-          <div className="link_box">
-            <a href="">Моды</a>
-            <div className="page-indicator page-deactive"></div>
-          </div>
-          <div className="link_box">
-            <a href="">Настройки</a>
-            <div className="page-indicator page-deactive"></div>
-          </div> */}
+
         </div>
 
 
@@ -76,11 +83,19 @@ function Home(): React.JSX.Element {
 
 
         <div className={styles.basement}>
+          
           <select name="installations" id="" className={styles.installations}>
-            <option value="">1.21.10</option>
-            <option value="">1.20.0</option>
-            <option value="">1.19.0</option>
+            {installations ?
+            Object.values(installations).map(version => (
+              <>
+                <option value={version.id}>{version.name}</option>
+              </>
+            ))
+            :
+            <></>
+            }
           </select>
+          
 
           <div className={styles.play}>
             <button className={styles.play_btn}>play</button>
