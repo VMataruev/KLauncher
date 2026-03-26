@@ -23,6 +23,7 @@ declare global {
         fileName?: string;
       }) => void
     ) => () => void;
+    open_file: (path: string) => Promise
   };
   interface Window {
     electron: ElectronAPI

@@ -11,8 +11,6 @@ function PlayButton({installation_id}): React.JSX.Element {
         const folder = installation.folder;
         const isFolderEmpty = await window.api.isFolderEmpty(folder);
         if (isFolderEmpty) {
-            // download exe
-            
             const unsubscribe = window.api.downloadProgress((data) => {
                 setProgress(data.percent);
                 setStatus(data.state);
@@ -25,7 +23,16 @@ function PlayButton({installation_id}): React.JSX.Element {
             } finally {
                 unsubscribe();
                 setStatus("");
-            }
+            };
+            await window.api.open_file(`${installation.folder}\\Vintagestory.exe`);
+        };
+
+        if (!isFolderEmpty) {
+            try {
+                await window.api.open_file(`${installation.folder}\\Vintagestory.exe`);
+            } catch (error) {
+                console.log("Game not found:", error)
+            };
         };
     };
 

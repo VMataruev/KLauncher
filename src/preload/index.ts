@@ -21,7 +21,8 @@ const api = {
     return () => {
       ipcRenderer.removeListener('download-progress', listener);
     }
-  }
+  },
+  open_file: (path: string) => ipcRenderer.invoke('open-file', path)
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to
