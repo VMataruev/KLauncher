@@ -14,7 +14,16 @@ declare global {
     getData: <T = any>() => Promise<T>  
     isFolderEmpty: (folderPath) => Promise<boolean>
     download_and_install_game: (url: string, outputPath: string) => Promise
-  }
+    downloadProgress: (
+      callback: (data: {
+        state: string;
+        receivedBytes?: number;
+        totalBytes?: number;
+        percent?: number;
+        fileName?: string;
+      }) => void
+    ) => () => void;
+  };
   interface Window {
     electron: ElectronAPI
     api: Api

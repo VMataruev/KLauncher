@@ -14,7 +14,14 @@ const api = {
   openLogin: (): Promise<void> => ipcRenderer.invoke('open-login'),
   getData: <T = any>(): Promise<T> => ipcRenderer.invoke('get-data'),
   isFolderEmpty: (folderPath) => ipcRenderer.invoke('isFolderEmpty', folderPath),
-  download_and_install_game: (url: string, outputPath: string) => ipcRenderer.invoke('download_and_install_game', url, outputPath)
+  download_and_install_game: (url: string, outputPath: string) => ipcRenderer.invoke('download_and_install_game', url, outputPath),
+  downloadProgress: (callback: (data: any) => void) => {
+    const listener = (_event: unknown, data: any) => callback(data);
+    ipcRenderer.on('download-progress', listener);
+    return () => {
+      ipcRenderer.removeListener('download-progress', listener);
+    }
+  }
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

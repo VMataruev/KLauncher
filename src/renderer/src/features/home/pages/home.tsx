@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import styles from '../styles/style.module.css'
 // import { Link } from 'react-router-dom';
-import { playButton } from '../features/playButton';
+import PlayButton from '../features/playButton/playButton';
 
 function Home(): React.JSX.Element {
 
@@ -105,7 +105,8 @@ function Home(): React.JSX.Element {
           
 
           <div className={styles.play}>
-            <button className={styles.play_btn} onClick={() => playButton(installationID)}>play</button>
+            {/* <button className={styles.play_btn} onClick={() => playButton(installationID)}>play</button> */}
+            <PlayButton installation_id={installationID}></PlayButton>
             {/* <img src={img} alt="" /> */}
           </div>
 
