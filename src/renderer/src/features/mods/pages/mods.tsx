@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import styles from "../styles/style.module.css"
 import { useNavigate } from "react-router-dom"
 // import img from "../../../assets/mod_img.jpg"
+import AddModButton from "../features/addMod/addMod";
 
 const BLOCK_SIZE = 40; // сколько модов загружаем за один раз
 
@@ -112,13 +113,14 @@ function Mods(): React.JSX.Element {
                         <div className={styles.mod_box} key={mod.modid} onClick={() => handleModClick(mod.modid)}>
                             {mod.logo ? (<img className={styles.mod_img} src={mod.logo} alt="" />) : (<img className={styles.mod_img} src="https://mods.vintagestory.at/web/img/mod-default.png" alt="" />)}
                             <div className={styles.mod_info_box}>
-                                <div className={styles.mod_text_info}>
-                                    <div className={styles.mod_name}>{mod.name}</div>
-                                    <div className={styles.mod_description}>{mod.summary}</div>
-                                </div>
                                 <div className={styles.mod_numbers_info}>
                                     <div className={styles.mod_downloads}>{mod.downloads}</div>
                                     <div className={styles.mod_comments}>{mod.comments}</div>
+                                    <AddModButton modID={""} modName={""} modLink={""}></AddModButton>
+                                </div>
+                                <div className={styles.mod_text_info}>
+                                    <div className={styles.mod_name}>{mod.name}</div>
+                                    <div className={styles.mod_description}>{mod.summary}</div>
                                 </div>
                             </div>
                         </div>
