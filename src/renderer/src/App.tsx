@@ -6,12 +6,14 @@ import Mod from './features/mods/pages/mod'
 import Settings from './features/settings/pages/settings';
 import Made_installation from './features/installations/pages/made_installation';
 import Auth from './features/auth/pages/auth';
+import Notifications from './features/overlay/notification/pages/notification';
 
 function App(): React.JSX.Element {
   const location = useLocation();
 
   return (
     <>
+      <Notifications></Notifications>
       <div className="header">
         <div className="link_box">
           <Link to="/">Играть</Link>
