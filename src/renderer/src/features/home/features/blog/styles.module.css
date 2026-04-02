@@ -1,0 +1,23 @@
+.blog_box {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: 20px 0px;
+}
+
+.blog {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background-second);
+    padding: 12px;
+}
+
+.blog_header {
+    display: flex;
+    gap: 12px;
+}
+
+.blog_header_avatar {
+    justify-content: center;
+    align-items: center;
+}

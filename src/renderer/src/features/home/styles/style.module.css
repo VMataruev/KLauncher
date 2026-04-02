@@ -53,3 +53,10 @@
   border: 2px solid var(--brand-color-1);
   cursor: pointer;
 }
+
+
+.blog_bog {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 80%;
+}

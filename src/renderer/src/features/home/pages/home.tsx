@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import styles from '../styles/style.module.css'
 // import { Link } from 'react-router-dom';
 import PlayButton from '../features/playButton/playButton';
+import Blog from '../features/blog/blog';
 
 function Home(): React.JSX.Element {
 
@@ -78,8 +79,6 @@ function Home(): React.JSX.Element {
 
         </div>
 
-
-
         <div className={styles.body}>
             {/* <div>
               <button onClick={loadData}>Получить данные</button>
@@ -87,10 +86,7 @@ function Home(): React.JSX.Element {
             </div> */}
         </div>
 
-
-
         <div className={styles.basement}>
-          
           <select name="installations" id="" onChange={(e) => setInstallationID(e.target.value)} className={styles.installations}>
             {installations ?
             Object.values(installations).map(version => (
@@ -112,6 +108,10 @@ function Home(): React.JSX.Element {
 
           {/* {userName ? <div>{userName} <button onClick={() => logout()}>log out</button></div> : <Link to='/auth'>Authorize</Link>} */}
           {userName ? <div>{userName}</div> : <button onClick={login}>Войти</button>}
+        </div>
+
+        <div className={styles.blog_bog}>
+          <Blog></Blog>
         </div>
       </div>
     </>

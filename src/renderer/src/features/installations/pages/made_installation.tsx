@@ -35,7 +35,7 @@ function Made_installation(): React.JSX.Element {
         const loadData = async (): Promise<void> => {
             const res = await window.api.getData();
             setData(res);
-            // console.log(res);
+            console.log(res);
             setInstallationBuild((prev) => ({
                 ...prev,
                 version: res[0].name,
