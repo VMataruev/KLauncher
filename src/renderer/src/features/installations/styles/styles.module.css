@@ -2,32 +2,55 @@
     padding: 20px 100px 0px 100px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    /* gap: 20px; */
 }
 
 .page_header {
     display: flex;
+    gap: 12px;
 }
+
+.search_input {
+    background-color: var(--background-main);
+    border: 1px solid var(--brand-color-1);
+    padding: 8px 12px;
+    outline: none;
+    color: var(--text-white);
+    border-radius: 4px;
+}
+
+.select_input {
+    background-color: var(--gray-1);
+    padding: 8px 12px;
+    outline: none;
+    color: var(--text-white);
+    border: none;
+    border-radius: 4px;
+}
+
+
 
 .releases_v {
     display: flex;
+    gap: 12px;
 }
 
 .checkbox_box {
     display: flex;
+    gap: 4px;
 }
 
 .installs {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    /* gap: 20px; */
 }
 
 .install {
     display: flex;
     justify-content: space-between;
     align-items: center;
-
+    border-bottom: 1px solid var(--gray-2);
 }
 
 .left_box {
@@ -35,11 +58,70 @@
 }
 
 .img {
-    max-width: 80px;
+    max-width: 70px;
 }
 
 .name_verison_box {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin-left: 8px;
+}
+
+
+.right_box {
+    display: flex;
+    gap: 8px;
+}
+
+.installation_button {
+    padding: 8px;
+    outline: none;
+    border: 1px solid var(--gray-1);
+    background-color: #12121200;
+    color: var(--text-white);
+    cursor: pointer;
+}
+
+.installation_button:hover {
+    background-color: var(--gray-2);
+}
+
+.installation_button_play {
+    background-color: var(--brand-color-1);
+    border: none;
+    padding: 0px 24px;
+}
+
+.installation_button_play:hover {
+    background-color: var(--brand-color-3);
+}
+
+
+
+
+.new_install_button {
+    color: var(--text-white);
+    text-decoration: none;
+    border: 1px solid var(--gray-1);
+    padding: 8px 24px;
+}
+
+.new_install_button:hover {
+    background-color: var(--gray-2);
+}
+
+.new_install {
+    border-bottom: 1px solid var(--gray-2);
+    border-top: 1px solid var(--gray-2);
+    height: 80px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin-top: 20px;
+}
+
+
+.version {
+    color: var(--gray-1);
 }

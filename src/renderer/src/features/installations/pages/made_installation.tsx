@@ -76,13 +76,17 @@ function Made_installation(): React.JSX.Element {
         // console.log(installations);
         navigate("/installations");
         return setBuildStatus("Installation added");
-    }
+    };
+
+    const cancel_installation = () => {
+        navigate("/installations");
+    };
     
 
     return(
         <div className={styles.page_wrapper}>
             <div className={styles.page_header}>
-                <div>Installation create</div>
+                <div>Create installation</div>
             </div>
 
             <div className={styles.page_body}>
@@ -104,7 +108,7 @@ function Made_installation(): React.JSX.Element {
                 <div className={styles.version_box}>
                     <div className={styles.version}>Version</div>
 
-                    <select name="" id="" onChange={(e) => {
+                    <select className={styles.version_input} name="" id="" onChange={(e) => {
                         const select = e.target;
                         const option = select.options[select.selectedIndex];
                         const link = option.getAttribute('data-link');
@@ -138,7 +142,7 @@ function Made_installation(): React.JSX.Element {
             </div>
 
             <div className={styles.page_basement}>
-                <button>Cancel</button>
+                <button onClick={() => cancel_installation()}>Cancel</button>
                 <button onClick={() => storeBuild()}>Install</button>
             </div>
         </div>

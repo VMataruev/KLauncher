@@ -43,3 +43,13 @@
   background-color: transparent;
   color: white; */
 }
+
+
+.installations {
+  background-color: var(--background-second);
+  color: var(--white);
+  padding: 8px 12px;
+  outline: none;
+  border: 2px solid var(--brand-color-1);
+  cursor: pointer;
+}

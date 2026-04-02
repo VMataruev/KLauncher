@@ -16,19 +16,19 @@ function App(): React.JSX.Element {
       <Notifications></Notifications>
       <div className="header">
         <div className="link_box">
-          <Link to="/">Играть</Link>
+          <Link to="/">Play</Link>
           <div className={`page-indicator ${location.pathname === '/' ? 'page-active' : 'page-deactive'}`}></div>
         </div>
         <div className="link_box">
-          <Link to="/Installations">Установки</Link>
+          <Link to="/Installations">Installations</Link>
           <div className={`page-indicator ${location.pathname === '/Installations' ? 'page-active' : 'page-deactive'}`}></div>
         </div>
         <div className="link_box">
-          <Link to="/Mods">Моды</Link>
+          <Link to="/Mods">Mods</Link>
           <div className={`page-indicator ${location.pathname === '/Mods' ? 'page-active' : 'page-deactive'}`}></div>
         </div>
         <div className="link_box">
-          <Link to="/Settings">Настройки</Link>
+          <Link to="/Settings">Settings</Link>
           <div className={`page-indicator ${location.pathname === '/Settings' ? 'page-active' : 'page-deactive'}`}></div>
         </div>
       </div>

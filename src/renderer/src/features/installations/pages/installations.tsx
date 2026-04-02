@@ -1,5 +1,5 @@
 import styles from '../styles/styles.module.css'
-import img from '../../../assets/mod_img.jpg'
+import img from '../../../assets/temporal.png'
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
@@ -38,12 +38,12 @@ function Installations(): React.JSX.Element {
 
           <div className={styles.page_header}>
             <div className={styles.search}>
-              <div>Find</div>
-              <input type="text" />
+              <div>SEARCH</div>
+              <input type="text" className={styles.search_input} />
             </div>
             <div className={styles.sort}>
               <div>sort</div>
-              <select name="" id="">
+              <select className={styles.select_input} name="" id="">
                 <option value="">test</option>
               </select>
             </div>
@@ -51,15 +51,15 @@ function Installations(): React.JSX.Element {
               <div>Releases</div>
               <div className={styles.releases_v}>
                 <div className={styles.checkbox_box}>
-                  <input type="checkbox" />
-                  <div>Release</div>
+                  <input className={styles.checkbox_style} type="checkbox" />
+                  <div>Releases</div>
                 </div>
                 <div className={styles.checkbox_box}>
-                  <input type="checkbox" />
-                  <div>Snapshot</div>
+                  <input className={styles.checkbox_style} type="checkbox" />
+                  <div>Snapshots</div>
                 </div>
                 <div className={styles.checkbox_box}>
-                  <input type="checkbox" />
+                  <input className={styles.checkbox_style} type="checkbox" />
                   <div>Modify</div>
                 </div>
               </div>
@@ -67,7 +67,7 @@ function Installations(): React.JSX.Element {
           </div>
 
           <div className={styles.new_install}>
-            <Link to="/Made_installation">New install</Link>
+            <Link className={styles.new_install_button} to="/Made_installation">New install</Link>
           </div>
 
           <div className={styles.installs}>
@@ -83,9 +83,9 @@ function Installations(): React.JSX.Element {
                     </div>
                   </div>
                   <div className={styles.right_box}>
-                    <button>Play</button>
-                    <button onClick={() => openFolder(installation.folder)}>Folder</button>
-                    <button>More</button>
+                    <button className={`${styles.installation_button} ${styles.installation_button_play}`}>Play</button>
+                    <button className={styles.installation_button} onClick={() => openFolder(installation.folder)}>Folder</button>
+                    <button className={styles.installation_button}>...</button>
                   </div>
                 </div>
               ))

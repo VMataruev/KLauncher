@@ -7,6 +7,10 @@
 .page_header {
     display: flex;
     justify-content: center;
+    padding: 20px 0px;
+    border-bottom: 1px solid var(--gray-2);
+    font-weight: bold;
+    font-size: 20px;
 }
 
 .page_body {
@@ -25,4 +29,18 @@
 .page_basement {
     display: flex;
     margin-left: auto;
+}
+
+
+.icon_box {
+    display: flex;
+}
+
+.name_box {
+    display: flex;
+    flex-direction: column;
+}
+
+.version_input {
+    display: flex;
 }

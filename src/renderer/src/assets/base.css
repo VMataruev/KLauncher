@@ -1,11 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Cascadia+Code:ital,wght@0,200..700;1,200..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lexend:wght@100..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  /* <weight>: Use a value from 100 to 900 */
+  font-family: "Lexend", sans-serif;
+  font-weight: 500;
 }
 
 :root {
   --white-text: #ffffff;
+  --gray-1: rgb(95, 95, 95);
+  --gray-2: rgba(110, 110, 110, 0.432);
   --background-main: #171615;
+  --background-second: #262423;
+  --brand-color-1: #735B42;
+  --brand-color-2: #3F3326;
+  --brand-color-3: #967756;
+}
+
+body {
+  background-color: var(--background-main);
+  color: var(--white-text);
 }
 

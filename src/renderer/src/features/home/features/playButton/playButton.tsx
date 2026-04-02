@@ -1,4 +1,5 @@
 import { useState } from "react";
+import styles from './playButton.module.css'
 
 function PlayButton({installation_id}): React.JSX.Element {
 
@@ -37,8 +38,8 @@ function PlayButton({installation_id}): React.JSX.Element {
     };
 
     return (
-        <button onClick={playButton}>
-            {status ? `Downloading installer: ${progress}%` : "Play"}
+        <button className={styles.play_btn} onClick={playButton}>
+            {status ? `Downloading installer: ${progress}%` : "PLAY"}
         </button>
     )
 }
