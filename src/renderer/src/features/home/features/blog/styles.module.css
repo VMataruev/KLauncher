@@ -12,6 +12,11 @@
     padding: 12px;
 }
 
+.blog a {
+    text-decoration: none;
+    color: var(--link);
+}
+
 .blog_header {
     display: flex;
     gap: 12px;
@@ -20,4 +25,34 @@
 .blog_header_avatar {
     justify-content: center;
     align-items: center;
+}
+
+
+.blog_header {
+    margin-bottom: 20px;
+}
+
+.blog_header img {
+    max-width: 50px;
+    border-radius: 900px;
+    object-fit: cover;
+}
+
+.blog_header h2 a {
+    color: var(--white-text);
+    text-decoration: none;
+    font-weight: var(--text-bold);
+}
+
+.blog_body img {
+    max-width: 100%;
+}
+
+.blog_body ul {
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.blog_body ul li {
+    font-weight: var(--text-thin);
 }
