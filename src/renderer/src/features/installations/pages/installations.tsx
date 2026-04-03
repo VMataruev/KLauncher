@@ -29,7 +29,12 @@ function Installations(): React.JSX.Element {
   const openFolder = async (folderpath) => {
     console.log(folderpath);
     await window.api.openFolder(folderpath);
-  }
+  };
+
+  const [ moreBtnId, setMoreBtnId ] = useState<string>("");
+  const setIdForBtn = (id) => {
+    setMoreBtnId(id);
+  };
   
 
   return (
@@ -85,7 +90,17 @@ function Installations(): React.JSX.Element {
                   <div className={styles.right_box}>
                     <button className={`${styles.installation_button} ${styles.installation_button_play}`}>Play</button>
                     <button className={styles.installation_button} onClick={() => openFolder(installation.folder)}>Folder</button>
-                    <button className={styles.installation_button}>...</button>
+
+                    <div className={styles.installation_button_more_box}>
+                      <button id='btn_more' className={styles.installation_button}
+                        onClick={() => {setIdForBtn(prev => prev === installation.id ? null : installation.id)}}
+                      >...</button>
+                      <div className={`${styles.installation_button_buttons_box} ${moreBtnId == installation.id ? styles.installation_button_buttons_box_visible : <></>}`}>
+                        <button className={styles.more_button}>Delete</button>
+                        <button className={styles.more_button}>More</button>
+                      </div>
+                    </div>
+                    
                   </div>
                 </div>
               ))

@@ -125,3 +125,44 @@
 .version {
     color: var(--gray-1);
 }
+
+
+
+
+.installation_button_more_box {
+    position: relative;
+
+}
+
+
+
+.installation_button_buttons_box {
+    position: absolute;
+    z-index: 10;
+    /* left: -70%; */
+    background-color: var(--background-second);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    box-shadow: 0px 0px 10px rgb(10, 10, 10);
+
+    visibility: hidden;
+}
+
+.installation_button_buttons_box_visible {
+    visibility: visible;
+}
+
+.more_button {
+    cursor: pointer;
+    background-color: none;
+    border: none;
+    background: none;
+    color: var(--text-white);
+    display: flex;
+    padding: 8px 12px;
+}
+
+.more_button:hover {
+    background-color: var(--gray-1);
+}
