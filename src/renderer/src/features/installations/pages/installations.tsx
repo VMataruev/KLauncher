@@ -1,9 +1,10 @@
 import styles from '../styles/styles.module.css'
 import img from '../../../assets/temporal.png'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 function Installations(): React.JSX.Element {
+  const navigate = useNavigate();
 
   type Installation = {
     id: string;
@@ -96,7 +97,7 @@ function Installations(): React.JSX.Element {
                         onClick={() => {setIdForBtn(prev => prev === installation.id ? null : installation.id)}}
                       >...</button>
                       <div className={`${styles.installation_button_buttons_box} ${moreBtnId == installation.id ? styles.installation_button_buttons_box_visible : <></>}`}>
-                        <button className={styles.more_button}>Settings</button>
+                        <button className={styles.more_button} onClick={() => navigate(`/installation_settings/${installation.id}`)}>Settings</button>
                         <button className={styles.more_button}>Copy</button>
                         <button className={styles.more_button}>Delete</button>
                       </div>

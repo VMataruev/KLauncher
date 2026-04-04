@@ -7,6 +7,7 @@ import Settings from './features/settings/pages/settings';
 import Made_installation from './features/installations/pages/made_installation';
 import Auth from './features/auth/pages/auth';
 import Notifications from './features/overlay/notification/pages/notification';
+import Installation_settings from './features/installations/pages/installation_settings';
 
 function App(): React.JSX.Element {
   const location = useLocation();
@@ -42,6 +43,7 @@ function App(): React.JSX.Element {
         <Route path="/mod/:id" element={<Mod />} />
         <Route path='/made_installation' element={<Made_installation/>}></Route>
         <Route path='/auth' element={<Auth></Auth>}></Route>
+        <Route path='/installation_settings/:id' element={<Installation_settings></Installation_settings>}></Route>
       </Routes>
     </>
   )
