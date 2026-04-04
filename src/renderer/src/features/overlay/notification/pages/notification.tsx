@@ -2,8 +2,7 @@ import { useEffect, useState } from "react"
 import styles from "../styles/msg.module.css"
 import {
     type MyNotification,
-    subscribe,
-    removeNotification
+    subscribe
 }  from "../features/notificationList"
 
 function Notifications(): React.JSX.Element {

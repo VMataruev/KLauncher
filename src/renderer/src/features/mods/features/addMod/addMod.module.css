@@ -1,8 +1,5 @@
 .add_mod_button_box {
-    position: absolute;
-    right: 0;
-    top: 0;
-    z-index: 10;
+    position: relative;
 }
 
 .button_overlay {

@@ -1,13 +1,7 @@
 import { useState } from "react";
 import styles from "./addMod.module.css"
 
-function AddModButton({modID, modName, modLink}): React.JSX.Element {
-    const modInfo = {
-        modId: modID,
-        modName: modName,
-        modLink: modLink
-    };
-
+function AddModButton({modID}): React.JSX.Element {
     type Installation = {
         id: string;
         img: string;
@@ -20,23 +14,46 @@ function AddModButton({modID, modName, modLink}): React.JSX.Element {
 
     const [ isChooseInstallation, setIsChooseInstallation ] = useState<boolean>(false);
     const [ installations, setInstallations ] = useState<Record<string, Installation>>({});
-    const add_mod_to_installation = async () => {
-        const res = await window.api.getStore('installations');
-        setInstallations(res);
-        console.log(res);
-    }
+    const get_installations = async () => {
+        const res = await window.api.getStore("installations") as Record<string, Installation>;
+
+        const installations_filtered: Record<string, Installation> = Object.fromEntries(
+            Object.entries(res || {}).filter(([_, installation]) => {
+                return !installation.mods.includes(modID);
+            })
+        );
+
+        setInstallations(installations_filtered);
+        console.log(installations_filtered);
+    };
+
+    const add_mod_to_installation = async (installationID, modID) => {
+        const installation = await window.api.getStore(`installations.${installationID}`);
+
+        const currentMods = installation.mods || [];
+
+        await window.api.setStore(
+            `installations.${installationID}.mods`,
+            [...currentMods, modID]
+        );
+    };
+
     return(
         <div className={styles.add_mod_button_box}>
             <button className={styles.add_mod_button} onClick={(e) => {
                 e.stopPropagation();
-                add_mod_to_installation();
+                get_installations();
                 setIsChooseInstallation(!isChooseInstallation);
             }}>
                 Add
             </button>
 
             {isChooseInstallation ?
-                <select className={styles.button_overlay} onChange={() => setIsChooseInstallation(!isChooseInstallation)} onClick={(e) => {e.stopPropagation()}}>
+                <select className={styles.button_overlay} onChange={(e) => {
+                    setIsChooseInstallation(!isChooseInstallation);
+                    add_mod_to_installation(e.target.value, modID)
+                    }} onClick={(e) => {e.stopPropagation()}}>
+                    <option value="" hidden>Choose installation</option>
                     {Object.values(installations).map(installation => (
                         <option value={installation.id} key={installation.id}>{installation.name}</option>
                     ))}

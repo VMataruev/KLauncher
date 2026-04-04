@@ -7,6 +7,7 @@ import "slick-carousel/slick/slick-theme.css";
 import '@renderer/components/slider'
 import ImageCarousel from '@renderer/components/slider';
 import { useParams } from 'react-router-dom';
+import AddModButton from '../features/addMod/addMod';
 
 function Mod(): React.JSX.Element {
 
@@ -61,6 +62,7 @@ function Mod(): React.JSX.Element {
                             <div className={styles.mod_box_created}>Created: {mod.created}</div>
                             <div className={styles.mod_box_last_modified}>Last modified: {mod.lastmodified}</div>
                             <div className={styles.mod_box_downloads}>Downloads: {mod.downloads}</div>
+                            <AddModButton modID={mod.modid}></AddModButton>
                         </div>
                     </div>
 

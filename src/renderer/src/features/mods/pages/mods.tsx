@@ -112,7 +112,7 @@ function Mods(): React.JSX.Element {
                     displayedMods.map(mod => (
                         <div className={styles.mod_box} key={mod.modid} onClick={() => handleModClick(mod.modid)}>
                             {mod.logo ? (<img className={styles.mod_img} src={mod.logo} alt="" />) : (<img className={styles.mod_img} src="https://mods.vintagestory.at/web/img/mod-default.png" alt="" />)}
-                            <AddModButton modID={""} modName={""} modLink={""}></AddModButton>
+                            <div className={styles.add_mod_button_box}><AddModButton modID={mod.modid}></AddModButton></div>
                             <div className={styles.mod_info_box}>
                                 <div className={styles.mod_numbers_info}>
                                     <div className={styles.mod_downloads}>{mod.downloads}</div>
