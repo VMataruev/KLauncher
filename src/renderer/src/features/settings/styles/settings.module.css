@@ -1,0 +1,93 @@
+.page_wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100svh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    justify-content: center;
+    align-items: center;
+}
+
+.settings_box_wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.settings_theme_box {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background-second);
+    border-radius: 8px;
+    overflow: hidden;
+    min-width: 550px;
+}
+
+.setting {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.header {
+    margin-bottom: 4px;
+    background-color: var(--brand-color-2);
+    padding: 8px;
+}
+
+.body {
+    padding: 8px;
+    gap: 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+.setting_name {
+    width: 160px;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: end;
+}
+
+.setting_folder_name {
+    width: 100%;
+    display: flex;
+    min-width: 0;
+    justify-content: start;
+    align-items: center;
+    padding: 4px 8px;
+}
+
+.setting_folder_btn, .setting_folder_name {
+    background-color: var(--gray-2);
+    border-radius: 4px;
+}
+
+
+
+.fromname_pading {
+    display: flex;
+    gap: 8px;
+    width: 80%;
+    flex: 1;
+    min-width: 0;
+}
+
+.setting_folder_btn {
+    border: none;
+    cursor: pointer;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+}
+
+.img_btn {
+    width: 20px;
+    aspect-ratio: 1 / 1;
+    fill: red;
+}
