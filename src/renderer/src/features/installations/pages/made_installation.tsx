@@ -5,16 +5,31 @@ import { useNavigate } from "react-router-dom";
 
 function Made_installation(): React.JSX.Element {
     
-    const [ folderPath, setFolderPath ] = useState<string | null>(null);
+    const [ folderPath, setFolderPath ] = useState<string>();
+    useEffect(() => {
+        const getDefaultFolder = async () => {
+            const res = await window.api.getStore('installationsFolder');
+            if (res != null) {
+                setFolderPath(res);
+                setInstallationBuild((prev) => ({
+                    ...prev,
+                    folder: res
+                }));
+            };
+        };
+        getDefaultFolder();
+    }, [])
+    
     const handleSelectFolder = async () => {
         try {
             const selectedPath = await window.api.selectFolder();
-            setFolderPath(selectedPath);
-            setInstallationBuild((prev) => ({
-                ...prev,
-                folder: selectedPath
-            }));
-
+            if (selectedPath != null) {
+                setFolderPath(selectedPath);
+                setInstallationBuild((prev) => ({
+                    ...prev,
+                    folder: selectedPath
+                }));
+            };
         } catch (error) {
             console.log('Cant select foler', error);
         }
@@ -130,9 +145,9 @@ function Made_installation(): React.JSX.Element {
                 </div>
 
                 <div className={styles.foler_box}>
-                    <div className={styles.foler_header}>Foler</div>
+                    <div className={styles.foler_header}>Folder</div>
                     <div className={styles.foler_box_change}>
-                        <div className={styles.foler_name}>{folderPath ? folderPath : 'Default'}</div>
+                        <div className={styles.folder_name}>{folderPath ? folderPath : 'Default'}</div>
                         <button onClick={handleSelectFolder}>Observe</button>
                     </div>
                 </div>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { addNotification }  from "../../overlay/notification/features/notificationList"
+// import { addNotification }  from "../../overlay/notification/features/notificationList"
 import styles from "../styles/settings.module.css"
 import search_icon from "../../../assets/icons/search.svg"
 
