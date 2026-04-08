@@ -25,7 +25,9 @@ const api = {
   open_file: (path: string) => ipcRenderer.invoke('open-file', path),
   openExternalLink: (url: string) => ipcRenderer.invoke("open-external-link", url),
   createFolder: (folderPath: string, folderName: string) => ipcRenderer.invoke('create-folder', folderPath, folderName),
-  deleteFolder: (folderPath: string) => ipcRenderer.invoke('delete-folder', folderPath)
+  deleteFolder: (folderPath: string) => ipcRenderer.invoke('delete-folder', folderPath),
+  isFileExist: (filePath: string) => ipcRenderer.invoke('isFileExist', filePath),
+  downloadFile: (url: string, pathToSave: string) => ipcRenderer.invoke('downloadFile', url, pathToSave)
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

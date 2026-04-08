@@ -27,6 +27,8 @@ declare global {
     openExternalLink: (url: string) => Promise
     createFolder: (folderPath: string, folderName: string) => Promise
     deleteFolder: (folderPath: string) => Promise
+    isFileExist: (filePath: string) => Promise<boolean>
+    downloadFile: (url: string, pathToSave: string) => Promise
   };
   interface Window {
     electron: ElectronAPI

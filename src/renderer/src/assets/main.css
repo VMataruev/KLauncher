@@ -30,7 +30,8 @@
 }
 
 .page-active {
-  background-color: green;
+  /* background-color: green; */
+  background-color: var(--brand-color-1);
 }
 
 /* .page-deactive {

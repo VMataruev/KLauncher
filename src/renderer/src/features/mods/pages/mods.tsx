@@ -3,6 +3,7 @@ import styles from "../styles/style.module.css"
 import { useNavigate } from "react-router-dom"
 // import img from "../../../assets/mod_img.jpg"
 import AddModButton from "../features/addMod/addMod";
+import { addNotification } from "@renderer/features/overlay/notification/features/notificationList";
 
 const BLOCK_SIZE = 40; // сколько модов загружаем за один раз
 
@@ -42,6 +43,7 @@ function Mods(): React.JSX.Element {
                 console.log(res.mods)
             } catch (error) {
                 console.log(error)
+                addNotification({status: "error", msg: `${error}`})
             } finally {
                 setLoading(false);
             }

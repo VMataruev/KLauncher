@@ -1,3 +1,4 @@
+import { addNotification } from "@renderer/features/overlay/notification/features/notificationList";
 import styles from "./styles.module.css"
 import * as cheerio from 'cheerio';
 import { useEffect, useState } from "react";
@@ -12,6 +13,7 @@ function Blog({}): React.JSX.Element {
     useEffect(() => {
         const getBlogData = async () => {
             const res = await window.api.getRequest('https://www.vintagestory.at/blog.html/');
+            // TODO: error if blog can't load
             const $ = cheerio.load(res);
 
             const parsedArticles: BlogArticle[] = $("article.cCmsCategoryFeaturedEntry")
@@ -26,8 +28,8 @@ function Blog({}): React.JSX.Element {
             .get();
 
             setArticles(parsedArticles);
-            const articles = $('.cCmsCategoryFeaturedEntry');
-            console.log(articles);
+            // const articles = $('.cCmsCategoryFeaturedEntry');
+            // console.log(articles);
         };
         getBlogData();
     }, []);
