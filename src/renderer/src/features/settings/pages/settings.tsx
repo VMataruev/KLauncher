@@ -6,12 +6,14 @@ import search_icon from "../../../assets/icons/search.svg"
 function Settings(): React.JSX.Element {
 
     const [ installationsFolder, setInstallationsFolder ] = useState<string>();
+    const [ modsStashFolder, setModsStashFolder ] = useState<string>();
     const [ modsFolder, setModsFolder ] = useState<string>();
     const [ backupsFolder, setBackupsFolder ] = useState<string>();
 
     useEffect(() => {
         const getData = async () => {
             setInstallationsFolder(await window.api.getStore('installationsFolder'));
+            setModsStashFolder(await window.api.getStore('modsStashFolder'));
             setModsFolder(await window.api.getStore('modsFolder'));
             setBackupsFolder(await window.api.getStore('backupsFolder'));
         };
@@ -23,6 +25,14 @@ function Settings(): React.JSX.Element {
         if (res != null) {
             await window.api.setStore('installationsFolder', res);
             setInstallationsFolder(res);
+        }
+    };
+
+    const selectModsStashFolder = async () => {
+        const res = await window.api.selectFolder();
+        if (res != null) {
+            await window.api.setStore('modsStashFolder', res);
+            setModsStashFolder(res);
         }
     };
 
@@ -55,6 +65,14 @@ function Settings(): React.JSX.Element {
                             <div className={styles.fromname_pading}>
                                 <button className={styles.setting_folder_btn} onClick={() => {selectInstallationsFolder()}}><img src={search_icon} className={styles.img_btn} alt="" /></button>
                                 <div className={styles.setting_folder_name}>{installationsFolder}</div>
+                            </div>
+                        </div>
+
+                        <div className={styles.setting}>
+                            <div className={styles.setting_name}>Mods Stash Folder</div>
+                            <div className={styles.fromname_pading}>
+                                <button className={styles.setting_folder_btn} onClick={() => {selectModsStashFolder()}}><img src={search_icon} className={styles.img_btn} alt="" /></button>
+                                <div className={styles.setting_folder_name}>{modsStashFolder}</div>
                             </div>
                         </div>
 
