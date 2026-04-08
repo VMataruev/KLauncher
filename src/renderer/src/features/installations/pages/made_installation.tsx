@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import styles from '../styles/made_installation.module.css';
 import { v4 as uuidv4 } from 'uuid';
 import { useNavigate } from "react-router-dom";
+import { addNotification } from '@renderer/features/overlay/notification/features/notificationList';
 
 function Made_installation(): React.JSX.Element {
     
@@ -86,6 +87,9 @@ function Made_installation(): React.JSX.Element {
             return setBuildStatus("choose folder first");
         };
 
+
+
+        // Clear folder path and name ======================
         const sanitizeFolderName = (name: string): string => {
             return name
                 .replace(/[<>:"/\\|?*\x00-\x1F]/g, '') // запрещённые символы Windows
@@ -100,6 +104,34 @@ function Made_installation(): React.JSX.Element {
             ...installationBuild,
             folder: finalPath
         };
+        // ================================================
+
+
+        // If name already exist (used finalName from previous check) ======================
+        type Installation = {
+            id: string;
+            img: string;
+            name: string;
+            version: string;
+            version_link: string;
+            mods: string[];
+            folder: string | null;
+        };
+        const installations = await window.api.getStore("installations") as Record<string, Installation>;
+        const isNameExists = Object.values(installations).some(
+            (installation) => installation.name === finalName
+        );
+
+        if (isNameExists) {
+            addNotification({
+                status: "error",
+                msg: "Installation with this name already exist"
+            });
+            return setBuildStatus("Change installation name");
+        }
+        // ============================================
+
+
 
         await window.api.setStore(`installations.${updatedInstallationBuild.id}`, updatedInstallationBuild);
         // const installations = await window.api.getStore("installations");

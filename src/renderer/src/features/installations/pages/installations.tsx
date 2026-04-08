@@ -2,6 +2,7 @@ import styles from '../styles/styles.module.css'
 import img from '../../../assets/temporal.png'
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { addNotification } from '@renderer/features/overlay/notification/features/notificationList';
 
 function Installations(): React.JSX.Element {
   const navigate = useNavigate();
@@ -21,20 +22,35 @@ function Installations(): React.JSX.Element {
     const loadData = async () => {
       const res = await window.api.getStore("installations");
       setInstallations(res);
-      console.log(res);
+    //   console.log(res);
     };
 
     loadData();
   }, []);
 
   const openFolder = async (folderpath) => {
-    console.log(folderpath);
+    // console.log(folderpath);
     await window.api.openFolder(folderpath);
   };
 
   const [ moreBtnId, setMoreBtnId ] = useState<string>("");
   const setIdForBtn = (id) => {
     setMoreBtnId(id);
+  };
+
+
+  const deleteInstallation = async (installationID: string) => {
+    const installation = installations[installationID];
+    await window.api.deleteStore(`installations.${installationID}`);
+    if (installation.folder != null) {
+        await window.api.deleteFolder(installation.folder);
+    };
+    setInstallations(prev => {
+        const updated = { ...prev };
+        delete updated[installationID];
+        return updated;
+    });
+    addNotification({status: "success", msg: "Installations deleted successfully"})
   };
   
 
@@ -99,7 +115,7 @@ function Installations(): React.JSX.Element {
                       <div className={`${styles.installation_button_buttons_box} ${moreBtnId == installation.id ? styles.installation_button_buttons_box_visible : <></>}`}>
                         <button className={styles.more_button} onClick={() => navigate(`/installation_settings/${installation.id}`)}>Settings</button>
                         <button className={styles.more_button}>Copy</button>
-                        <button className={styles.more_button}>Delete</button>
+                        <button className={styles.more_button} onClick={() => {deleteInstallation(installation.id)}}>Delete</button>
                       </div>
                     </div>
                     
