@@ -25,6 +25,7 @@ declare global {
     ) => () => void;
     open_file: (path: string) => Promise
     openExternalLink: (url: string) => Promise
+    createFolder: (folderPath: string, folderName: string) => Promise
   };
   interface Window {
     electron: ElectronAPI

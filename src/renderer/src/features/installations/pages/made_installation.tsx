@@ -35,7 +35,7 @@ function Made_installation(): React.JSX.Element {
         }
     };
 
-    const [ installationBuild, setInstallationBuild] = useState({
+    const [ installationBuild, setInstallationBuild ] = useState({
         id: uuidv4(),
         img: "",
         name: "",
@@ -50,7 +50,7 @@ function Made_installation(): React.JSX.Element {
         const loadData = async (): Promise<void> => {
             const res = await window.api.getData();
             setData(res);
-            console.log(res);
+            // console.log(res);
             setInstallationBuild((prev) => ({
                 ...prev,
                 version: res[0].name,
@@ -65,7 +65,7 @@ function Made_installation(): React.JSX.Element {
     const navigate = useNavigate();
 
     const storeBuild = async ()  => {
-        console.log(installationBuild);
+        // console.log(installationBuild);
         // if (!installationBuild.img) {
         //     return setBuildStatus("choose img first");
         // };
@@ -86,7 +86,22 @@ function Made_installation(): React.JSX.Element {
             return setBuildStatus("choose folder first");
         };
 
-        await window.api.setStore(`installations.${installationBuild.id}`, installationBuild);
+        const sanitizeFolderName = (name: string): string => {
+            return name
+                .replace(/[<>:"/\\|?*\x00-\x1F]/g, '') // запрещённые символы Windows
+                .replace(/\s+/g, ' ')                  // много пробелов -> один
+                .trim()                                // убрать пробелы по краям
+                .replace(/\.+$/, '');                  // убрать точки в конце
+        };
+        const finalName = sanitizeFolderName(installationBuild.name)
+        const finalPath = `${installationBuild.folder}\\${finalName}`
+        await window.api.createFolder(installationBuild.folder, finalName);
+        const updatedInstallationBuild = {
+            ...installationBuild,
+            folder: finalPath
+        };
+
+        await window.api.setStore(`installations.${updatedInstallationBuild.id}`, updatedInstallationBuild);
         // const installations = await window.api.getStore("installations");
         // console.log(installations);
         navigate("/installations");

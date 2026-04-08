@@ -23,7 +23,8 @@ const api = {
     }
   },
   open_file: (path: string) => ipcRenderer.invoke('open-file', path),
-  openExternalLink: (url: string) => ipcRenderer.invoke("open-external-link", url)
+  openExternalLink: (url: string) => ipcRenderer.invoke("open-external-link", url),
+  createFolder: (folderPath: string, folderName: string) => ipcRenderer.invoke('create-folder', folderPath, folderName)
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to
