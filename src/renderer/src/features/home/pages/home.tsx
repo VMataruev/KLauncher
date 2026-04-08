@@ -66,6 +66,7 @@ function Home(): React.JSX.Element {
       // console.log(res);
     };
     getInstallations();
+    console.log(installations)
   }, []);
 
   
@@ -88,14 +89,12 @@ function Home(): React.JSX.Element {
 
         <div className={styles.basement}>
           <select name="installations" id="" onChange={(e) => setInstallationID(e.target.value)} className={styles.installations}>
-            {installations ?
+            {Object.keys(installations).length > 0 ?
             Object.values(installations).map(version => (
-              <>
-                <option value={version.id}>{version.name}</option>
-              </>
+              <option value={version.id}>{version.name}</option>
             ))
             :
-            <></>
+            <option value=" disabled">Create installation first</option>
             }
           </select>
           
