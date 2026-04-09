@@ -42,15 +42,15 @@
 .mods_wrapper {
     padding: 16px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 16px;
     align-items: stretch; /* важно */
 
 }
 
 .mod_box {
-    /* aspect-ratio: 1 / 1;
-    max-width: 250px; */
+    aspect-ratio: 1 / 1;
+    /* max-width: 250px; */
     background-color: #2e2c2a;
     display: flex;
     flex-direction: column;
