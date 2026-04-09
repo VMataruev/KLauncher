@@ -29,6 +29,8 @@ declare global {
     deleteFolder: (folderPath: string) => Promise
     isFileExist: (filePath: string) => Promise<boolean>
     downloadFile: (url: string, pathToSave: string) => Promise
+    deleteFile: (filePath: string) => Promise
+    getFilesNames: (path: string) => Promise
   };
   interface Window {
     electron: ElectronAPI

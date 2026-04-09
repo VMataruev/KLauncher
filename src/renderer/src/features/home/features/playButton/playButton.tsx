@@ -1,7 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from './playButton.module.css'
 import { addNotification } from "@renderer/features/overlay/notification/features/notificationList";
-import axios from "axios";
 
 function PlayButton({installation_id}): React.JSX.Element {
 
@@ -21,19 +20,30 @@ function PlayButton({installation_id}): React.JSX.Element {
     // Если нет, то скачивать установщих и запускать его
     // 2. Проверять установлены ли необходимые моды 
     // Если да, то запускать игру
-    // Если нет, то докачивать с moddb
+    // Если нет, то докачивать с moddb 
     // Если есть лишние, то удалить
     // 3. Запускать игру
 
+    const [ modsPath, setModsPath ] = useState("");
+    useEffect(() => {
+        const getModsPath = async () => {
+            const path = await window.api.getStore("modsFolder");
+            setModsPath(path ?? "");
+        };
+        getModsPath();
+    }, []);
+    
+
     const [ isGameInstalled, setIsGameInstalled ] = useState<boolean>(false);
-    const[ isRequiredModsInstalled, setIsRequiredModsInstalled ] = useState<boolean>(false);
+    const [ isRequiredModsInstalled, setIsRequiredModsInstalled ] = useState<boolean>(false);
+    const [ isNotRequiredModsUninstalled, setNotRequiredModsUninstalled ] = useState<boolean>(false); // по факту дальше по коду всегда будет ставиться в true, но пусть будет для наглядности
 
     const [ progress, setProgress ] = useState<number>();
     const [ status, setStatus ] = useState<string>();
     const playButton = async () => {
         // ==== Получаем настройки установки ====
         const installation = await window.api.getStore(`installations.${installation_id}`);
-        console.log(installation);
+        // console.log(installation);
         // ======================================
 
 
@@ -79,12 +89,29 @@ function PlayButton({installation_id}): React.JSX.Element {
         // ========================================
 
 
+        // ==== Удаляем моды, ненужные для выбранной установки ====  | сверяем имена с именами, которые уже есть в папке с модами, если не нужно, то удаляем
+        const files = await window.api.getFilesNames(modsPath);
+        // console.log(files);
+        for (const file of files) {
+            const modID = Number(file.split("-")[0]);
+            const modVersion = file.split("-")[1];
+            const cleanedVerison = installation.version.replace("v", "");
+            if (!installation.mods.includes(modID) || !(modVersion == cleanedVerison)) {
+                await window.api.deleteFile(`${modsPath}\\${file}`);
+                // console.log(`${modsPath}\\${file}`)
+                // TODO: отображение времени удаления файла
+            };
+        };
+        setNotRequiredModsUninstalled(true); // оно всегда будет выполнятся, но пусть будет для наглядности
+
+        // ========================================================
+
 
         // TODO: если моды нужны в установке, то оставляем, если нет, то удаляем
 
-        // ==== Если в установке есть моды ====
+        // ==== Если в установке есть моды, то мы их докачиваем в формате modId-verison-name ====
         if (installation.mods.length != 0) {
-            console.log(installation.mods)
+            // console.log(installation.mods)
             for (const mod of installation.mods) {
                 const res = await window.api.getRequest(`https://mods.vintagestory.at/api/mod/${mod}`);
                 const cleanedVerison = installation.version.replace("v", "");
@@ -94,11 +121,13 @@ function PlayButton({installation_id}): React.JSX.Element {
 
                 // console.log(cleanedVerison)
                 // console.log(res);
-                // console.log(neededRelease);
-                const modsPath = await window.api.getStore('modsFolder');
-                const fullModsPath = `${modsPath}\\${neededRelease.filename}`
+                // console.log(res);
+
+                // const fullModsPath = `${modsPath}\\${mod}-${neededRelease.filename}`
+                const fullModsPath = `${modsPath}\\${mod}-${cleanedVerison}-${neededRelease.modidstr}.zip`
                 const linkToMod = `${neededRelease.mainfile}`;
                 await window.api.downloadFile(linkToMod, fullModsPath);
+                // TODO: добавить отображение загрузки и заблокировать кнопку игры до завершения скачивания
             };
             setIsRequiredModsInstalled(true);
         }
@@ -109,9 +138,10 @@ function PlayButton({installation_id}): React.JSX.Element {
 
 
         // ==== Если всё ок, то запускаем игру ====
-        console.log(isGameInstalled)
-        console.log(isRequiredModsInstalled)
-        if (isGameInstalled && isRequiredModsInstalled) {
+        console.log(isGameInstalled);
+        console.log(isRequiredModsInstalled);
+        console.log(isNotRequiredModsUninstalled);
+        if (isGameInstalled && isRequiredModsInstalled && isNotRequiredModsUninstalled) {
             addNotification({status: "success", msg: "Game started"});
             await window.api.open_file(`${installation.folder}\\Vintagestory.exe`);
         }
@@ -119,9 +149,11 @@ function PlayButton({installation_id}): React.JSX.Element {
     };
 
     return (
-        <button className={styles.play_btn} onClick={playButton}>
-            {status ? `Downloading installer: ${progress}%` : "PLAY"}
-        </button>
+        <>
+            <button className={styles.play_btn} onClick={playButton}>
+                {status ? `Downloading installer: ${progress}%` : "PLAY"}
+            </button>
+        </>
     )
 }
 

@@ -4,6 +4,7 @@ import styles from '../styles/style.module.css'
 // import { Link } from 'react-router-dom';
 import PlayButton from '../features/playButton/playButton';
 import Blog from '../features/blog/blog';
+import ProgressBar from '../features/progressBar/progressBar';
 
 function Home(): React.JSX.Element {
 
@@ -113,6 +114,8 @@ function Home(): React.JSX.Element {
           <Blog></Blog>
         </div>
       </div>
+
+      <ProgressBar progress={30}></ProgressBar>
     </>
   )
 }

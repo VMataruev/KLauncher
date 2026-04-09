@@ -1,0 +1,31 @@
+.progressBar {
+    background-color: var(--background-second);
+    position: fixed;
+    padding: 12px;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+
+.bar {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: var(--background-main);
+    display: flex;
+    align-items: center;
+}
+
+.bar_complete {
+    position: absolute;
+    height: 100%;
+    background-color: var(--success);
+}
+
+.text_info {
+    position: absolute;
+    margin-left: 8px;
+    color: var(--background-main);
+}
