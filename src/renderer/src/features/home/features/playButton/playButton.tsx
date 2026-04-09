@@ -38,8 +38,8 @@ function PlayButton({installation_id}): React.JSX.Element {
     const [ isRequiredModsInstalled, setIsRequiredModsInstalled ] = useState<boolean>(false);
     const [ isNotRequiredModsUninstalled, setNotRequiredModsUninstalled ] = useState<boolean>(false); // по факту дальше по коду всегда будет ставиться в true, но пусть будет для наглядности
 
-    const [ progress, setProgress ] = useState<number>();
-    const [ status, setStatus ] = useState<string>();
+    // const [ progress, setProgress ] = useState<number>();
+    // const [ status, setStatus ] = useState<string>();
     const playButton = async () => {
         // ==== Получаем настройки установки ====
         const installation = await window.api.getStore(`installations.${installation_id}`);
@@ -52,16 +52,16 @@ function PlayButton({installation_id}): React.JSX.Element {
 
         // ==== Если папка пустая ====
         if (isFolderEmpty) {
-            const unsubscribe = window.api.downloadProgress((data) => {
-                setProgress(data.percent);
-                setStatus(data.state);
-            });
+            // const unsubscribe = window.api.downloadProgress((data) => {
+            //     setProgress(data.percent);
+            //     setStatus(data.state);
+            // });
 
             try {
                 await window.api.download_and_install_game(installation.version_link, installation.folder);
             } finally {
-                unsubscribe();
-                setStatus("");
+                // unsubscribe();
+                // setStatus("");
                 setIsGameInstalled(true);
             };
         };
@@ -121,7 +121,8 @@ function PlayButton({installation_id}): React.JSX.Element {
 
                 // console.log(cleanedVerison)
                 // console.log(res);
-                // console.log(res);
+                console.log(installation);
+                console.log(neededRelease);
 
                 // const fullModsPath = `${modsPath}\\${mod}-${neededRelease.filename}`
                 const fullModsPath = `${modsPath}\\${mod}-${cleanedVerison}-${neededRelease.modidstr}.zip`
@@ -133,6 +134,7 @@ function PlayButton({installation_id}): React.JSX.Element {
         }
 
         // ====================================
+
 
         
 
@@ -151,7 +153,8 @@ function PlayButton({installation_id}): React.JSX.Element {
     return (
         <>
             <button className={styles.play_btn} onClick={playButton}>
-                {status ? `Downloading installer: ${progress}%` : "PLAY"}
+                {/* {status ? `Downloading installer: ${progress}%` : "PLAY"} */}
+                PLAY
             </button>
         </>
     )

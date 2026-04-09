@@ -110,12 +110,12 @@ function Home(): React.JSX.Element {
           {userName ? <div>{userName}</div> : <button onClick={login}>Войти</button>}
         </div>
 
-        <div className={styles.blog_bog}>
+        <div className={styles.blog_box}>
           <Blog></Blog>
         </div>
       </div>
 
-      <ProgressBar progress={30}></ProgressBar>
+      <ProgressBar></ProgressBar>
     </>
   )
 }

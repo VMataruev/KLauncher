@@ -29,7 +29,14 @@ const api = {
   isFileExist: (filePath: string) => ipcRenderer.invoke('isFileExist', filePath),
   downloadFile: (url: string, pathToSave: string) => ipcRenderer.invoke('downloadFile', url, pathToSave),
   deleteFile: (filePath: string) => ipcRenderer.invoke('delete-file', filePath),
-  getFilesNames: (path: string) => ipcRenderer.invoke('get-files-names', path)
+  getFilesNames: (path: string) => ipcRenderer.invoke('get-files-names', path),
+  downloadFileProgress: (callback) => {
+    const listener = (_event, data) => callback(data);
+    ipcRenderer.on('download-file-progress', listener);
+    return () => {
+        ipcRenderer.removeListener('download-progress', listener);
+    };
+},
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

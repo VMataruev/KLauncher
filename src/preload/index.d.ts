@@ -31,6 +31,14 @@ declare global {
     downloadFile: (url: string, pathToSave: string) => Promise
     deleteFile: (filePath: string) => Promise
     getFilesNames: (path: string) => Promise
+    downloadFileProgress: (
+      callback: (data: {
+        received?: number;
+        percent?: number;
+        total?: number;
+        fileName?: string;
+      }) => void
+    ) => () => void;
   };
   interface Window {
     electron: ElectronAPI
