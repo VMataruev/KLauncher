@@ -34,6 +34,8 @@
 
 .icon_box {
     display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .name_box {
@@ -107,4 +109,9 @@
 .basement_btn_main:hover {
     background-color: var(--brand-color-1);
     filter: brightness(1.5);
+}
+
+
+.select_icon {
+    max-width: 100px;
 }

@@ -3,6 +3,8 @@ import styles from '../styles/made_installation.module.css';
 import { v4 as uuidv4 } from 'uuid';
 import { useNavigate } from "react-router-dom";
 import { addNotification } from '@renderer/features/overlay/notification/features/notificationList';
+import CustomSelect from '@renderer/components/CustomSelect/CustomSelect';
+import iconOptions from '@renderer/components/Installation_icons';
 
 function Made_installation(): React.JSX.Element {
     
@@ -60,6 +62,17 @@ function Made_installation(): React.JSX.Element {
         }
         loadData();
     }, [])
+
+
+
+    const [ selectedIcon, setSelectedIcon ] = useState("gear-temporal");
+    useEffect(() => {
+        setInstallationBuild((prev) => ({
+            ...prev,
+            img: selectedIcon
+        }))
+    }, [selectedIcon])
+        
     
 
     const [ buildStatus, setBuildStatus ] = useState<string>();
@@ -67,9 +80,9 @@ function Made_installation(): React.JSX.Element {
 
     const storeBuild = async ()  => {
         // console.log(installationBuild);
-        // if (!installationBuild.img) {
-        //     return setBuildStatus("choose img first");
-        // };
+        if (!installationBuild.img) {
+            return setBuildStatus("choose img first");
+        };
 
         if (!installationBuild.name) {
             return setBuildStatus("choose name first");
@@ -144,7 +157,6 @@ function Made_installation(): React.JSX.Element {
         navigate("/installations");
     };
     
-
     return(
         <div className={styles.page_wrapper}>
             <div className={styles.page_header}>
@@ -154,10 +166,16 @@ function Made_installation(): React.JSX.Element {
             <div className={styles.page_body}>
                 <div className={styles.page_body_box}>
                     <div className={styles.icon_box}>
-                        <select name="" id="" className={`${styles.input} ${styles.input_icon}`}>
-                            <option value="">Temporal Gear</option>
-                            <option value="">Temporal Gear</option>
-                        </select>
+                        <CustomSelect value={selectedIcon} onChange={(id) => {
+                            const selected = iconOptions.find(i => i.id === id);
+                            if (!selected) return;
+
+                            setSelectedIcon(id);
+                            setInstallationBuild(prev => ({
+                                ...prev,
+                                img: selected.icon // сохраняем путь, а не id
+                            }));
+                        }} options={iconOptions}></CustomSelect>
                     </div>
 
                     <div className={styles.name_box}>

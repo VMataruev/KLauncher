@@ -1,5 +1,5 @@
 import { ipcMain } from "electron";
-const fs = require('fs');
+const fs = require('fs/promises');
 
 ipcMain.handle('delete-folder', async(_event, folderPath) => {
     try {

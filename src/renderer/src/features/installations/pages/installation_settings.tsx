@@ -3,6 +3,8 @@ import styles from '../styles/installation_settings.module.css';
 import { v4 as uuidv4 } from 'uuid';
 import { useNavigate, useParams } from "react-router-dom";
 import { addNotification } from '@renderer/features/overlay/notification/features/notificationList';
+import CustomSelect from '@renderer/components/CustomSelect/CustomSelect';
+import iconOptions from '@renderer/components/Installation_icons';
 
 function Installation_settings(): React.JSX.Element {
     
@@ -87,6 +89,15 @@ function Installation_settings(): React.JSX.Element {
             mods: updatedMods
         }));
     };
+
+
+    const [ selectedIcon, setSelectedIcon ] = useState("");
+    useEffect(() => {
+        setInstallationBuild((prev) => ({
+            ...prev,
+            img: selectedIcon
+        }))
+    }, [selectedIcon])
     
 
     const [ buildStatus, setBuildStatus ] = useState<string>();
@@ -196,10 +207,16 @@ function Installation_settings(): React.JSX.Element {
             <div className={styles.page_body}>
                 <div className={styles.page_body_box}>
                     <div className={styles.icon_box}>
-                        <select name="" id="" className={`${styles.input} ${styles.input_icon}`}>
-                            <option value="">Temporal Gear</option>
-                            <option value="">Temporal Gear</option>
-                        </select>
+                        <CustomSelect value={installationBuild.img} onChange={(id) => {
+                            const selected = iconOptions.find(i => i.id === id);
+                            if (!selected) return;
+
+                            setSelectedIcon(id);
+                            setInstallationBuild(prev => ({
+                                ...prev,
+                                img: selected.icon // сохраняем путь, а не id
+                            }));
+                        }} options={iconOptions}></CustomSelect>
                     </div>
 
                     <div className={styles.name_box}>

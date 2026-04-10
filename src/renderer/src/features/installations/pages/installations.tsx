@@ -3,9 +3,11 @@ import img from '../../../assets/temporal.png'
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { addNotification } from '@renderer/features/overlay/notification/features/notificationList';
+import iconOptions from '@renderer/components/Installation_icons';
 
 function Installations(): React.JSX.Element {
   const navigate = useNavigate();
+
 
   type Installation = {
     id: string;
@@ -27,6 +29,13 @@ function Installations(): React.JSX.Element {
 
     loadData();
   }, []);
+
+  const getInstallationIcon = (img: string) => {
+    const found = iconOptions.find(icon => icon.id === img);
+    return found ? found.icon : img;
+  };
+  console.log(installations);
+
 
   const openFolder = async (folderpath) => {
     // console.log(folderpath);
@@ -98,7 +107,8 @@ function Installations(): React.JSX.Element {
               Object.values(installations).map(installation => (
                 <div className={styles.install}>
                   <div className={styles.left_box}>
-                    <img src={img} alt="" className={styles.img}/>
+                    
+                    <img src={getInstallationIcon(installation.img)} alt="" className={styles.img}/>
                     <div className={styles.name_verison_box}>
                       <div className={styles.name}>{installation.name}</div>
                       <div className={styles.version}>{installation.version}</div>

@@ -5,6 +5,7 @@ import styles from '../styles/style.module.css'
 import PlayButton from '../features/playButton/playButton';
 import Blog from '../features/blog/blog';
 import ProgressBar from '../features/progressBar/progressBar';
+import CustomSelect from '@renderer/components/CustomSelect/CustomSelect';
 
 function Home(): React.JSX.Element {
 
@@ -112,6 +113,8 @@ function Home(): React.JSX.Element {
             <option value=" disabled">Create installation first</option>
             }
           </select>
+
+          {/* <CustomSelect></CustomSelect> */}
           
 
           <div className={styles.play}>

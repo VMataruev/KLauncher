@@ -77,7 +77,7 @@
 .page_basement {
     display: flex;
     border-top: 1px solid var(--background-second);
-    padding-top: 20px;
+    padding: 20px 0px;
 }
 
 .basement_btns_box {
@@ -107,4 +107,11 @@
 .basement_btn_main:hover {
     background-color: var(--brand-color-1);
     filter: brightness(1.5);
+}
+
+
+.icon_box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
