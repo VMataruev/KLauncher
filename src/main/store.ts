@@ -10,7 +10,8 @@ export const store = new Store({
         modsStashFolder: path.join(app.getPath('userData'), 'KLuncher_mods_stash'),
         modsFolder: "",
         backupsFolder: path.join(app.getPath('userData'), 'KLuncher_backups')
-    }
+    },
+    installation_to_start: ""
 });
 
 // store.reset('installationsFolder', 'modsFolder', 'backupsFolder');

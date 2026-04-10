@@ -98,8 +98,6 @@ function PlayButton({installation_id}): React.JSX.Element {
             const cleanedVerison = installation.version.replace("v", "");
             if (!installation.mods.includes(modID) || !(modVersion == cleanedVerison)) {
                 await window.api.deleteFile(`${modsPath}\\${file}`);
-                // console.log(`${modsPath}\\${file}`)
-                // TODO: отображение времени удаления файла
             };
         };
         setNotRequiredModsUninstalled(true); // оно всегда будет выполнятся, но пусть будет для наглядности
@@ -107,20 +105,21 @@ function PlayButton({installation_id}): React.JSX.Element {
         // ========================================================
 
 
-        // TODO: если моды нужны в установке, то оставляем, если нет, то удаляем
 
-        // ==== Если в установке есть моды, то мы их докачиваем в формате modId-verison-name ====
+
+        // ==== Если в установке есть моды, то мы их докачиваем в формате modID-verison-name ====
         if (installation.mods.length != 0) {
             // console.log(installation.mods)
             for (const mod of installation.mods) {
                 const res = await window.api.getRequest(`https://mods.vintagestory.at/api/mod/${mod}`);
-                const cleanedVerison = installation.version.replace("v", "");
+                const cleanedVerison = installation.version.replace("v", ""); // "1.21.1"
+                const baseVersion = cleanedVerison.split('.').slice(0, 2).join('.'); // "1.21"
                 const neededRelease = res.mod.releases.find((release) =>
-                    release.tags.includes(cleanedVerison)
+                    release.tags.some(tag => tag.startsWith(baseVersion))
                 );
 
-                // console.log(cleanedVerison)
-                // console.log(res);
+                console.log(cleanedVerison)
+                console.log(res);
                 console.log(installation);
                 console.log(neededRelease);
 
@@ -128,7 +127,7 @@ function PlayButton({installation_id}): React.JSX.Element {
                 const fullModsPath = `${modsPath}\\${mod}-${cleanedVerison}-${neededRelease.modidstr}.zip`
                 const linkToMod = `${neededRelease.mainfile}`;
                 await window.api.downloadFile(linkToMod, fullModsPath);
-                // TODO: добавить отображение загрузки и заблокировать кнопку игры до завершения скачивания
+                // TODO: заблокировать кнопку игры до завершения скачивания
             };
             setIsRequiredModsInstalled(true);
         }
@@ -140,12 +139,16 @@ function PlayButton({installation_id}): React.JSX.Element {
 
 
         // ==== Если всё ок, то запускаем игру ====
-        console.log(isGameInstalled);
-        console.log(isRequiredModsInstalled);
-        console.log(isNotRequiredModsUninstalled);
-        if (isGameInstalled && isRequiredModsInstalled && isNotRequiredModsUninstalled) {
-            addNotification({status: "success", msg: "Game started"});
-            await window.api.open_file(`${installation.folder}\\Vintagestory.exe`);
+        // console.log(isGameInstalled);
+        // console.log(isRequiredModsInstalled);
+        // console.log(isNotRequiredModsUninstalled);
+        if (isGameInstalled && isRequiredModsInstalled && isNotRequiredModsUninstalled) { 
+            try {
+                await window.api.open_file(`${installation.folder}\\Vintagestory.exe`);
+                addNotification({status: "success", msg: "Game started"});
+            } catch (error) {
+                addNotification({status: "error", msg: `${error}`});
+            }
         }
         // ========================================
     };

@@ -58,16 +58,25 @@ function Home(): React.JSX.Element {
   const [ installationID, setInstallationID ] = useState<string>();
   const [ installations, setInstallations ] = useState<Record<string, Installation>>({});
   useEffect(() => {
-    const getInstallations = async () => {
+    const init = async () => {
       const res = await window.api.getStore("installations");
       setInstallations(res);
-      const first = Object.values(res)[0] as Installation;
-      setInstallationID(first.id);
-      // console.log(first.id);
-      // console.log(res);
+
+      const saved = await window.api.getStore("installation_to_start");
+
+      if (saved && res[saved]) {
+        // если есть сохранённый и он существует
+        setInstallationID(saved);
+      } else {
+        // иначе берём первый
+        const first = Object.values(res)[0] as Installation | undefined;
+        if (first) {
+          setInstallationID(first.id);
+        }
+      }
     };
-    getInstallations();
-    console.log(installations)
+
+    init();
   }, []);
 
   
@@ -89,7 +98,12 @@ function Home(): React.JSX.Element {
         </div>
 
         <div className={styles.basement}>
-          <select name="installations" id="" onChange={(e) => setInstallationID(e.target.value)} className={styles.installations}>
+          <select name="installations" id="" value={installationID ?? ""} onChange={ async (e) => {
+            const id = e.target.value;
+            setInstallationID(id);
+            await window.api.setStore('installation_to_start', id);
+          }} 
+          className={styles.installations}>
             {Object.keys(installations).length > 0 ?
             Object.values(installations).map(version => (
               <option value={version.id}>{version.name}</option>
