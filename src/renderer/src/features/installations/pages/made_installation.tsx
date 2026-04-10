@@ -152,60 +152,62 @@ function Made_installation(): React.JSX.Element {
             </div>
 
             <div className={styles.page_body}>
-                <div className={styles.icon_box}>
-                    <select name="" id="">
-                        <option value="">Temporal Gear</option>
-                        <option value="">Temporal Gear</option>
-                    </select>
-                </div>
-
-                <div className={styles.name_box}>
-                    <div className={styles.name}>Name</div>
-                    <input type="text" onChange={(e) => {setInstallationBuild((prev) => ({
-                        ...prev,
-                        name: e.target.value
-                    }))}} />
-                </div>
-                
-                <div className={styles.version_box}>
-                    <div className={styles.version}>Version</div>
-
-                    <select className={styles.version_input} name="" id="" onChange={(e) => {
-                        const select = e.target;
-                        const option = select.options[select.selectedIndex];
-                        const link = option.getAttribute('data-link');
-                        
-                        setInstallationBuild((prev) => ({
-                        ...prev,
-                        version: e.target.value,
-                        version_link: link || ""
-                    }))}}>
-
-                        {data ? data.map((version) => (
-                            <option key={version.name} data-link={version.link}>{version.name}</option>
-                        )) : <></>}
-                    </select>
-                </div>
-
-                <div className={styles.mods_box}>
-                    <div>mods</div>
-                </div>
-
-                <div className={styles.foler_box}>
-                    <div className={styles.foler_header}>Folder</div>
-                    <div className={styles.foler_box_change}>
-                        <div className={styles.folder_name}>{folderPath ? folderPath : 'Default'}</div>
-                        <button onClick={handleSelectFolder}>Observe</button>
+                <div className={styles.page_body_box}>
+                    <div className={styles.icon_box}>
+                        <select name="" id="" className={`${styles.input} ${styles.input_icon}`}>
+                            <option value="">Temporal Gear</option>
+                            <option value="">Temporal Gear</option>
+                        </select>
                     </div>
-                </div>
 
-                {buildStatus ? <div>{buildStatus}</div> : <></>}
-                
+                    <div className={styles.name_box}>
+                        <div className={styles.name}>Name</div>
+                        <input type="text" className={styles.input} onChange={(e) => {setInstallationBuild((prev) => ({
+                            ...prev,
+                            name: e.target.value
+                        }))}} 
+                        placeholder='No name'/>
+                    </div>
+                    
+                    <div className={styles.version_box}>
+                        <div className={styles.version}>Version</div>
+
+                        <select className={`${styles.version_input} ${styles.input}`} name="" id="" onChange={(e) => {
+                            const select = e.target;
+                            const option = select.options[select.selectedIndex];
+                            const link = option.getAttribute('data-link');
+                            
+                            setInstallationBuild((prev) => ({
+                            ...prev,
+                            version: e.target.value,
+                            version_link: link || ""
+                        }))}}>
+
+                            {data ? data.map((version) => (
+                                <option key={version.name} data-link={version.link}>{version.name}</option>
+                            )) : <></>}
+                        </select>
+                    </div>
+
+                    
+
+                    <div className={styles.foler_box}>
+                        <div className={styles.foler_header}>Game's Folder</div>
+                        <div className={styles.foler_box_change}>
+                            <div className={`${styles.folder_name} ${styles.input}`}>{folderPath ? folderPath : 'Default'}</div>
+                            <button onClick={handleSelectFolder} className={styles.folder_btn}>Observe</button>
+                        </div>
+                    </div>
+
+                    {buildStatus ? <div>{buildStatus}</div> : <></>}
+                </div>
             </div>
 
             <div className={styles.page_basement}>
-                <button onClick={() => cancel_installation()}>Cancel</button>
-                <button onClick={() => storeBuild()}>Install</button>
+                <div className={styles.basement_btns_box}>
+                    <button className={styles.basement_btn} onClick={() => cancel_installation()}>Cancel</button>
+                    <button className={`${styles.basement_btn} ${styles.basement_btn_main}`} onClick={() => storeBuild()}>Install</button>
+                </div>
             </div>
         </div>
     )

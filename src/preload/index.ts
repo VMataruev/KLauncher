@@ -36,7 +36,9 @@ const api = {
     return () => {
         ipcRenderer.removeListener('download-progress', listener);
     };
-},
+  },
+  renameFolder: (oldPath: string, newPath: string) => ipcRenderer.invoke('rename-folder', oldPath, newPath),
+  clearFolder: (folderPath: string) => ipcRenderer.invoke('clear-folder', folderPath)
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

@@ -39,6 +39,8 @@ declare global {
         fileName?: string;
       }) => void
     ) => () => void;
+    renameFolder: (oldPath: string, newPath: string) => Promise
+    clearFolder: (folderPath: string) => Promise
   };
   interface Window {
     electron: ElectronAPI

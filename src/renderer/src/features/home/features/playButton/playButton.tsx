@@ -111,6 +111,7 @@ function PlayButton({installation_id}): React.JSX.Element {
         if (installation.mods.length != 0) {
             // console.log(installation.mods)
             for (const mod of installation.mods) {
+                // Добавить проверку на то, нету ли уже этих модов в папке
                 const res = await window.api.getRequest(`https://mods.vintagestory.at/api/mod/${mod}`);
                 const cleanedVerison = installation.version.replace("v", ""); // "1.21.1"
                 const baseVersion = cleanedVerison.split('.').slice(0, 2).join('.'); // "1.21"
@@ -136,7 +137,7 @@ function PlayButton({installation_id}): React.JSX.Element {
 
 
         
-
+        console.log(await window.api.getStore('installations'));
 
         // ==== Если всё ок, то запускаем игру ====
         // console.log(isGameInstalled);

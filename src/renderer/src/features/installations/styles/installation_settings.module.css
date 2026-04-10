@@ -9,7 +9,7 @@
     justify-content: center;
     padding: 20px 0px;
     border-bottom: 1px solid var(--gray-2);
-    font-weight: bold;
+    font-weight: var(--text-bold);
     font-size: 20px;
 }
 
@@ -19,16 +19,16 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    gap: 8px;
+}
+
+.page_body_box {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
 }
 
 .foler_box_change {
     display: flex;
-}
-
-.page_basement {
-    display: flex;
-    margin-left: auto;
 }
 
 
@@ -43,4 +43,68 @@
 
 .version_input {
     display: flex;
+}
+
+.input {
+    border: 2px solid var(--brand-color-1);
+    background-color: var(--background-second);
+    color: var(--text-white);
+    padding: 4px 8px;
+    outline: none;
+}
+
+.input_icon {
+    margin: auto;
+}
+
+.mod_box {
+    display: flex;
+    justify-content: space-between;
+}
+
+.folder_btn {
+    background-color: rgba(255, 0, 0, 0);
+    border: none;
+    color: var(--text-white);
+    padding: 4px;
+    cursor: pointer;
+}
+
+
+
+
+
+.page_basement {
+    display: flex;
+    border-top: 1px solid var(--background-second);
+    padding-top: 20px;
+}
+
+.basement_btns_box {
+    display: flex;
+    margin-left: auto;
+    gap: 8px;
+    padding-right: 16px;
+}
+
+.basement_btn {
+    padding: 8px 24px;
+    background-color: rgba(255, 0, 0, 0);
+    border: 1px solid var(--gray-1);
+    cursor: pointer;
+    color: var(--text-white);
+}
+
+.basement_btn:hover {
+    background-color: var(--gray-2);
+}
+
+.basement_btn_main {
+    background-color: var(--brand-color-1);
+    border: none;
+}
+
+.basement_btn_main:hover {
+    background-color: var(--brand-color-1);
+    filter: brightness(1.5);
 }
