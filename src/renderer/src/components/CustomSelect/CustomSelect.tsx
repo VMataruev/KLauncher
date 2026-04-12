@@ -1,5 +1,5 @@
 import styles from "./CustomSelect.module.css"
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 type SelectOption = {
     id: string;
