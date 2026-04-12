@@ -112,6 +112,22 @@ function PlayButton({installation_id}): React.JSX.Element {
             // console.log(installation.mods)
             for (const mod of installation.mods) {
                 // Добавить проверку на то, нету ли уже этих модов в папке
+                
+                let isModInstalled = false;
+
+                const files = await window.api.getFilesNames(modsPath);
+                for (const file of files) {
+                    const modID = Number(file.split("-")[0]);
+                    const modVersion = file.split("-")[1];                            // version of installed mod
+                    const cleanedVerison = installation.version.replace("v", "");     // version of required mod
+                    if ((mod == modID) && (modVersion == cleanedVerison)) {
+                        isModInstalled = true;
+                        break;
+                    };
+                };
+
+                if (isModInstalled) {continue} // skipping mod of installation.mods cycle
+
                 const res = await window.api.getRequest(`https://mods.vintagestory.at/api/mod/${mod}`);
                 const cleanedVerison = installation.version.replace("v", ""); // "1.21.1"
                 const baseVersion = cleanedVerison.split('.').slice(0, 2).join('.'); // "1.21"
