@@ -1,6 +1,6 @@
 {
   "name": "klauncher",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "An Electron application with React and TypeScript",
   "main": "./dist/main/index.js",
   "author": "example.com",
