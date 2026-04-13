@@ -24,6 +24,55 @@ function PlayButton({installation_id}): React.JSX.Element {
     // Если есть лишние, то удалить
     // 3. Запускать игру
 
+    // const [ isGameDownloading, setIsGameDownloading ] = useState<boolean>(false);
+    // const [ isModsDownloading, setIsModsDownloading ] = useState<boolean>(false);
+    // const [progressFile, setProgressFile] = useState(0);
+    // const [progressGameInstaller, setProgressGameInstaller] = useState(0);
+    // const [fileName, setFileName] = useState("");
+    // const [gameInstallerName, setGameInstallerName] = useState("");
+    // // mod
+    // useEffect(() => {
+    //     const unsubscribe = window.api.downloadFileProgress((data) => {
+    //         if (data.percent !== undefined) {
+    //             setProgressFile(data.percent);
+    //         }
+    //         if (data.fileName !== undefined) {
+    //             setFileName(data.fileName);
+    //         }
+    //     });
+
+    //     return () => {
+    //         unsubscribe();
+    //     };
+    // }, []);
+    // // game
+    // useEffect(() => {
+    //     const unsubscribe = window.api.downloadProgress((data) => {
+    //         if (data.percent !== undefined) {
+    //             setProgressGameInstaller(data.percent);
+    //         }
+    //         if (data.fileName !== undefined) {
+    //             setGameInstallerName(data.fileName);
+    //         }
+    //     });
+
+    //     return () => {
+    //         unsubscribe();
+    //     };
+    // }, []);
+
+    // useEffect(() => {
+    //     setIsGameDownloading(progressGameInstaller > 0 && progressGameInstaller < 100);
+    // }, [progressGameInstaller]);
+
+    // useEffect(() => {
+    //     setIsModsDownloading(progressFile > 0 && progressFile < 100);
+    // }, [progressFile]);
+    
+
+
+
+
     const [ modsPath, setModsPath ] = useState("");
     useEffect(() => {
         const getModsPath = async () => {
@@ -34,13 +83,17 @@ function PlayButton({installation_id}): React.JSX.Element {
     }, []);
     
 
-    const [ isGameInstalled, setIsGameInstalled ] = useState<boolean>(false);
-    const [ isRequiredModsInstalled, setIsRequiredModsInstalled ] = useState<boolean>(false);
-    const [ isNotRequiredModsUninstalled, setNotRequiredModsUninstalled ] = useState<boolean>(false); // по факту дальше по коду всегда будет ставиться в true, но пусть будет для наглядности
+    // const [ isGameInstalled, setIsGameInstalled ] = useState<boolean>(false);
+    // const [ isRequiredModsInstalled, setIsRequiredModsInstalled ] = useState<boolean>(false);
+    // const [ isNotRequiredModsUninstalled, setNotRequiredModsUninstalled ] = useState<boolean>(false); // по факту дальше по коду всегда будет ставиться в true, но пусть будет для наглядности
+    // const [ isBlockPlayButton, setIsBlockPlayButton ] = useState<boolean>(false);
 
     // const [ progress, setProgress ] = useState<number>();
     // const [ status, setStatus ] = useState<string>();
     const playButton = async () => {
+        let isGameInstalled = false;
+        let isRequiredModsInstalled = false;
+        let isNotRequiredModsUninstalled = false;
         // ==== Получаем настройки установки ====
         const installation = await window.api.getStore(`installations.${installation_id}`);
         // console.log(installation);
@@ -58,11 +111,13 @@ function PlayButton({installation_id}): React.JSX.Element {
             // });
 
             try {
+                // setIsBlockPlayButton(true);
                 await window.api.download_and_install_game(installation.version_link, installation.folder);
             } finally {
                 // unsubscribe();
                 // setStatus("");
-                setIsGameInstalled(true);
+                // setIsGameInstalled(true);
+                isGameInstalled = true;
             };
         };
         // ====================
@@ -72,7 +127,7 @@ function PlayButton({installation_id}): React.JSX.Element {
             // await window.api.open_file(`${installation.folder}\\Vintagestory.exe`);
             const res = await window.api.isFileExist(`${installation.folder}\\Vintagestory.exe`);
             if (res) {
-                setIsGameInstalled(true);
+                isGameInstalled = true;
             } else {
                 addNotification({status: "error", msg: "The directory of installation is already occupied, please delete all files from it."})
             };
@@ -84,7 +139,7 @@ function PlayButton({installation_id}): React.JSX.Element {
 
         // ==== Если в установке нет модов ====
         if (installation.mods.length === 0) {
-            setIsRequiredModsInstalled(true);
+            isRequiredModsInstalled = true;
         }
         // ========================================
 
@@ -100,7 +155,7 @@ function PlayButton({installation_id}): React.JSX.Element {
                 await window.api.deleteFile(`${modsPath}\\${file}`);
             };
         };
-        setNotRequiredModsUninstalled(true); // оно всегда будет выполнятся, но пусть будет для наглядности
+        isNotRequiredModsUninstalled = true; // оно всегда будет выполнятся, но пусть будет для наглядности
 
         // ========================================================
 
@@ -109,6 +164,7 @@ function PlayButton({installation_id}): React.JSX.Element {
 
         // ==== Если в установке есть моды, то мы их докачиваем в формате modID-verison-name ====
         if (installation.mods.length != 0) {
+            // setIsBlockPlayButton(true);
             // console.log(installation.mods)
             for (const mod of installation.mods) {
                 // Добавить проверку на то, нету ли уже этих модов в папке
@@ -146,7 +202,7 @@ function PlayButton({installation_id}): React.JSX.Element {
                 await window.api.downloadFile(linkToMod, fullModsPath);
                 // TODO: заблокировать кнопку игры до завершения скачивания
             };
-            setIsRequiredModsInstalled(true);
+            isRequiredModsInstalled = true;
         }
 
         // ====================================
@@ -156,23 +212,25 @@ function PlayButton({installation_id}): React.JSX.Element {
         console.log(await window.api.getStore('installations'));
 
         // ==== Если всё ок, то запускаем игру ====
-        // console.log(isGameInstalled);
-        // console.log(isRequiredModsInstalled);
-        // console.log(isNotRequiredModsUninstalled);
+        console.log(isGameInstalled);
+        console.log(isRequiredModsInstalled);
+        console.log(isNotRequiredModsUninstalled);
         if (isGameInstalled && isRequiredModsInstalled && isNotRequiredModsUninstalled) { 
+            // setIsBlockPlayButton(false);
             try {
                 await window.api.open_file(`${installation.folder}\\Vintagestory.exe`);
                 addNotification({status: "success", msg: "Game started"});
             } catch (error) {
                 addNotification({status: "error", msg: `${error}`});
-            }
+            };
         }
         // ========================================
     };
 
     return (
         <>
-            <button className={styles.play_btn} onClick={playButton}>
+            {/* <button className={`${styles.play_btn} ${styles.play_btn_inactive}`} onClick={playButton}> */}
+            <button className={`${styles.play_btn}`} onClick={playButton}>
                 {/* {status ? `Downloading installer: ${progress}%` : "PLAY"} */}
                 PLAY
             </button>
