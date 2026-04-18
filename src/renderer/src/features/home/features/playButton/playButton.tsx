@@ -199,7 +199,12 @@ function PlayButton({installation_id}): React.JSX.Element {
                 // const fullModsPath = `${modsPath}\\${mod}-${neededRelease.filename}`
                 const fullModsPath = `${modsPath}\\${mod}-${cleanedVerison}-${neededRelease.modidstr}.zip`
                 const linkToMod = `${neededRelease.mainfile}`;
-                await window.api.downloadFile(linkToMod, fullModsPath);
+                try {
+                    await window.api.downloadFile(linkToMod, fullModsPath);
+                } catch (error) {
+                    console.log(error);
+                }
+                
                 // TODO: заблокировать кнопку игры до завершения скачивания
             };
             isRequiredModsInstalled = true;

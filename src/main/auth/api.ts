@@ -40,9 +40,20 @@ export async function fetchProtectedData(): Promise<any> {
         };
     };
 
-    return versions_stable
-    console.log(versions_stable);
+    const v_unstable = $('.tabpane.unstable');
+    const v_ammount_unstable = v_unstable.children();
 
-
-    // return res.data;
+    for (let i = 0; i < v_ammount_unstable.length; i++) {
+        const version = v_unstable.children().eq(i);
+        const version_name = version.find('b').text();
+        const version_link = version.find('a').attr('href')
+        if (version_name && version_link) {
+            versions_unstable.push({
+                name: version_name,
+                link: version_link
+            });
+        };
+    };
+    console.log("here")
+    return {versions_stable: versions_stable, versions_unstable: versions_unstable, test: "test"}
 }
