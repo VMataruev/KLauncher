@@ -150,7 +150,9 @@ function Mods(): React.JSX.Element {
     useEffect(() => {
         const fetchMods = async () => {
             try {
-                const res = await window.api.getRequest("http://mods.vintagestory.at/api/mods");
+                console.log(window.api);
+                console.log(window.api.getModsInCache);
+                const res = await window.api.getModsInCache();
                 setMods(res.mods);
                 // setDisplayedMods(res.mods.slice(0, BLOCK_SIZE));
                 // setHasMore(res.mods.length > BLOCK_SIZE);
@@ -166,6 +168,20 @@ function Mods(): React.JSX.Element {
         fetchMods();
         
     }, []);
+
+
+    const refreshMods = async () => {
+        setLoading(true);
+        try {
+            await window.api.clearModsCache();
+            const res = await window.api.getModsInCache();
+            setMods(res.mods);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
         setDisplayedMods(filteredMods.slice(0, BLOCK_SIZE));
@@ -241,6 +257,7 @@ function Mods(): React.JSX.Element {
                     <button className={styles.header_input} onClick={() => handleSort("newest")}>Newest {sortType === "newest" && (sortOrder === "asc" ? "↑" : "↓")}</button>
                     <button className={styles.header_input} onClick={() => handleSort("name")}>A-Z {sortType === "name" && (sortOrder === "asc" ? "↑" : "↓")}</button>
                     <button className={styles.header_input} onClick={() => resetFilters()}>Reset filters</button>
+                    <button className={styles.header_input} onClick={() => refreshMods()}>Refresh Mods</button>
                 </div>
             </div>
 

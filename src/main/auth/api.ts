@@ -22,6 +22,15 @@ export async function fetchProtectedData(): Promise<any> {
     });
 
     const $ = cheerio.load(res.data);
+
+    // if no cookies (not logged in)
+    // const logoutButton = $('.menuItem.right');
+    // if (logoutButton.length) {
+    //     return {status: "not ok"}
+    // }
+    // ======================
+
+
     versions_stable = [];
     versions_unstable = [];
 
@@ -54,6 +63,6 @@ export async function fetchProtectedData(): Promise<any> {
             });
         };
     };
-    console.log("here")
-    return {versions_stable: versions_stable, versions_unstable: versions_unstable, test: "test"}
+
+    return {status: "ok", versions_stable: versions_stable, versions_unstable: versions_unstable}
 }

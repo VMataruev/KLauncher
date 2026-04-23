@@ -7,7 +7,7 @@ export const store = new Store({
     installations: {},
     defaults: {
         installationsFolder: path.join(app.getPath('userData'), 'KLuncher_installations'),
-        modsStashFolder: path.join(app.getPath('userData'), 'KLuncher_mods_stash'),
+        VS_versions: path.join(app.getPath('userData'), 'KLuncher_VS_versions'),
         modsFolder: "",
         backupsFolder: path.join(app.getPath('userData'), 'KLuncher_backups')
     },

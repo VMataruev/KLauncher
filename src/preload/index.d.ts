@@ -41,6 +41,9 @@ declare global {
     ) => () => void;
     renameFolder: (oldPath: string, newPath: string) => Promise
     clearFolder: (folderPath: string) => Promise
+    getModsInCache: () => Promise<{ mods: any[]; fromCache: boolean }>;
+    clearModsCache: () => Promise<boolean>;
+    getCookies: () => Promise
   };
   interface Window {
     electron: ElectronAPI

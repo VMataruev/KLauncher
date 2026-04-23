@@ -70,7 +70,9 @@ function Installation_settings(): React.JSX.Element {
     useEffect(() => {
         const loadData = async (): Promise<void> => {
             const res = await window.api.getData();
-            setData(res);
+            const versions_stable = res.versions_stable;
+            const versions_unstable = res.versions_unstable;
+            setData(versions_stable);
             // console.log(res);
             // setInstallationBuild((prev) => ({
             //     ...prev,
@@ -81,6 +83,7 @@ function Installation_settings(): React.JSX.Element {
         loadData();
     }, [])
 
+    const [ modsToDelete, setModsToDelete ] = useState<number[]>([]);
     const deleteMod = async (targetModID) => {
         const updatedMods = installationBuild.mods.filter((modID: string) => modID !== targetModID);
         // await window.api.setStore(`installations.${installationBuild.id}.mods`, updatedMods);
@@ -88,6 +91,10 @@ function Installation_settings(): React.JSX.Element {
             ...prev,
             mods: updatedMods
         }));
+
+        setModsToDelete((prev) => (
+            prev.includes(targetModID) ? prev : [...prev, targetModID]
+        ));
     };
 
 
@@ -145,11 +152,6 @@ function Installation_settings(): React.JSX.Element {
             await window.api.renameFolder(oldPath, newPath);
         }
 
-        // Удаляем старую версию, если мы сменили на новую в установке
-        if ((oldVersion != installationBuild.version)) {
-            await window.api.clearFolder(newPath);
-        }
-
         const updatedInstallationBuild = {
             ...installationBuild,
             folder: newPath
@@ -186,8 +188,21 @@ function Installation_settings(): React.JSX.Element {
 
 
         await window.api.setStore(`installations.${updatedInstallationBuild.id}`, updatedInstallationBuild);
-        // const installations = await window.api.getStore("installations");
-        // console.log(installations);
+
+
+        // ========== delete mods ==========
+        const pathToInstallation = await window.api.getStore(`installations.${installationID}.folder`);
+        const pathToMods = `${pathToInstallation}\\Mods`;
+        const files = await window.api.getFilesNames(pathToMods)
+        for (const file of files) {
+            const modID = Number(file.split("-")[0]);
+            if (modsToDelete.includes(modID)) {
+                await window.api.deleteFile(`${pathToMods}\\${file}`);
+            };
+        };
+        // ==================================
+
+
         navigate("/installations");
         return setBuildStatus("Installation added");
     };
@@ -261,7 +276,7 @@ function Installation_settings(): React.JSX.Element {
                     </div>
 
                     <div className={styles.foler_box}>
-                        <div className={styles.foler_header}>Game's Folder</div>
+                        <div className={styles.foler_header}>Installation Folder</div>
                         <div className={styles.foler_box_change}>
                             <div className={`${styles.folder_name} ${styles.input}`}>{installationBuild.folder}</div>
                             <button onClick={handleSelectFolder} className={styles.folder_btn}>Observe</button>

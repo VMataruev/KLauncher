@@ -6,6 +6,7 @@ import PlayButton from '../features/playButton/playButton';
 import Blog from '../features/blog/blog';
 import ProgressBar from '../features/progressBar/progressBar';
 import CustomSelect from '@renderer/components/CustomSelect/CustomSelect';
+import LogInButton from '../features/logInButton/logInButton';
 
 function Home(): React.JSX.Element {
 
@@ -30,15 +31,6 @@ function Home(): React.JSX.Element {
   // };
   
   // const [data, setData] = useState<any>(null);
-
-  const login = async (): Promise<void> => {
-    try {
-      await window.api.openLogin();
-      setUserName("Logged in");
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   // const loadData = async (): Promise<void> => {
   //   const result = await window.api.getData();
@@ -124,7 +116,7 @@ function Home(): React.JSX.Element {
           </div>
 
           {/* {userName ? <div>{userName} <button onClick={() => logout()}>log out</button></div> : <Link to='/auth'>Authorize</Link>} */}
-          {userName ? <div>{userName}</div> : <button onClick={login}>Войти</button>}
+          <LogInButton></LogInButton>
         </div>
 
         <div className={styles.blog_box}>

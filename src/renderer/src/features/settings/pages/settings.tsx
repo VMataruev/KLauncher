@@ -6,14 +6,14 @@ import search_icon from "../../../assets/icons/search.svg"
 function Settings(): React.JSX.Element {
 
     const [ installationsFolder, setInstallationsFolder ] = useState<string>();
-    // const [ modsStashFolder, setModsStashFolder ] = useState<string>();
+    const [ vsVersionsFolder, setVsVersionsFolder ] = useState<string>();
     const [ modsFolder, setModsFolder ] = useState<string>();
     const [ backupsFolder, setBackupsFolder ] = useState<string>();
 
     useEffect(() => {
         const getData = async () => {
             setInstallationsFolder(await window.api.getStore('installationsFolder'));
-            // setModsStashFolder(await window.api.getStore('modsStashFolder'));
+            setVsVersionsFolder(await window.api.getStore('VS_versions'));
             setModsFolder(await window.api.getStore('modsFolder'));
             setBackupsFolder(await window.api.getStore('backupsFolder'));
         };
@@ -28,13 +28,13 @@ function Settings(): React.JSX.Element {
         }
     };
 
-    // const selectModsStashFolder = async () => {
-    //     const res = await window.api.selectFolder();
-    //     if (res != null) {
-    //         await window.api.setStore('modsStashFolder', res);
-    //         setModsStashFolder(res);
-    //     }
-    // };
+    const selectVS_versions = async () => {
+        const res = await window.api.selectFolder();
+        if (res != null) {
+            await window.api.setStore('VS_versions', res);
+            setVsVersionsFolder(res);
+        }
+    };
 
     const selectModsFolder = async () => {
         const res = await window.api.selectFolder();
@@ -61,23 +61,24 @@ function Settings(): React.JSX.Element {
                     <div className={styles.header}>Folders</div>
                     <div className={styles.body}>
                         <div className={styles.setting}>
-                            <div className={styles.setting_name}>Installations Folder</div>
+                            <div className={styles.setting_name}>Installations</div>
                             <div className={styles.fromname_pading}>
                                 <button className={styles.setting_folder_btn} onClick={() => {selectInstallationsFolder()}}><img src={search_icon} className={styles.img_btn} alt="" /></button>
                                 <div className={styles.setting_folder_name}>{installationsFolder}</div>
                             </div>
                         </div>
 
-                        {/* <div className={styles.setting}>
-                            <div className={styles.setting_name}>Mods Stash Folder</div>
-                            <div className={styles.fromname_pading}>
-                                <button className={styles.setting_folder_btn} onClick={() => {selectModsStashFolder()}}><img src={search_icon} className={styles.img_btn} alt="" /></button>
-                                <div className={styles.setting_folder_name}>{modsStashFolder}</div>
-                            </div>
-                        </div> */}
-
                         <div className={styles.setting}>
-                            <div className={styles.setting_name}>Mods Folder</div>
+                            <div className={styles.setting_name}>VS Versions</div>
+                            <div className={styles.fromname_pading}>
+                                <button className={styles.setting_folder_btn} onClick={() => {selectVS_versions()}}><img src={search_icon} className={styles.img_btn} alt="" /></button>
+                                <div className={styles.setting_folder_name}>{vsVersionsFolder}</div>
+                            </div>
+                        </div>
+
+                        {/* Может и не надо это делать, а просто оставить дефолтно */}
+                        <div className={styles.setting}>
+                            <div className={styles.setting_name}>Mods</div>   
                             <div className={styles.fromname_pading}>
                                 <button className={styles.setting_folder_btn} onClick={() => {selectModsFolder()}}><img src={search_icon} className={styles.img_btn} alt="" /></button>
                                 <div className={styles.setting_folder_name}>{modsFolder}</div>
@@ -85,7 +86,7 @@ function Settings(): React.JSX.Element {
                         </div>
 
                         <div className={styles.setting}>
-                            <div className={styles.setting_name}>Backups Folder</div>
+                            <div className={styles.setting_name}>Backups</div>
                             <div className={styles.fromname_pading}>
                                 <button className={styles.setting_folder_btn} onClick={() => {selectBackupsFolder()}}><img src={search_icon} className={styles.img_btn} alt="" /></button>
                                 <div className={styles.setting_folder_name}>{backupsFolder}</div>

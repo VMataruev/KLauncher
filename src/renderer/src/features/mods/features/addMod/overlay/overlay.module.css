@@ -1,0 +1,98 @@
+.overlay_wrapper {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.overlay_main_box {
+    background-color: var(--background-main);
+    padding: 20px 60px;
+    border-radius: 6px;
+
+}
+
+.overlay_header {
+    margin-bottom: 12px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 24px;
+    font-weight: var(--text-bold);
+}
+
+.overlay_setting_box_name {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+}
+
+.overlay_setting_box_setting {
+    margin-bottom: 12px;
+}
+
+.overlay_select {
+    width: 100%;
+}
+
+.table_wrapper {
+    max-height: 300px; /* примерно 8–10 строк */
+    overflow-y: auto;
+}
+
+table {
+    background-color: var(--background-second);
+    /* padding: 4px 8px; */
+    border-radius: 6px;
+    width: 100%;
+    text-align: center;
+
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead th {
+    position: sticky;
+    top: 0;
+    background: var(--background-second); /* обязательно, иначе будет прозрачная */
+    z-index: 1;
+}
+
+tr:nth-child(even) {
+    background-color: var(--gray-2);
+}
+
+td {
+    padding: 4px 16px;
+}
+
+.tags_scroll {
+    max-width: calc(500px); /* 5 элементов */
+    overflow: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.tags_scroll > div {
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.download_button {
+    cursor: pointer;
+}
+

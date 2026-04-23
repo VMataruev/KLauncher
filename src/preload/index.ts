@@ -34,11 +34,14 @@ const api = {
     const listener = (_event, data) => callback(data);
     ipcRenderer.on('download-file-progress', listener);
     return () => {
-        ipcRenderer.removeListener('download-progress', listener);
+        ipcRenderer.removeListener('download-file-progress', listener);
     };
   },
   renameFolder: (oldPath: string, newPath: string) => ipcRenderer.invoke('rename-folder', oldPath, newPath),
-  clearFolder: (folderPath: string) => ipcRenderer.invoke('clear-folder', folderPath)
+  clearFolder: (folderPath: string) => ipcRenderer.invoke('clear-folder', folderPath),
+  getModsInCache: () => ipcRenderer.invoke('get-mods-in-cache'),
+  clearModsCache: () => ipcRenderer.invoke('clear-mods-cache'),
+  getCookies: () => ipcRenderer.invoke('get-cookies')
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

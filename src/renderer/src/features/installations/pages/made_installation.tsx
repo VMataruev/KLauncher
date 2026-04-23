@@ -52,12 +52,15 @@ function Made_installation(): React.JSX.Element {
     useEffect(() => {
         const loadData = async (): Promise<void> => {
             const res = await window.api.getData();
-            setData(res);
-            console.log(res);
+            if (res.status != "ok") {return}
+            const versions_stable = res.versions_stable;
+            const versions_unstable = res.versions_unstable;
+            setData(versions_stable);
+            console.log(versions_stable);
             setInstallationBuild((prev) => ({
                 ...prev,
-                version: res[0].name,
-                version_link: res[0].link
+                version: versions_stable[0].name,
+                version_link: versions_stable[0].link
             }))
         }
         loadData();
@@ -81,23 +84,23 @@ function Made_installation(): React.JSX.Element {
     const storeBuild = async ()  => {
         // console.log(installationBuild);
         if (!installationBuild.img) {
-            return setBuildStatus("choose img first");
+            return addNotification({status: "warning", msg: "Choose image first"})
         };
 
         if (!installationBuild.name) {
-            return setBuildStatus("choose name first");
+            return addNotification({status: "warning", msg: "Choose name first"})
         };
 
         if (!installationBuild.version) {
-            return setBuildStatus("choose version first");
+            return addNotification({status: "warning", msg: "Choose version first"})
         };
 
         if (!installationBuild.version_link) {
-            return setBuildStatus("choose version_link first");
+            return addNotification({status: "warning", msg: "Choose version_link first"})
         };
 
         if (!installationBuild.folder) {
-            return setBuildStatus("choose folder first");
+            return addNotification({status: "warning", msg: "Choose folder first"})
         };
 
 
@@ -110,13 +113,15 @@ function Made_installation(): React.JSX.Element {
                 .trim()                                // убрать пробелы по краям
                 .replace(/\.+$/, '');                  // убрать точки в конце
         };
-        const finalName = sanitizeFolderName(installationBuild.name)
-        const finalPath = `${installationBuild.folder}\\${finalName}`
+        const finalName = sanitizeFolderName(installationBuild.name);
+        const finalPath = `${installationBuild.folder}\\${finalName}`;
         await window.api.createFolder(installationBuild.folder, finalName);
         const updatedInstallationBuild = {
             ...installationBuild,
             folder: finalPath
         };
+
+        await window.api.createFolder(finalPath, "Mods");
         // ================================================
 
 
@@ -210,7 +215,7 @@ function Made_installation(): React.JSX.Element {
                     
 
                     <div className={styles.foler_box}>
-                        <div className={styles.foler_header}>Game's Folder</div>
+                        <div className={styles.foler_header}>Installation Folder</div>
                         <div className={styles.foler_box_change}>
                             <div className={`${styles.folder_name} ${styles.input}`}>{folderPath ? folderPath : 'Default'}</div>
                             <button onClick={handleSelectFolder} className={styles.folder_btn}>Observe</button>
