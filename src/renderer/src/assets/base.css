@@ -15,11 +15,21 @@
   --gray-2: rgba(110, 110, 110, 0.432);
   --background-main: #171615;
   --background-second: #262423;
+  --dark-3: #1a1817;
   --brand-color-1: #735B42;
   --brand-color-2: #3F3326;
   --brand-color-3: #967756;
+
+
+  --text-primary: white;
+  --text-secondary: white;
+  --text-muted: white;
+
   --link: rgb(86, 83, 240);
+  --link-hover: rgb(112, 110, 238);
   --success: rgb(94, 177, 101);
+  --waring: yellow;
+  --error: red;
 
   --text-thin: 100;
   --text-bold: 500;

@@ -14,6 +14,7 @@ function ImageCarousel({ images }): React.JSX.Element {
     autoplay: true, // Автоматическое перелистывание
     autoplaySpeed: 3000, // Интервал (мс)
     arrows: true, // Показывать стрелки
+    adaptiveHeight: true,
   };
 
   return (

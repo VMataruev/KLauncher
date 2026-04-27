@@ -44,6 +44,10 @@ declare global {
     getModsInCache: () => Promise<{ mods: any[]; fromCache: boolean }>;
     clearModsCache: () => Promise<boolean>;
     getCookies: () => Promise
+    gameStart: (folder: string) => Promise
+    gameKill: () => Promise
+    copyFiles: (pathFrom, pathTo) => Promise
+    hasFolder: (folderPath, targetName) => Promise
   };
   interface Window {
     electron: ElectronAPI

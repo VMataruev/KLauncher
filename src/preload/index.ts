@@ -41,7 +41,11 @@ const api = {
   clearFolder: (folderPath: string) => ipcRenderer.invoke('clear-folder', folderPath),
   getModsInCache: () => ipcRenderer.invoke('get-mods-in-cache'),
   clearModsCache: () => ipcRenderer.invoke('clear-mods-cache'),
-  getCookies: () => ipcRenderer.invoke('get-cookies')
+  getCookies: () => ipcRenderer.invoke('get-cookies'),
+  gameStart: (folder: string) => ipcRenderer.invoke('game-start', folder),
+  gameKill: () => ipcRenderer.invoke('game-kill'),
+  copyFiles: (pathFrom: string, pathTo: string) => ipcRenderer.invoke('copy-files', pathFrom, pathTo),
+  hasFolder: (folderPath: string, targetName: string) => ipcRenderer.invoke('hasFolder', folderPath, targetName)
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

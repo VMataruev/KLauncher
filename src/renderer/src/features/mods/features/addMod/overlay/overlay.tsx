@@ -1,7 +1,8 @@
 import styles from "./overlay.module.css"
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 import { useState } from "react";
+import { addNotification } from "@renderer/features/overlay/notification/features/notificationList";
 
 type OverlayProps = {
   onClose: (e: React.MouseEvent) => void;
@@ -69,7 +70,7 @@ function Overlay({onClose, modID}: OverlayProps): React.JSX.Element {
     
 
 
-    const add_mod_to_installation = async (installationID, modID, modLink, modName, modVersion) => {
+    const add_mod_to_installation = async (installationID, modID, modLink, modName_, modVersion) => {
         const installation = await window.api.getStore(`installations.${installationID}`);
 
         const currentMods = installation.mods || [];
@@ -78,7 +79,9 @@ function Overlay({onClose, modID}: OverlayProps): React.JSX.Element {
             `installations.${installationID}.mods`,
             [...currentMods, modID]
         );
-        await window.api.downloadFile(modLink, `${installation.folder}\\Mods\\${modID}-${modName}-${modVersion}.zip`);
+        window.api.downloadFile(modLink, `${installation.folder}\\Mods\\${modID}-${modName_}-${modVersion}.zip`);
+        const installationName = await window.api.getStore(`installations.${installationID}.name`);
+        addNotification({status: "success", msg: `${modName} added to "${installationName}"`})
         onClose({} as React.MouseEvent); // close overlay
     };
     
@@ -96,7 +99,7 @@ function Overlay({onClose, modID}: OverlayProps): React.JSX.Element {
                     <div className={styles.overlay_setting_box_name}>Installation</div>
                     <select onChange={(e) => {setInstallationID(e.target.value)}} name="" id="" className={styles.overlay_select}>
                         {Object.values(installations).map(installation => (
-                            <option  value={installation.id} key={installation.id}>{installation.name}</option>
+                            <option className={styles.overlay_select_option}  value={installation.id} key={installation.id}>{installation.name}</option>
                         ))}
                     </select>
                     <div className={styles.overlay_setting_box_setting}></div>
@@ -120,8 +123,8 @@ function Overlay({onClose, modID}: OverlayProps): React.JSX.Element {
                                 {Object.values(releases).map((release) => (
                                     <tr key={release.modversion}>
                                         <td>{release.modversion}</td>
-                                        <td>{release.created}</td>
-                                        <td>
+                                        <td>{new Date(release.created).toLocaleDateString('ru-RU').replace(/\./g, '/')}</td>
+                                        <td className={styles.td}>
                                         <div className={styles.tags_scroll}>
                                             {release.tags.map((tag, i) => (
                                             <div key={i}>{tag}</div>

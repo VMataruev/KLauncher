@@ -14,18 +14,17 @@ function Mod(): React.JSX.Element {
     const [mod, setMod] = useState<any>();
     const { id } = useParams();
     useEffect(() => {
-        const fetchMods = async () => {
+        const fetchMod = async () => {
             try {
                 const res = await window.api.getRequest(`https://mods.vintagestory.at/api/mod/${id}`);
                 setMod(res.mod);
-                console.log(res.mod)
+                // console.log(res.mod)
             } catch (error) {
                 console.log(error)
             }
         };
 
-        fetchMods();
-            
+        fetchMod();
     }, [])
 
     if (!mod) {
@@ -33,21 +32,54 @@ function Mod(): React.JSX.Element {
     }
 
 
+
+    function transformSpoilers(html) {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+
+        const spoilers = doc.querySelectorAll(".spoiler");
+
+        spoilers.forEach((spoiler) => {
+            const toggle = spoiler.querySelector(".spoiler-toggle");
+            const content = spoiler.querySelector(".spoiler-text");
+
+            if (!toggle || !content) return;
+
+            const details = doc.createElement("details");
+            const summary = doc.createElement("summary");
+
+            // текст заголовка
+            summary.innerHTML = toggle.innerHTML;
+
+            // переносим контент
+            details.appendChild(summary);
+            details.appendChild(content);
+
+            // заменяем весь spoiler
+            spoiler.replaceWith(details);
+        });
+
+        return doc.body.innerHTML;
+    }
+
+    const transformed = transformSpoilers(mod.text);
+
+
     return (
         <>
             <div className={styles.main_wrapper}>
                 <div className={styles.header}>
                     <button>button</button>
-                    <div>/ Mod/{mod.name}</div>
+                    <div className={styles.header_mod_name}>{mod.name}</div>
                     <button>button</button>
                 </div>
 
                 <div className={styles.mod_box} key={mod.modid}>
-                    <div className={styles.mod_box_header}>
+                    {/* <div className={styles.mod_box_header}>
                         <div>Description</div>
                         <div>Files</div>
                         <div>Donate</div>
-                    </div>
+                    </div> */}
 
                     <div className={styles.mod_box_body}>
                         <div className={styles.mod_box_imgs_box}>
@@ -68,7 +100,7 @@ function Mod(): React.JSX.Element {
 
                     <div className={styles.mod_box_basement}>
                         {/* ВАЖНО: используем dangerouslySetInnerHTML вместо {mod.text} */}
-                        <div dangerouslySetInnerHTML={{ __html: mod.text }} />
+                        <div className={styles.mod_text} dangerouslySetInnerHTML={{ __html: transformed }} />
                     </div>
                 </div>
 

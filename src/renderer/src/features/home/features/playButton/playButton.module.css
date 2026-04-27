@@ -7,6 +7,7 @@
     font-weight: bold;
     color: var(--white-text);
     cursor: pointer;
+    user-select: none;
 }
 
 .play_btn:hover {
@@ -22,3 +23,8 @@
 }
 
 
+.play_btn_in_work {
+    pointer-events: none;
+    /* background-color: var(--background-main); */
+    opacity: 0.5;
+}

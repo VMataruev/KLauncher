@@ -1,10 +1,15 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import styles from "../styles/style.module.css"
 import { useNavigate } from "react-router-dom"
 // import img from "../../../assets/mod_img.jpg"
 import AddModButton from "../features/addMod/addMod";
 import { addNotification } from "@renderer/features/overlay/notification/features/notificationList";
 import { useMemo } from "react";
+
+import { Download } from 'iconoir-react';
+import { Message } from "iconoir-react";
+import { User } from "iconoir-react";
+
 
 const BLOCK_SIZE = 40; // сколько модов загружаем за один раз
 
@@ -189,13 +194,19 @@ function Mods(): React.JSX.Element {
     }, [filteredMods]);
 
     const loadMore = () => {
-        const currentLength = displayedMods.length;
-        // const nextMods = mods.slice(currentLength, currentLength + BLOCK_SIZE);
-        const nextMods = filteredMods.slice(currentLength, currentLength + BLOCK_SIZE);
-        // setDisplayedMods([...displayedMods, ...nextMods]);
-        setDisplayedMods((prev) => [...prev, ...nextMods]);
-        // if (currentLength + BLOCK_SIZE >= mods.length) setHasMore(false);
-        if (currentLength + BLOCK_SIZE >= filteredMods.length) setHasMore(false);
+        setDisplayedMods((prev) => {
+            const currentLength = prev.length;
+            const nextMods = filteredMods.slice(
+            currentLength,
+            currentLength + BLOCK_SIZE
+            );
+
+            const newLength = currentLength + nextMods.length;
+
+            setHasMore(newLength < filteredMods.length);
+
+            return [...prev, ...nextMods];
+        });
     };
 
     useEffect(() => {
@@ -215,8 +226,39 @@ function Mods(): React.JSX.Element {
 
     const navigate = useNavigate();
     const handleModClick = (modid: number) => {
-        navigate(`/mod/${modid}`)
+        sessionStorage.setItem("mods-scroll-y", String(window.scrollY));
+        sessionStorage.setItem("mods-from-detail", "true");
+        navigate(`/mod/${modid}`);
     };
+
+    const restoredRef = useRef(false);
+
+    useEffect(() => {
+        if (restoredRef.current) return;
+        if (loading) return;
+        if (!displayedMods.length) return;
+
+        const fromDetail = sessionStorage.getItem("mods-from-detail");
+        if (!fromDetail) return; // ⬅️ ключевая проверка
+
+        const savedY = Number(sessionStorage.getItem("mods-scroll-y") || 0);
+        if (!savedY) return;
+
+        const maxScrollY =
+            document.documentElement.scrollHeight - window.innerHeight;
+
+        if (maxScrollY < savedY && hasMore) {
+            loadMore();
+            return;
+        }
+
+        setTimeout(() => {
+            window.scrollTo(0, savedY);
+            restoredRef.current = true;
+            sessionStorage.removeItem("mods-scroll-y");
+            sessionStorage.removeItem("mods-from-detail");
+        }, 0);
+    }, [loading, displayedMods.length, hasMore, filteredMods.length]);
 
     // TODO: mods to cache, it will be better to not load mods every time instead of search mod which had been uploaded second ago
 
@@ -271,9 +313,20 @@ function Mods(): React.JSX.Element {
                             <div className={styles.add_mod_button_box}><AddModButton modID={mod.modid}></AddModButton></div>
                             <div className={styles.mod_info_box}>
                                 <div className={styles.mod_numbers_info}>
-                                    <div className={styles.mod_downloads}>{mod.downloads}</div>
-                                    <div className={styles.mod_comments}>{mod.comments}</div>
+                                    <div className={styles.mod_info}>
+                                        <User className={styles.icon}></User>
+                                        <div className={styles.mod_info_text}>{mod.author}</div>
+                                    </div>
+                                    <div className={styles.mod_info}>
+                                        <Download className={styles.icon}></Download>
+                                        <div className={styles.mod_info_text}>{mod.downloads}</div>
+                                    </div>
+                                    <div className={styles.mod_info}>
+                                        <Message className={styles.icon}></Message>
+                                        <div className={styles.mod_info_text}>{mod.comments}</div>
+                                    </div>
                                 </div>
+                                <div className={styles.devider}></div>
                                 <div className={styles.mod_text_info}>
                                     <div className={styles.mod_name}>{mod.name}</div>
                                     <div className={styles.mod_description}>{mod.summary}</div>

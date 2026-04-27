@@ -44,11 +44,20 @@
 
 .overlay_select {
     width: 100%;
+    background-color: var(--background-second);
+    border: none;
+    padding: 12px;
+    border-radius: 4px;
+    color: var(--text-white);
+    outline: none;
 }
+
+
 
 .table_wrapper {
     max-height: 300px; /* примерно 8–10 строк */
     overflow-y: auto;
+    border-radius: 4px;
 }
 
 table {
@@ -65,25 +74,34 @@ table {
 thead th {
     position: sticky;
     top: 0;
-    background: var(--background-second); /* обязательно, иначе будет прозрачная */
+    background: var(--dark-3); /* обязательно, иначе будет прозрачная */
     z-index: 1;
+    padding: 12px 24px;
 }
 
 tr:nth-child(even) {
     background-color: var(--gray-2);
 }
 
+
+
 td {
-    padding: 4px 16px;
+    padding: 12px 24px;
+}
+
+.td {
+    display: flex;
+    justify-content: center;
 }
 
 .tags_scroll {
     max-width: calc(500px); /* 5 элементов */
     overflow: auto;
+    scrollbar-width: none;
 
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
     gap: 4px;
 }
 
