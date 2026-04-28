@@ -69,9 +69,9 @@ function Mod(): React.JSX.Element {
         <>
             <div className={styles.main_wrapper}>
                 <div className={styles.header}>
-                    <button>button</button>
+                    {/* <button>button</button> */}
                     <div className={styles.header_mod_name}>{mod.name}</div>
-                    <button>button</button>
+                    {/* <button>button</button> */}
                 </div>
 
                 <div className={styles.mod_box} key={mod.modid}>

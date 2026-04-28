@@ -89,5 +89,5 @@
 .img_btn {
     width: 20px;
     aspect-ratio: 1 / 1;
-    fill: red;
+    color: var(--background-main);
 }
