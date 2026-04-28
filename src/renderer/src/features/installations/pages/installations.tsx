@@ -67,36 +67,6 @@ function Installations(): React.JSX.Element {
     <>
         <div className={styles.page_wrapper}>
 
-          <div className={styles.page_header}>
-            <div className={styles.search}>
-              <div>SEARCH</div>
-              <input type="text" className={styles.search_input} />
-            </div>
-            <div className={styles.sort}>
-              <div>sort</div>
-              <select className={styles.select_input} name="" id="">
-                <option value="">test</option>
-              </select>
-            </div>
-            <div className={styles.releases}>
-              <div>Releases</div>
-              <div className={styles.releases_v}>
-                <div className={styles.checkbox_box}>
-                  <input className={styles.checkbox_style} type="checkbox" />
-                  <div>Releases</div>
-                </div>
-                <div className={styles.checkbox_box}>
-                  <input className={styles.checkbox_style} type="checkbox" />
-                  <div>Snapshots</div>
-                </div>
-                <div className={styles.checkbox_box}>
-                  <input className={styles.checkbox_style} type="checkbox" />
-                  <div>Modify</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
           <div className={styles.new_install}>
             <Link className={styles.new_install_button} to="/Made_installation">New install</Link>
           </div>

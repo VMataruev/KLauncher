@@ -1,38 +1,99 @@
-.header {
-  background-color: #262423;
+.main-pages-wrapper {
   display: flex;
+}
+
+.header {
+  background-color: var(--dark-background);
   gap: 16px;
+  width: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100svh;
+  flex-shrink: 0;
   position: sticky;
   top: 0;
-  z-index: 91000;
+}
+
+.logInBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--dark-first);
+  border-radius: 4px;
+  margin: 8px 4px 30px 4px;
+  padding: 5px 20px;
+  cursor: pointer;
+  gap: 4px;
+  transition: .2s;
+}
+
+.logInBox:hover {
+  color: var(--text-second);
+  transition: .2s;
 }
 
 .link_box {
-  position: relative;
-  padding: 12px;
+  margin-left: 16px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   display: flex;
-  justify-content: center;
+  gap: 4px;
+  transition: .5s;
 }
 
-.link_box a {
-  color: var(--white-text);
+.link_box_inside a, .link_box a {
   text-decoration: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
+
+.link_box_inside {
+  display: flex;
+  justify-content: start;
+  cursor: pointer;
+  align-items: center;
+  transition: .2s;
+  gap: 4px;
+  width: 100%;
+}
+
+.link_box_inside:hover {
+  transition: .2s;
+  /* transform: translateX(15px) scale(1.1); */
+  transform: translateX(10px);
+}
+
+.link-button {
+  color: var(--text-main);
+  /* transition: .5s; */
+}
+
+
+
+
+
+
 
 .page-indicator {
-  width: 30px;
-  height: 4px;
+  width: 4px;
+  height: 20px;
   position: absolute;
-  bottom: 0;
+  left: 0;
+  border-radius: 0px 99px 99px 0px;
+  transition: .5s;
+  background-color: var(--brand);
 }
 
 .page-active {
   /* background-color: green; */
-  background-color: var(--brand-color-1);
+  background-color: var(--brand);
 }
+
+.page-activate-color {
+  color: var(--brand);
+  transition: .2s;
+}
+
+
 
 /* .page-deactive {
   background-color: red;

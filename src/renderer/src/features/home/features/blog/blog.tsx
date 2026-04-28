@@ -2,6 +2,7 @@ import { addNotification } from "@renderer/features/overlay/notification/feature
 import styles from "./styles.module.css"
 import * as cheerio from 'cheerio';
 import { useEffect, useState } from "react";
+import Loader from "@renderer/components/loader/loader";
 
 function Blog({}): React.JSX.Element {
     type BlogArticle = {
@@ -10,6 +11,7 @@ function Blog({}): React.JSX.Element {
     };
 
     const [articles, setArticles] = useState<BlogArticle[]>([]);
+    const [ isLoading, setIsLoading ] = useState<boolean>(true);
     useEffect(() => {
         const getBlogData = async () => {
             const res = await window.api.getRequest('https://www.vintagestory.at/blog.html/');
@@ -28,6 +30,7 @@ function Blog({}): React.JSX.Element {
             .get();
 
             setArticles(parsedArticles);
+            setIsLoading(false);
             // const articles = $('.cCmsCategoryFeaturedEntry');
             // console.log(articles);
         };
@@ -52,7 +55,7 @@ function Blog({}): React.JSX.Element {
             await window.api.openExternalLink(href);
         }
     };
-    
+    if (isLoading) {return <Loader></Loader>}
     return(
         <div className={styles.blog_box}>
         

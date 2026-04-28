@@ -8,6 +8,7 @@ import '@renderer/components/slider'
 import ImageCarousel from '@renderer/components/slider';
 import { useParams } from 'react-router-dom';
 import AddModButton from '../features/addMod/addMod';
+import Loader from '@renderer/components/loader/loader';
 
 function Mod(): React.JSX.Element {
 
@@ -28,7 +29,7 @@ function Mod(): React.JSX.Element {
     }, [])
 
     if (!mod) {
-        return <div>Downloading...</div>
+        return <Loader></Loader>
     }
 
 

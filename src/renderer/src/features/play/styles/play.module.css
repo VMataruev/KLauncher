@@ -1,0 +1,55 @@
+.page_wrapper {
+    width: 100%;
+    height: 100svh;
+    background-image: url("../../../assets/background-play.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+}
+
+.main_box {
+    max-width: 335px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-left: 50px;
+    margin-top: 160px;
+}
+
+.h1 {
+    font-size: 48px;
+}
+
+.span {
+    font-size: 20px;
+}
+
+.vid_box {
+    margin-left: 50px;
+    margin-bottom: 50px;
+    display: flex;
+    gap: 12px;
+}
+
+.vid {
+    width: 270px;
+    height: 150px;
+}
+
+
+
+.buttons_box {
+    display: flex;
+    gap: 12px;
+}
+
+.installations {
+    background-color: var(--dark-first);
+    border: none;
+    padding: 4px;
+    height: 100%;
+    color: var(--text-main);
+    outline: none;
+}

@@ -20,8 +20,8 @@
 }
 
 .notification_box {
-    background-color: white;
-    color: black;
+    background-color: var(--dark-third);
+    color: var(--text-main);
     padding: 12px 40px;
     display: flex;
     position: relative;
@@ -57,13 +57,13 @@
 
 
 .success {
-    background-color: rgb(89, 187, 122);
+    background-color: var(--success);
 }
 
 .error {
-    background-color: rgb(199, 60, 60);
+    background-color: var(--error);
 }
 
 .warning {
-    background-color: rgb(243, 255, 72);
+    background-color: var(--warning);
 }

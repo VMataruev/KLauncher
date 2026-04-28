@@ -9,12 +9,12 @@ import { useMemo } from "react";
 import { Download } from 'iconoir-react';
 import { Message } from "iconoir-react";
 import { User } from "iconoir-react";
+import Loader from "@renderer/components/loader/loader";
 
 
 const BLOCK_SIZE = 40; // сколько модов загружаем за один раз
 
 function Mods(): React.JSX.Element {
-
     interface Mod {
         modid: number
         assetid: number
@@ -261,52 +261,44 @@ function Mods(): React.JSX.Element {
     }, [loading, displayedMods.length, hasMore, filteredMods.length]);
 
     // TODO: mods to cache, it will be better to not load mods every time instead of search mod which had been uploaded second ago
-
+    if (loading) {return <Loader></Loader>}
   return (
     <>
         <div className={styles.main_wrapper}>
             <div className={styles.header}>
-                {/* <div className={`${styles.header_line} ${styles.header_line_main}`}>
-                    <div>
-                        <button>Button</button>
-                        <button>Button</button>
-                    </div>
-                    <div>/ Mods</div>
-                    <button>Button</button>
-                </div> */}
-                <div className={styles.header_line}>
-                    <input className={styles.header_input} placeholder="Mod name" type="text" onChange={(e) => setSearchName(e.target.value)} value={searchName} />
-                    <input className={styles.header_input} placeholder="Author" type="text" onChange={(e) => setSearchAuthor(e.target.value)} value={searchAuthor} />
 
-                    <select className={styles.header_input} name="" id="" value={selectedVersion} onChange={(e) => setSelectedVersion(e.target.value)}>
-                        <option disabled value="">Versions</option>
-                    </select>
+                <input className={styles.header_input} placeholder="Mod name" type="text" onChange={(e) =>setSearchName(e.target.value)} value={searchName} />
+                <input className={styles.header_input} placeholder="Author" type="text" onChange={(e) =>setSearchAuthor(e.target.value)} value={searchAuthor} />
 
-                    <select className={styles.header_input} name="" id="" value={selectedTag} onChange={(e) => setSelectedTag(e.target.value)}>
-                        <option disabled value="">Tags</option>
-                    </select>
+                <select className={styles.header_input} name="" id="" value={selectedVersion} onChange={(e) =>setSelectedVersion(e.target.value)}>
+                    <option disabled value="">Versions</option>
+                </select>
+
+                <select className={styles.header_input} name="" id="" value={selectedTag} onChange={(e) =>setSelectedTag(e.target.value)}>
+                    <option disabled value="">Tags</option>
+                </select>
                     
-                    <select className={styles.header_input} name="" id="" value={selectedSide} onChange={(e) => setSelectedSide(e.target.value)}>
-                        <option value="Both">Both</option>
-                        <option value="Server">Server</option>
-                        <option value="Client">Client</option>
-                    </select>
-                </div>
-                <div className={styles.header_line}>
-                    <input className={styles.header_input} placeholder="isInstalled" type="text" />
-                    <button className={styles.header_input} onClick={() => handleSort("downloads")}>Downloads {sortType === "downloads" && (sortOrder === "asc" ? "↑" : "↓")}</button>
-                    <button className={styles.header_input} onClick={() => handleSort("follows")}>Follows {sortType === "follows" && (sortOrder === "asc" ? "↑" : "↓")}</button>
-                    <button className={styles.header_input} onClick={() => handleSort("newest")}>Newest {sortType === "newest" && (sortOrder === "asc" ? "↑" : "↓")}</button>
-                    <button className={styles.header_input} onClick={() => handleSort("name")}>A-Z {sortType === "name" && (sortOrder === "asc" ? "↑" : "↓")}</button>
-                    <button className={styles.header_input} onClick={() => resetFilters()}>Reset filters</button>
-                    <button className={styles.header_input} onClick={() => refreshMods()}>Refresh Mods</button>
-                </div>
+                <select className={styles.header_input} name="" id="" value={selectedSide} onChange={(e) =>setSelectedSide(e.target.value)}>
+                    <option value="Both">Both</option>
+                    <option value="Server">Server</option>
+                    <option value="Client">Client</option>
+                </select>
+
+                {/* TODO: Скрыть пункты ниже под одной кнопкой */}
+                {/* <input className={styles.header_input} placeholder="isInstalled" type="text" />
+                <button className={styles.header_input} onClick={() => handleSort("downloads")}>Downloads {sortType=== "downloads" && (sortOrder === "asc" ? "↑" : "↓")}</button>
+                <button className={styles.header_input} onClick={() => handleSort("follows")}>Follows {sortType ==="follows" && (sortOrder === "asc" ? "↑" : "↓")}</button>
+                <button className={styles.header_input} onClick={() => handleSort("newest")}>Newest {sortType ==="newest" && (sortOrder === "asc" ? "↑" : "↓")}</button>
+                <button className={styles.header_input} onClick={() => handleSort("name")}>A-Z {sortType ==="name" && (sortOrder === "asc" ? "↑" : "↓")}</button> */}
+                <button className={styles.header_input} onClick={() => resetFilters()}>Reset filters</button>
+                <button className={styles.header_input} onClick={() => refreshMods()}>Refresh Mods</button>
+
             </div>
 
 
             <div className={styles.mods_wrapper}>
 
-                {loading ? <div className={styles.loading}>loading</div> : (
+                {loading ? <></> : ( // пережиток прошлого, который можно почистить, тут больше нет условия, лоадер теперь грузится через return
                     displayedMods.map(mod => (
                         <div className={styles.mod_box} key={mod.modid} onClick={() => handleModClick(mod.modid)}>
                             {mod.logo ? (<img className={styles.mod_img} src={mod.logo} alt="" />) : (<img className={styles.mod_img} src="https://mods.vintagestory.at/web/img/mod-default.png" alt="" />)}

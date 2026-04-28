@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import styles from "../styles/settings.module.css"
 // import search_icon from "../../../assets/icons/search.svg"
 import { Search } from "iconoir-react";
+import Loader from "@renderer/components/loader/loader";
 
 function Settings(): React.JSX.Element {
 

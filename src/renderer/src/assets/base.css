@@ -6,7 +6,7 @@
   box-sizing: border-box;
   /* <weight>: Use a value from 100 to 900 */
   font-family: "Lexend", sans-serif;
-  font-weight: 300;
+  font-size: 14px;
 }
 
 :root {
@@ -21,23 +21,36 @@
   --brand-color-3: #967756;
 
 
-  --text-primary: white;
-  --text-secondary: white;
-  --text-muted: white;
 
-  --link: rgb(86, 83, 240);
-  --link-hover: rgb(112, 110, 238);
-  --success: rgb(94, 177, 101);
-  --waring: yellow;
-  --error: red;
 
   --text-thin: 100;
   --text-bold: 500;
+
+
+
+  
+  --brand: #996125;
+  --success: #3FBD40;
+  --warning: #F4AD39;
+  --error: #FD4D64;
+  --link: #5653F0;
+  --link-hover: #706EEE;
+
+  --dark-basement: #10131A;
+  --dark-background: #141821;
+  --dark-first: #1A202C;
+  --dark-second: #1E2736;
+  --dark-third: #212C3E;
+
+  --text-main: #F6F7F9;
+  --text-second: #A8A8A8;
+  --text-muted: #5E5E5E;
+  --text-dark: #080808;
 }
 
 body {
-  background-color: var(--background-main);
-  color: var(--white-text);
+  background-color: var(--dark-basement);
+  color: var(--text-main);
 }
 
 html {

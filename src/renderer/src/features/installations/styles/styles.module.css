@@ -1,13 +1,8 @@
 .page_wrapper {
-    padding: 20px 100px 0px 100px;
+    margin: 50px;
     display: flex;
     flex-direction: column;
-    /* gap: 20px; */
-}
-
-.page_header {
-    display: flex;
-    gap: 12px;
+    width: 100%;
 }
 
 .search_input {
@@ -43,14 +38,16 @@
 .installs {
     display: flex;
     flex-direction: column;
-    /* gap: 20px; */
+    gap: 12px;
 }
 
 .install {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid var(--gray-2);
+    background-color: var(--dark-first);
+    border-radius: 4px;
+    padding: 0px 12px 0px 0px;
 }
 
 .left_box {
@@ -101,24 +98,21 @@
 
 
 .new_install_button {
-    color: var(--text-white);
+    color: var(--text-main);
     text-decoration: none;
-    border: 1px solid var(--gray-1);
+    background-color: var(--dark-first);
     padding: 8px 24px;
 }
 
 .new_install_button:hover {
-    background-color: var(--gray-2);
+    background-color: var(--dark-second);
 }
 
 .new_install {
-    border-bottom: 1px solid var(--gray-2);
-    border-top: 1px solid var(--gray-2);
-    height: 80px;
     display: flex;
     justify-content: start;
     align-items: center;
-    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 

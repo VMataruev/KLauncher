@@ -1,14 +1,14 @@
 .main_wrapper {
-    background-color: var(--background-main);
     width: 100%;
     min-height: 100svh;
+
 }
 
 .header {
     display: flex;
     /* justify-content: space-between; */
     justify-content: center;
-    color: var(--white-text);
+    color: var(--text-main);
     padding: 20px;
 }
 
@@ -19,7 +19,7 @@
 .mod_box {
     display: flex;
     flex-direction: column;
-    color: var(--white-text);
+    color: var(--text-main);
     gap: 12px;
     padding: 20px;
 }
