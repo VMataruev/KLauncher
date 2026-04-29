@@ -1,0 +1,74 @@
+.header {
+  background-color: var(--dark-background);
+  gap: 16px;
+  width: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100svh;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+}
+
+
+
+.link_box {
+  margin-left: 16px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  display: flex;
+  gap: 4px;
+  transition: .5s;
+}
+
+.link_box_inside a, .link_box a {
+  text-decoration: none;
+}
+
+.link_box_inside {
+  display: flex;
+  justify-content: start;
+  cursor: pointer;
+  align-items: center;
+  transition: .2s;
+  gap: 4px;
+  width: 100%;
+}
+
+.link_box_inside:hover {
+  transition: .2s;
+  /* transform: translateX(15px) scale(1.1); */
+  transform: translateX(10px);
+}
+
+.link_button {
+  color: var(--text-main);
+  /* transition: .5s; */
+}
+
+
+
+
+
+
+
+.page_indicator {
+  width: 4px;
+  height: 20px;
+  position: absolute;
+  left: 0;
+  border-radius: 0px 99px 99px 0px;
+  transition: .5s;
+  background-color: var(--brand);
+}
+
+.page_active {
+  /* background-color: green; */
+  background-color: var(--brand);
+}
+
+.page_activate_color {
+  color: var(--brand);
+  transition: .2s;
+}

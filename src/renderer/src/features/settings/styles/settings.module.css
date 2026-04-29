@@ -82,5 +82,5 @@
 .img_btn {
     width: 20px;
     aspect-ratio: 1 / 1;
-    color: var(--background-main);
+    color: var(--text-muted);
 }
