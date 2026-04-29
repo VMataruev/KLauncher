@@ -60,7 +60,7 @@ html {
 
 ::-webkit-scrollbar {
   width: 8px;
-  background-color: var(--background-second);
+  background-color: var(--dark-background);
 }
 
 /* ::-webkit-scrollbar-track {
@@ -68,5 +68,5 @@ html {
 } */
 
 ::-webkit-scrollbar-thumb {
-  background-color: var(--gray-2);
+  background-color: var(--dark-second);
 }

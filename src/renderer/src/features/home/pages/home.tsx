@@ -1,27 +1,75 @@
-// import img from "../../../assets/play-btn-img.png"
-import { useState, useEffect } from 'react';
-import styles from '../styles/style.module.css'
-// import { Link } from 'react-router-dom';
-import PlayButton from '../features/playButton/playButton';
-import Blog from '../features/blog/blog';
-import ProgressBar from '../features/progressBar/progressBar';
-import CustomSelect from '@renderer/components/CustomSelect/CustomSelect';
-import LogInButton from '../features/logInButton/logInButton';
+import { addNotification } from "@renderer/features/overlay/notification/features/notificationList";
+import styles from "../styles/style.module.css"
+import * as cheerio from 'cheerio';
+import { useEffect, useState } from "react";
+import Loader from "@renderer/components/loader/loader";
 
-function Home(): React.JSX.Element {
+function Home({}): React.JSX.Element {
+    type BlogArticle = {
+        headerHtml: string;
+        contentHtml: string;
+    };
 
+    const [articles, setArticles] = useState<BlogArticle[]>([]);
+    const [ isLoading, setIsLoading ] = useState<boolean>(true);
+    useEffect(() => {
+        const getBlogData = async () => {
+            const res = await window.api.getRequest('https://www.vintagestory.at/blog.html/');
+            // TODO: error if blog can't load
+            const $ = cheerio.load(res);
 
-  return (
-    <>
-      <div className={styles.main_wrapper}>
+            const parsedArticles: BlogArticle[] = $("article.cCmsCategoryFeaturedEntry")
+            .map((_, el) => {
+                const article = $(el);
+
+                return {
+                    headerHtml: article.find("header").html() || "",
+                    contentHtml: article.children("div").first().html() || "",
+                };
+            })
+            .get();
+
+            setArticles(parsedArticles);
+            setIsLoading(false);
+            // const articles = $('.cCmsCategoryFeaturedEntry');
+            // console.log(articles);
+        };
+        getBlogData();
+    }, []);
+
+    const handleExternalLinks = async (e: React.MouseEvent<HTMLDivElement>) => {
+        const target = e.target as HTMLElement;
+        const anchor = target.closest("a");
+
+        if (!anchor) return;
+
+        let href = anchor.getAttribute("href");
+        if (!href) return;
+
+        if (href.startsWith("/")) {
+            href = `https://www.vintagestory.at${href}`;
+        }
+
+        if (href.startsWith("http://") || href.startsWith("https://")) {
+            e.preventDefault();
+            await window.api.openExternalLink(href);
+        }
+    };
+    if (isLoading) {return <Loader></Loader>}
+    return(
         <div className={styles.blog_box}>
-          <Blog></Blog>
+        
+            {articles ? articles.map((article, index) => (
+                <div className={styles.blog} onClick={handleExternalLinks}>
+                    <div key={index} className={styles.article_box}>
+                        <div className={styles.blog_header} dangerouslySetInnerHTML={{ __html: article.headerHtml }} />
+                        <div className={styles.blog_body} dangerouslySetInnerHTML={{ __html: article.contentHtml }} />
+                    </div>
+                </div>
+            )) : <></>}
+            
         </div>
-      </div>
-
-      {/* <ProgressBar></ProgressBar> */}
-    </>
-  )
+    )
 }
 
 export default Home
