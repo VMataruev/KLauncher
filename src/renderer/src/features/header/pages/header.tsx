@@ -46,18 +46,18 @@ function Header(): React.JSX.Element {
                     <div ref={refs['/']} className={styles.link_box}>
                         {location.pathname === '/' ? 
                             <>
-                                <div className={styles.link_box_inside}>
+                                <Link className={styles.link_box_inside} to="/">
                                     <HomeIcon className={styles.page_activate_color}></HomeIcon>
-                                    <Link className={`${styles.link_button} ${styles.page_activate_color}`} to="/">Home</Link>
-                                </div>
+                                    <div className={`${styles.link_button} ${styles.page_activate_color}`}>Home</div>
+                                </Link>
                                 {/* <div className='page-indicator page-active'></div> */}
                             </>
                             : 
                             <>
-                                <div className={styles.link_box_inside}>
+                                <Link className={styles.link_box_inside} to="/">
                                     <HomeIcon></HomeIcon>
-                                    <Link className={styles.link_button} to="/">Home</Link>
-                                </div>
+                                    <div className={styles.link_button}>Home</div>
+                                </Link>
                             </>
                             
                         }
@@ -66,19 +66,19 @@ function Header(): React.JSX.Element {
                     <div ref={refs['/play']} className={styles.link_box}>
                         {location.pathname === '/play' ? 
                             <>
-                                <div className={styles.link_box_inside}>
+                                <Link className={styles.link_box_inside} to="/play">
                                     <PlayIcon className={styles.page_activate_color}></PlayIcon>
-                                    <Link className={`${styles.link_button} ${styles.page_activate_color}`} to="/play">Play</Link>
-                                </div>
+                                    <div className={`${styles.link_button} ${styles.page_activate_color}`}>Play</div>
+                                </Link>
                                 
                                 {/* <div className='page-indicator page-active'></div> */}
                             </>
                             : 
                             <>
-                                <div className={styles.link_box_inside}>
+                                <Link className={styles.link_box_inside} to="/play">
                                     <PlayIcon></PlayIcon>
-                                    <Link className={styles.link_button} to="/play">Play</Link>
-                                </div>
+                                    <div className={styles.link_button}>Play</div>
+                                </Link>
                             </>
                             
                         }
@@ -87,18 +87,18 @@ function Header(): React.JSX.Element {
                     <div ref={refs['/installations']} className={styles.link_box}>
                         {location.pathname === '/installations' ? 
                             <>
-                                <div className={styles.link_box_inside}>
+                                <Link className={styles.link_box_inside} to="/installations">
                                     <FolderIcon className={styles.page_activate_color}></FolderIcon>
-                                    <Link className={`${styles.link_button} ${styles.page_activate_color}`} to="/installations">Installations</Link>
-                                </div>
+                                    <div className={`${styles.link_button} ${styles.page_activate_color}`}>Installations</div>
+                                </Link>
                                 {/* <div className='page-indicator page-active'></div> */}
                             </>
                             : 
                             <>
-                                <div className={styles.link_box_inside}>
+                                <Link className={styles.link_box_inside} to="/installations">
                                     <FolderIcon></FolderIcon>
-                                    <Link className={styles.link_button} to="/installations">Installations</Link>
-                                </div>
+                                    <div className={styles.link_button}>Installations</div>
+                                </Link>
                             </>
                             
                         }
@@ -107,18 +107,18 @@ function Header(): React.JSX.Element {
                     <div ref={refs['/mods']} className={styles.link_box}>
                         {location.pathname === '/mods' ? 
                             <>
-                                <div className={styles.link_box_inside}>
+                                <Link className={styles.link_box_inside} to="/mods">
                                     <ToolsIcon className={styles.page_activate_color}></ToolsIcon>
-                                    <Link className={`${styles.link_button} ${styles.page_activate_color}`} to="/mods">Mods</Link>
-                                </div>
+                                    <div className={`${styles.link_button} ${styles.page_activate_color}`}>Mods</div>
+                                </Link>
                                 {/* <div className='page-indicator page-active'></div> */}
                             </>
                             : 
                             <>
-                                <div className={styles.link_box_inside}>
+                                <Link className={styles.link_box_inside} to="/mods">
                                     <ToolsIcon></ToolsIcon>
-                                    <Link className={styles.link_button} to="/mods">Mods</Link>
-                                </div>
+                                    <div className={styles.link_button}>Mods</div>
+                                </Link>
                             </>
                         }
                     </div>
@@ -128,18 +128,18 @@ function Header(): React.JSX.Element {
                     <div ref={refs['/settings']} className={styles.link_box}>
                         {location.pathname === '/settings' ? 
                             <>
-                                <div className={styles.link_box_inside}>
+                                <Link className={styles.link_box_inside} to="/settings">
                                     <SettingsIcon className={styles.page_activate_color}></SettingsIcon>
-                                    <Link className={`${styles.link_button} ${styles.page_activate_color}`} to="/settings">Settings</Link>
-                                </div>
+                                    <div className={`${styles.link_button} ${styles.page_activate_color}`}>Settings</div>
+                                </Link>
                                 {/* <div className='page-indicator page-active'></div> */}
                             </>
                             : 
                             <>
-                                <div className={styles.link_box_inside}>
+                                <Link className={styles.link_box_inside} to="/settings">
                                     <SettingsIcon></SettingsIcon>
-                                    <Link className={styles.link_button} to="/settings">Settings</Link>
-                                </div>
+                                    <div className={styles.link_button}>Settings</div>
+                                </Link>
                             </>
                         }
                     </div>

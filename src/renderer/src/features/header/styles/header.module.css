@@ -34,6 +34,7 @@
   transition: .2s;
   gap: 4px;
   width: 100%;
+  color: var(--text-main);
 }
 
 .link_box_inside:hover {
