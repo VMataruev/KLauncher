@@ -68,7 +68,7 @@ function Overlay({onClose, modID}: OverlayProps): React.JSX.Element {
             const releases = mod.res.mod.releases;
             console.log(releases)
             setReleases(releases);
-            setModName(mod.mod.name)
+            setModName(mod.res.mod.name)
         }
         getModReleases();
     }, [])

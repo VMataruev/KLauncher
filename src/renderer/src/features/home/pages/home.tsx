@@ -59,7 +59,7 @@ function Home({}): React.JSX.Element {
             await window.api.openExternalLink(href);
         }
     };
-    if (isLoading) {return <Loader></Loader>}
+    if (isLoading) {return <div className={styles.loader_wrapper}><Loader></Loader></div>}
     return(
         <div className={styles.blog_box}>
         

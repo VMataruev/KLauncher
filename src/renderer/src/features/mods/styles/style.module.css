@@ -1,3 +1,8 @@
+.loader_wrapper {
+    height: 100svh;
+    width: 100%;
+}
+
 .main_wrapper {
     width: 100%;
 }

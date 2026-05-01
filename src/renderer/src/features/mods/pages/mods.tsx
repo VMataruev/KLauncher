@@ -266,7 +266,7 @@ function Mods(): React.JSX.Element {
         }, 0);
     }, [loading, displayedMods.length, hasMore, filteredMods.length]);
 
-    if (loading) {return <Loader></Loader>}
+    if (loading) {return <div className={styles.loader_wrapper}><Loader></Loader></div>}
   return (
     <>
         <div className={styles.main_wrapper}>

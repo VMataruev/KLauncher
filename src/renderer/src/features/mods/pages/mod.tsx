@@ -33,9 +33,8 @@ function Mod(): React.JSX.Element {
         fetchMod();
     }, [])
 
-    if (!mod) {
-        return <Loader></Loader>
-    }
+    
+    if (!mod) {return <div className={styles.loader_wrapper}><Loader></Loader></div>}
 
 
 

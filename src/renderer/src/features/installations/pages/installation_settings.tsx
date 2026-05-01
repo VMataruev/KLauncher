@@ -5,6 +5,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { addNotification } from '@renderer/features/overlay/notification/features/notificationList';
 import CustomSelect from '@renderer/components/CustomSelect/CustomSelect';
 import iconOptions from '@renderer/components/Installation_icons';
+import { Search } from 'iconoir-react';
+import Loader from '@renderer/components/loader/loader';
 
 function Installation_settings(): React.JSX.Element {
     
@@ -33,12 +35,27 @@ function Installation_settings(): React.JSX.Element {
     const [ oldPath, setOldPath ] = useState("");
     const [ oldVersion, setOldVersion ] = useState("");
 
+    const [ modsFullData, setModsFullData ] = useState<any[]>([]);
+    const [ modsLoader, setModsLoader ] = useState<boolean>(true);
     useEffect(() => {
         const getInstallationData = async () => {
             const data = await window.api.getStore(`installations.${installationID}`);
             setInstallationBuild(data);
             setOldPath(data.folder);
             setOldVersion(data.version);
+
+            const modsData: any[] = [];
+            for (const modID of data.mods) {
+                const modData = await window.api.getRequest(`http://mods.vintagestory.at/api/mod/${modID}`);
+                // if (!modData.success) {addNotification({status: "error", msg: ""})}
+                if (modData.res.mod.logofile == null) {
+                    modData.res.mod.logofile = "https://mods.vintagestory.at/web/img/mod-default.png";
+                };
+                modsData.push(modData);
+            }
+            setModsFullData(modsData);
+            console.log(modsData);
+            setModsLoader(false);
         };
         getInstallationData();
     }, [])
@@ -215,76 +232,97 @@ function Installation_settings(): React.JSX.Element {
 
     return(
         <div className={styles.page_wrapper}>
-            <div className={styles.page_header}>
-                <div>Installation Settings</div>
-            </div>
-
-            <div className={styles.page_body}>
-                <div className={styles.page_body_box}>
-                    <div className={styles.icon_box}>
-                        <CustomSelect value={installationBuild.img} onChange={(id) => {
-                            const selected = iconOptions.find(i => i.id === id);
-                            if (!selected) return;
-
-                            setSelectedIcon(id);
-                            setInstallationBuild(prev => ({
-                                ...prev,
-                                img: selected.icon // сохраняем путь, а не id
-                            }));
-                        }} options={iconOptions}></CustomSelect>
-                    </div>
-
-                    <div className={styles.name_box}>
-                        <div className={styles.name}>Name</div>
-                        <input type="text" className={styles.input} onChange={(e) => {setInstallationBuild((prev) => ({
-                            ...prev,
-                            name: e.target.value
-                        }))}} 
-                        placeholder={installationBuild.name}
-                        value={installationBuild.name}/>
-                    </div>
-                    
-                    <div className={styles.version_box}>
-                        <div className={styles.version}>Version</div>
-
-                        <select className={`${styles.version_input} ${styles.input}`} name="" id="" value={installationBuild?.version || ""} onChange={(e) => {
-                            const select = e.target;
-                            const option = select.options[select.selectedIndex];
-                            const link = option.getAttribute('data-link');
-                            
-                            setInstallationBuild((prev) => ({
-                            ...prev,
-                            version: e.target.value,
-                            version_link: link || ""
-                        }))}}>
-
-                            {data ? data.map((version) => (
-                                <option key={version.name} data-link={version.link} value={version.name}>{version.name}</option>
-                            )) : <></>}
-                        </select>
-                    </div>
-
-                    <div className={styles.mods_box}>
-                        <div>Mods</div>
-                        {installationBuild.mods.length == 0 ? <div>No mods</div> :
-                        installationBuild.mods.map(mod => (
-                            <div className={styles.mod_box}>
-                                <div>{mod}</div>
-                                <button onClick={() => {deleteMod(mod)}}>Delete</button>
-                            </div>
-                        ))}
-                    </div>
-
-                    <div className={styles.foler_box}>
-                        <div className={styles.foler_header}>Installation Folder</div>
-                        <div className={styles.foler_box_change}>
-                            <div className={`${styles.folder_name} ${styles.input}`}>{installationBuild.folder}</div>
-                            <button onClick={handleSelectFolder} className={styles.folder_btn}>Observe</button>
-                        </div>
-                    </div>
-
-                    {buildStatus ? <div>{buildStatus}</div> : <></>}
+            <div className={styles.settings_box}>
+                <div className={styles.header}>
+                    <div>Basics</div>
                 </div>
+
+                    <div className={styles.page_body_box}>
+                        <div className={styles.name_box}>
+                            <div className={styles.setting_box}>
+                                <div className={styles.setting_name}>Name</div>
+                                <div className={styles.input_box_name}>
+                                    <input type="text" className={styles.input} onChange={(e) => {setInstallationBuild((prev) => ({
+                                        ...prev,
+                                        name: e.target.value
+                                    }))}} 
+                                    placeholder={installationBuild.name}
+                                    value={installationBuild.name}/>
+                                    <div className={styles.name_muted}>From 5 to 50 symbols</div>
+                                </div>
+                            </div>
+
+                            <div className={styles.icon_box}>
+                                <CustomSelect value={installationBuild.img} onChange={(id) => {
+                                    const selected = iconOptions.find(i => i.id === id);
+                                    if (!selected) return;
+
+                                    setSelectedIcon(id);
+                                    setInstallationBuild(prev => ({
+                                        ...prev,
+                                        img: selected.icon // сохраняем путь, а не id
+                                    }));
+                                }} options={iconOptions}></CustomSelect>
+                            </div>
+                        </div>
+
+                        
+                        
+                        <div className={styles.setting_box}>
+                            <div className={styles.setting_name}>Version</div>
+
+                            <select className={`${styles.version_input} ${styles.input}`} name="" id="" value={installationBuild?.version || ""} onChange={(e) => {
+                                const select = e.target;
+                                const option = select.options[select.selectedIndex];
+                                const link = option.getAttribute('data-link');
+                                
+                                setInstallationBuild((prev) => ({
+                                ...prev,
+                                version: e.target.value,
+                                version_link: link || ""
+                            }))}}>
+
+                                {data ? data.map((version) => (
+                                    <option key={version.name} data-link={version.link} value={version.name}>{version.name}</option>
+                                )) : <></>}
+                            </select>
+                        </div>
+
+                        <div className={styles.setting_box}>
+                            <div className={styles.setting_name}>Mods</div>
+                            {modsLoader ? <div className={`${styles.input}`}><Loader></Loader></div> :
+                            <div className={`${styles.input} ${styles.input_mods}`}>
+                                <div className={styles.mods_grid}>
+                                {installationBuild.mods.length == 0 ? <div>No mods</div> :
+                                Object.values(modsFullData).filter(mod => installationBuild.mods.includes(mod.res.mod.modid)).map(mod => (
+                                    <div className={styles.mod_box}>
+                                        <img className={styles.mod_img} src={mod.res.mod.logofile} alt="" />
+                                        <div className={styles.mod_basement}>
+                                            <div className={styles.mod_name}>{mod.res.mod.name}</div>
+                                            <button onClick={() => {deleteMod(mod.res.mod.modid)}} className={styles.mod_delete_btn}>Delete</button>
+                                        </div>
+                                    </div>
+                                ))
+                                
+                                }
+                                </div>
+                            </div>
+                            }
+                        </div>
+
+                        <div className={styles.setting_box}>
+                            <div className={styles.setting_name}>Installation Folder</div>
+                            <div className={styles.folder_box}>
+                                <Search onClick={handleSelectFolder} className={styles.folder_btn}></Search>
+                                <div className={styles.foler_box_change}>
+                                    <div className={`${styles.folder_name} ${styles.input}`}>{installationBuild.folder}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {buildStatus ? <div>{buildStatus}</div> : <></>}
+                    </div>
+                
             </div>
 
             <div className={styles.page_basement}>

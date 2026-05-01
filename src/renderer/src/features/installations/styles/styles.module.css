@@ -74,24 +74,29 @@
 .installation_button {
     padding: 8px;
     outline: none;
-    border: 1px solid var(--gray-1);
+    border: 1px solid var(--dark-third);
     background-color: #12121200;
     color: var(--text-white);
     cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .installation_button:hover {
-    background-color: var(--gray-2);
+    background-color: var(--dark-third);
 }
 
 .installation_button_play {
-    background-color: var(--brand-color-1);
+    background-color: var(--brand);
     border: none;
     padding: 0px 24px;
 }
 
 .installation_button_play:hover {
-    background-color: var(--brand-color-3);
+    background-color: var(--brand);
 }
 
 
@@ -125,7 +130,6 @@
 
 .installation_button_more_box {
     position: relative;
-
 }
 
 
@@ -159,4 +163,23 @@
 
 .more_button:hover {
     background-color: var(--dark-third);
+}
+
+
+
+
+
+
+
+
+
+.no_installations_box {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--dark-second);
+    border-radius: 4px;
+    padding: 20px;
+    color: var(--text-second);
 }

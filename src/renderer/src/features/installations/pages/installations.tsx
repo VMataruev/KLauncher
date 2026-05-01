@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { addNotification } from '@renderer/features/overlay/notification/features/notificationList';
 import iconOptions from '@renderer/components/Installation_icons';
+import { MoreHoriz } from 'iconoir-react';
 
 function Installations(): React.JSX.Element {
   const navigate = useNavigate();
@@ -73,7 +74,7 @@ function Installations(): React.JSX.Element {
 
           <div className={styles.installs}>
 
-            { installations ?
+            { Object.values(installations).length != 0 ?
               Object.values(installations).map(installation => (
                 <div className={styles.install}>
                   <div className={styles.left_box}>
@@ -91,7 +92,7 @@ function Installations(): React.JSX.Element {
                     <div className={styles.installation_button_more_box}>
                       <button id='btn_more' className={styles.installation_button}
                         onClick={() => {setIdForBtn(prev => prev === installation.id ? null : installation.id)}}
-                      >...</button>
+                      ><MoreHoriz></MoreHoriz></button>
                       <div className={`${styles.installation_button_buttons_box} ${moreBtnId == installation.id ? styles.installation_button_buttons_box_visible : <></>}`}>
                         <button className={styles.more_button} onClick={() => navigate(`/installation_settings/${installation.id}`)}>Settings</button>
                         <button className={styles.more_button}>Copy</button>
@@ -102,7 +103,12 @@ function Installations(): React.JSX.Element {
                   </div>
                 </div>
               ))
-              : <></>
+              : 
+              <>
+                <div className={styles.no_installations_box}>
+                  <div>No installations</div>
+                </div>
+              </>
             }
 
           </div>

@@ -173,7 +173,7 @@ function Made_installation(): React.JSX.Element {
                 <div className={styles.page_body_box}>
                     <div className={styles.name_box}>
                         <div className={styles.setting_box}>
-                            <div className={styles.name}>Name</div>
+                            <div className={styles.setting_name}>Name</div>
                             <div className={styles.input_box_name}>
                                 <input type="text" className={styles.input} onChange={(e) => {setInstallationBuild((prev) => ({
                                     ...prev,
@@ -199,7 +199,7 @@ function Made_installation(): React.JSX.Element {
                     </div>
                     
                     <div className={styles.setting_box}>
-                        <div className={styles.version}>Version</div>
+                        <div className={styles.setting_name}>Version</div>
 
                         <select className={`${styles.version_input} ${styles.input}`} name="" id="" onChange={(e) => {
                             const select = e.target;
@@ -221,10 +221,12 @@ function Made_installation(): React.JSX.Element {
                     
 
                     <div className={styles.setting_box}>
-                        <div className={styles.foler_header}>Installation Folder</div>
-                        <Search onClick={handleSelectFolder} className={styles.folder_btn}></Search>
-                        <div className={styles.foler_box_change}>
-                            <div className={`${styles.folder_name} ${styles.input}`}>{folderPath ? folderPath : 'Default'}</div>
+                        <div className={styles.setting_name}>Installation Folder</div>
+                        <div className={styles.folder_box}>
+                            <Search onClick={handleSelectFolder} className={styles.folder_btn}></Search>
+                            <div className={styles.foler_box_change}>
+                                <div className={`${styles.folder_name} ${styles.input}`}>{folderPath ? folderPath : 'Default'}</div>
+                            </div>
                         </div>
                     </div>
 

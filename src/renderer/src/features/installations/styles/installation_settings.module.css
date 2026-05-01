@@ -1,73 +1,173 @@
 .page_wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-}
-
-.page_header {
-    display: flex;
-    justify-content: center;
-    padding: 20px 0px;
-    border-bottom: 1px solid var(--gray-2);
-    font-weight: var(--text-bold);
-    font-size: 20px;
-}
-
-.page_body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     width: 100%;
+    height: 100svh;
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+}
+
+.settings_box {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--dark-first);
+    border-radius: 4px;
+}
+
+.header {
+    background-color: var(--dark-second);
+    padding: 8px 12px;
+    border-radius: 4px 4px 0px 0px;
 }
 
 .page_body_box {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 12px;
+    padding: 20px 50px;
 }
 
 .foler_box_change {
     display: flex;
+    width: 100%;
+}
+
+.input_box_name {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 
 
-.icon_box {
+.setting_box {
     display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 8px;
 }
 
 .name_box {
     display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.name_muted {
+    color: var(--text-muted);
+}
+
+.name_box_text {
+    display: flex;
     flex-direction: column;
 }
+
+.setting_name {
+    display: flex;
+    width: 160px;
+    justify-content: end;
+}
+
 
 .version_input {
     display: flex;
 }
 
 .input {
-    border: 2px solid var(--brand-color-1);
-    background-color: var(--background-second);
+    border: none;
+    background-color: var(--dark-second);
+    border-radius: 4px;
     color: var(--text-white);
     padding: 4px 8px;
     outline: none;
+    height: 100%;
+    display: flex;
+    width: 100%;
 }
+
 
 .input_icon {
     margin: auto;
 }
 
+.input_mods {
+    max-height: 365px;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.mods_grid {
+    gap: 12px;
+    padding: 12px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    align-items: stretch; /* важно */
+}
+
+
 .mod_box {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    background-color: var(--dark-third);
+    border-radius: 4px;
+    overflow: hidden;
+    gap: 4px;
+    min-width: 0;
+    aspect-ratio: 1 / 1;
+    position: relative;
+}
+
+.mod_box img {
+    object-fit: cover;
+}
+
+.mod_basement {
+    position: absolute;
+    width: 100%;
+    background-color: var(--dark-third);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    bottom: 0;
+    height: 33%;
+}
+
+.mod_name {
+    padding: 4px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+
+.mod_delete_btn {
+    margin-top: auto;
+    border: none;
+    background-color: var(--text-main);
+    cursor: pointer;
 }
 
 .folder_btn {
-    background-color: rgba(255, 0, 0, 0);
+    background-color: var(--dark-second);
+    border-radius: 4px;
     border: none;
-    color: var(--text-white);
+    color: var(--text-main);
     padding: 4px;
     cursor: pointer;
+    height: 26px;
+    width: 26px;
+}
+
+.folder_box {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+}
+
+.icon_box {
+    background-color: var(--dark-second);
+    border-radius: 4px;
+    max-height: 100%;
+    display: flex;
 }
 
 
@@ -76,42 +176,45 @@
 
 .page_basement {
     display: flex;
-    border-top: 1px solid var(--background-second);
-    padding: 20px 0px;
+    margin-top: 20px;
 }
 
 .basement_btns_box {
     display: flex;
-    margin-left: auto;
-    gap: 8px;
-    padding-right: 16px;
+    gap: 40px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }
 
 .basement_btn {
-    padding: 8px 24px;
+    padding: 8px 40px;
     background-color: rgba(255, 0, 0, 0);
-    border: 1px solid var(--gray-1);
+    border: 1px solid var(--dark-first);
     cursor: pointer;
-    color: var(--text-white);
+    color: var(--text-main);
+    border-radius: 4px;
+    transition: .2s;
 }
 
 .basement_btn:hover {
-    background-color: var(--gray-2);
+    background-color: var(--dark-second);
+    transition: .2s;
 }
 
 .basement_btn_main {
-    background-color: var(--brand-color-1);
+    background-color: var(--dark-first);
     border: none;
+    transition: .2s;
 }
 
 .basement_btn_main:hover {
-    background-color: var(--brand-color-1);
+    background-color: var(--dark-second);
+    transition: .2s;
     filter: brightness(1.5);
 }
 
 
-.icon_box {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.select_icon {
+    max-width: 100px;
 }
