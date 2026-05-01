@@ -18,7 +18,12 @@ function Mod(): React.JSX.Element {
         const fetchMod = async () => {
             try {
                 const res = await window.api.getRequest(`https://mods.vintagestory.at/api/mod/${id}`);
-                setMod(res.mod);
+                if (!res.success) {
+                    await new Promise(resolve => setTimeout(resolve, 5000)); // ждем 5 сек
+                    fetchMod();
+                    return;
+                };
+                setMod(res.res.mod);
                 // console.log(res.mod)
             } catch (error) {
                 console.log(error)

@@ -158,6 +158,12 @@ function Mods(): React.JSX.Element {
                 console.log(window.api);
                 console.log(window.api.getModsInCache);
                 const res = await window.api.getModsInCache();
+                console.log(res);
+                if (res.status != "ok") {
+                    await new Promise(resolve => setTimeout(resolve, 5000)); // ждем 5 сек
+                    fetchMods();
+                    return;
+                }
                 setMods(res.mods);
                 // setDisplayedMods(res.mods.slice(0, BLOCK_SIZE));
                 // setHasMore(res.mods.length > BLOCK_SIZE);
@@ -260,7 +266,6 @@ function Mods(): React.JSX.Element {
         }, 0);
     }, [loading, displayedMods.length, hasMore, filteredMods.length]);
 
-    // TODO: mods to cache, it will be better to not load mods every time instead of search mod which had been uploaded second ago
     if (loading) {return <Loader></Loader>}
   return (
     <>

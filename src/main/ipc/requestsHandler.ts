@@ -5,7 +5,10 @@ ipcMain.handle('get-request', async (_event, url: string) => {
     try {
         const res = await axios.get(url);
         // console.log(res.data);
-        return res.data;
+        return {
+            success: true,
+            res: res.data
+        }
     } catch (error) {
         if (axios.isAxiosError(error)) {
             if (error.code === 'ECONNREFUSED' || error.code === 'ENOTFOUND') {

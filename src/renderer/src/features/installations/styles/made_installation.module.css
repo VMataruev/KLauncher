@@ -1,30 +1,29 @@
 .page_wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-}
-
-.page_header {
-    display: flex;
-    justify-content: center;
-    padding: 20px 0px;
-    border-bottom: 1px solid var(--gray-2);
-    font-weight: var(--text-bold);
-    font-size: 20px;
-}
-
-.page_body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     width: 100%;
+    height: 100svh;
+    display: flex;
+    flex-direction: column;
+    margin: 50px;
+}
+
+.settings_box {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--dark-first);
+    border-radius: 4px;
+}
+
+.header {
+    background-color: var(--dark-second);
+    padding: 8px 12px;
+    border-radius: 4px 4px 0px 0px;
 }
 
 .page_body_box {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 12px;
+    padding: 12px;
 }
 
 .foler_box_change {
@@ -32,28 +31,46 @@
 }
 
 
-.icon_box {
+
+
+.setting_box {
     display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 8px;
 }
 
 .name_box {
     display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.name_muted {
+    color: var(--text-muted);
+}
+
+.name_box_text {
+    display: flex;
     flex-direction: column;
 }
+
 
 .version_input {
     display: flex;
 }
 
 .input {
-    border: 2px solid var(--brand-color-1);
-    background-color: var(--background-second);
+    border: none;
+    background-color: var(--dark-second);
+    border-radius: 4px;
     color: var(--text-white);
     padding: 4px 8px;
     outline: none;
+    height: 100%;
+    display: flex;
+    width: 100%;
 }
+
 
 .input_icon {
     margin: auto;
@@ -73,41 +90,54 @@
 }
 
 
+.icon_box {
+    background-color: var(--dark-second);
+    border-radius: 4px;
+    max-height: 100%;
+    display: flex;
+}
+
+
 
 
 
 .page_basement {
     display: flex;
-    border-top: 1px solid var(--background-second);
-    padding-top: 20px;
+    margin-top: 20px;
 }
 
 .basement_btns_box {
     display: flex;
-    margin-left: auto;
-    gap: 8px;
-    padding-right: 16px;
+    gap: 40px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }
 
 .basement_btn {
-    padding: 8px 24px;
+    padding: 8px 40px;
     background-color: rgba(255, 0, 0, 0);
-    border: 1px solid var(--gray-1);
+    border: 1px solid var(--dark-first);
     cursor: pointer;
-    color: var(--text-white);
+    color: var(--text-main);
+    border-radius: 4px;
+    transition: .2s;
 }
 
 .basement_btn:hover {
-    background-color: var(--gray-2);
+    background-color: var(--dark-second);
+    transition: .2s;
 }
 
 .basement_btn_main {
-    background-color: var(--brand-color-1);
+    background-color: var(--dark-first);
     border: none;
+    transition: .2s;
 }
 
 .basement_btn_main:hover {
-    background-color: var(--brand-color-1);
+    background-color: var(--dark-second);
+    transition: .2s;
     filter: brightness(1.5);
 }
 

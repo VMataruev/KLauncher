@@ -41,7 +41,7 @@ function CustomSelect({
                                 alt={selectedOption.name}
                                 className={styles.icon}
                             />
-                            {/* <span>{selectedOption.name}</span> */}
+                            <span>{selectedOption.name}</span>
                         </div>
                     ) : (
                         <span>{placeholder}</span>
@@ -67,7 +67,7 @@ function CustomSelect({
                                     alt={option.name}
                                     className={styles.icon}
                                 />
-                                {/* <span>{option.name}</span> */}
+                                <span>{option.name}</span>
                             </button>
                         ))}
                     </div>

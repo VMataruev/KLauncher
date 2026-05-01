@@ -134,7 +134,7 @@
     position: absolute;
     z-index: 10;
     /* left: -70%; */
-    background-color: var(--background-second);
+    background-color: var(--dark-second);
     display: flex;
     flex-direction: column;
     gap: 4px;
@@ -152,11 +152,11 @@
     background-color: none;
     border: none;
     background: none;
-    color: var(--text-white);
+    color: var(--text-main);
     display: flex;
     padding: 8px 12px;
 }
 
 .more_button:hover {
-    background-color: var(--gray-1);
+    background-color: var(--dark-third);
 }

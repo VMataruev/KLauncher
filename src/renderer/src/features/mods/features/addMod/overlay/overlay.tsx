@@ -60,7 +60,12 @@ function Overlay({onClose, modID}: OverlayProps): React.JSX.Element {
     useEffect(() => {
         const getModReleases = async () => {
             const mod = await window.api.getRequest(`https://mods.vintagestory.at/api/mod/${modID}`);
-            const releases = mod.mod.releases;
+            if (!mod.success) {
+                await new Promise(resolve => setTimeout(resolve, 5000)); // ждем 5 сек
+                getModReleases();
+                return;
+            };
+            const releases = mod.res.mod.releases;
             console.log(releases)
             setReleases(releases);
             setModName(mod.mod.name)

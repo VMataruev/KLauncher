@@ -15,8 +15,12 @@ function Home({}): React.JSX.Element {
     useEffect(() => {
         const getBlogData = async () => {
             const res = await window.api.getRequest('https://www.vintagestory.at/blog.html/');
-            // TODO: error if blog can't load
-            const $ = cheerio.load(res);
+            if (!res.success) {
+                await new Promise(resolve => setTimeout(resolve, 5000)); // ждем 5 сек
+                getBlogData();
+                return;
+            };
+            const $ = cheerio.load(res.res);
 
             const parsedArticles: BlogArticle[] = $("article.cCmsCategoryFeaturedEntry")
             .map((_, el) => {

@@ -41,7 +41,7 @@ declare global {
     ) => () => void;
     renameFolder: (oldPath: string, newPath: string) => Promise
     clearFolder: (folderPath: string) => Promise
-    getModsInCache: () => Promise<{ mods: any[]; fromCache: boolean }>;
+    getModsInCache: () => Promise;
     clearModsCache: () => Promise<boolean>;
     getCookies: () => Promise
     gameStart: (folder: string) => Promise

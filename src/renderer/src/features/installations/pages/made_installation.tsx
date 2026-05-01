@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { addNotification } from '@renderer/features/overlay/notification/features/notificationList';
 import CustomSelect from '@renderer/components/CustomSelect/CustomSelect';
 import iconOptions from '@renderer/components/Installation_icons';
+import { Search } from "iconoir-react";
 
 function Made_installation(): React.JSX.Element {
     
@@ -164,35 +165,40 @@ function Made_installation(): React.JSX.Element {
     
     return(
         <div className={styles.page_wrapper}>
-            <div className={styles.page_header}>
-                <div>Create installation</div>
-            </div>
+            <div className={styles.settings_box}>
+                <div className={styles.header}>
+                    <div>Basics</div>
+                </div>
 
-            <div className={styles.page_body}>
                 <div className={styles.page_body_box}>
-                    <div className={styles.icon_box}>
-                        <CustomSelect value={selectedIcon} onChange={(id) => {
-                            const selected = iconOptions.find(i => i.id === id);
-                            if (!selected) return;
-
-                            setSelectedIcon(id);
-                            setInstallationBuild(prev => ({
-                                ...prev,
-                                img: selected.icon // сохраняем путь, а не id
-                            }));
-                        }} options={iconOptions}></CustomSelect>
-                    </div>
-
                     <div className={styles.name_box}>
-                        <div className={styles.name}>Name</div>
-                        <input type="text" className={styles.input} onChange={(e) => {setInstallationBuild((prev) => ({
-                            ...prev,
-                            name: e.target.value
-                        }))}} 
-                        placeholder='No name'/>
+                        <div className={styles.setting_box}>
+                            <div className={styles.name}>Name</div>
+                            <div className={styles.input_box_name}>
+                                <input type="text" className={styles.input} onChange={(e) => {setInstallationBuild((prev) => ({
+                                    ...prev,
+                                    name: e.target.value
+                                }))}} 
+                                placeholder='No name'/>
+                                <div className={styles.name_muted}>From 5 to 50 symbols</div>
+                            </div>
+                        </div>
+
+                        <div className={styles.icon_box}>
+                            <CustomSelect value={selectedIcon} onChange={(id) => {
+                                const selected = iconOptions.find(i => i.id === id);
+                                if (!selected) return;
+
+                                setSelectedIcon(id);
+                                setInstallationBuild(prev => ({
+                                    ...prev,
+                                    img: selected.icon // сохраняем путь, а не id
+                                }));
+                            }} options={iconOptions}></CustomSelect>
+                        </div>
                     </div>
                     
-                    <div className={styles.version_box}>
+                    <div className={styles.setting_box}>
                         <div className={styles.version}>Version</div>
 
                         <select className={`${styles.version_input} ${styles.input}`} name="" id="" onChange={(e) => {
@@ -214,11 +220,11 @@ function Made_installation(): React.JSX.Element {
 
                     
 
-                    <div className={styles.foler_box}>
+                    <div className={styles.setting_box}>
                         <div className={styles.foler_header}>Installation Folder</div>
+                        <Search onClick={handleSelectFolder} className={styles.folder_btn}></Search>
                         <div className={styles.foler_box_change}>
                             <div className={`${styles.folder_name} ${styles.input}`}>{folderPath ? folderPath : 'Default'}</div>
-                            <button onClick={handleSelectFolder} className={styles.folder_btn}>Observe</button>
                         </div>
                     </div>
 
@@ -229,7 +235,7 @@ function Made_installation(): React.JSX.Element {
             <div className={styles.page_basement}>
                 <div className={styles.basement_btns_box}>
                     <button className={styles.basement_btn} onClick={() => cancel_installation()}>Cancel</button>
-                    <button className={`${styles.basement_btn} ${styles.basement_btn_main}`} onClick={() => storeBuild()}>Install</button>
+                    <button className={`${styles.basement_btn} ${styles.basement_btn_main}`} onClick={() => storeBuild()}>Save</button>
                 </div>
             </div>
         </div>

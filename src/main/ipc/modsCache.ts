@@ -11,19 +11,29 @@ ipcMain.handle("get-mods-in-cache", async () => {
 
     if (modsCache && now - modsCacheTime < CACHE_TTL) {
         return {
+            status: "ok",
             mods: modsCache,
             fromCache: true
         };
     }
 
-    const res = await axios.get("http://mods.vintagestory.at/api/mods");
-    modsCache = res.data.mods;
-    modsCacheTime = now;
+    try {
+        const res = await axios.get("http://mods.vintagestory.at/api/mods");
+        modsCache = res.data.mods;
+        modsCacheTime = now;
 
-    return {
-        mods: modsCache,
-        fromCache: false
-    };
+        return {
+            status: "ok",
+            mods: modsCache,
+            fromCache: false
+        };
+    } catch (error) {
+        return {
+            status: "error",
+            error: error
+        }
+    }
+    
 });
 
 ipcMain.handle("clear-mods-cache", async () => {
