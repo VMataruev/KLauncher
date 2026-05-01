@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { addNotification } from '@renderer/features/overlay/notification/features/notificationList';
 import iconOptions from '@renderer/components/Installation_icons';
 import { MoreHoriz } from 'iconoir-react';
+import { v4 as uuidv4 } from 'uuid';
 
 function Installations(): React.JSX.Element {
   const navigate = useNavigate();
@@ -60,8 +61,52 @@ function Installations(): React.JSX.Element {
         delete updated[installationID];
         return updated;
     });
+
     addNotification({status: "success", msg: "Installations deleted successfully"})
   };
+
+
+  const createInstallationCopy = async (installation) => {
+    const newID = uuidv4();
+    const copyName = `${installation.name}-copy`;
+    const copyFolder = `${installation.folder}-copy`;
+    const copyInstallation = {
+      ...installation,
+      id: newID,
+      name: copyName,
+      folder: copyFolder
+    }
+
+    // check if copy already created
+    const installations = await window.api.getStore('installations');
+    
+    // Проверяем, существует ли уже установка с таким именем
+    const isNameExists = Object.values(installations).some(
+        (inst: any) => inst.name === copyName
+    );
+    
+    if (isNameExists) {
+        addNotification({
+            status: "error", 
+            msg: `Installation with name "${copyName}" already exists`
+        });
+        return;
+    }
+    
+    // Сохраняем новую установку
+    await window.api.setStore(`installations.${newID}`, copyInstallation);
+
+    const installationsFolder = await window.api.getStore('installationsFolder');
+    await window.api.createFolder(`${installationsFolder}/${copyName}`, copyName);
+    await window.api.copyFiles(`${installation.folder}`, `${installationsFolder}/${copyName}`)
+
+    setInstallations(prev => ({
+      ...prev,
+      [newID]: copyInstallation
+    }))
+    setMoreBtnId("")
+    addNotification({status: "success", msg: `${copyName} created`})
+  }
   
 
   return (
@@ -95,7 +140,7 @@ function Installations(): React.JSX.Element {
                       ><MoreHoriz></MoreHoriz></button>
                       <div className={`${styles.installation_button_buttons_box} ${moreBtnId == installation.id ? styles.installation_button_buttons_box_visible : <></>}`}>
                         <button className={styles.more_button} onClick={() => navigate(`/installation_settings/${installation.id}`)}>Settings</button>
-                        <button className={styles.more_button}>Copy</button>
+                        <button className={styles.more_button} onClick={() => createInstallationCopy(installation)}>Copy</button>
                         <button className={styles.more_button} onClick={() => {deleteInstallation(installation.id)}}>Delete</button>
                       </div>
                     </div>

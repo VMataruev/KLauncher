@@ -99,7 +99,7 @@ function Mod(): React.JSX.Element {
                             <div className={styles.mod_box_created}>Created: {mod.created}</div>
                             <div className={styles.mod_box_last_modified}>Last modified: {mod.lastmodified}</div>
                             <div className={styles.mod_box_downloads}>Downloads: {mod.downloads}</div>
-                            <AddModButton modID={mod.modid}></AddModButton>
+                            <AddModButton mod={mod}></AddModButton>
                         </div>
                     </div>
 

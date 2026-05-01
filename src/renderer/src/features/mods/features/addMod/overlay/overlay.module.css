@@ -14,10 +14,10 @@
 }
 
 .overlay_main_box {
-    background-color: var(--background-main);
+    background-color: var(--dark-background);
     padding: 20px 60px;
     border-radius: 6px;
-
+    min-width: 1000px;
 }
 
 .overlay_header {
@@ -44,7 +44,7 @@
 
 .overlay_select {
     width: 100%;
-    background-color: var(--background-second);
+    background-color: var(--dark-first);
     border: none;
     padding: 12px;
     border-radius: 4px;
@@ -62,7 +62,7 @@
 }
 
 table {
-    background-color: var(--background-second);
+    background-color: var(--dark-first);
     /* padding: 4px 8px; */
     border-radius: 6px;
     width: 100%;
@@ -70,19 +70,22 @@ table {
 
     width: 100%;
     border-collapse: collapse;
+
 }
 
 thead th {
     position: sticky;
     top: 0;
-    background: var(--dark-3); /* обязательно, иначе будет прозрачная */
+    background: var(--dark-third); /* обязательно, иначе будет прозрачная */
     z-index: 1;
     padding: 12px 24px;
 }
 
-tr:nth-child(even) {
-    background-color: var(--gray-2);
-}
+/* tr {
+    background-color: var(--dark-first);
+} */
+
+
 
 
 
@@ -104,6 +107,7 @@ td {
     align-items: center;
     justify-content: start;
     gap: 4px;
+
 }
 
 .tags_scroll > div {
@@ -113,5 +117,11 @@ td {
 
 .download_button {
     cursor: pointer;
+    color: var(--link);
+}
+
+.download_button:hover {
+    color: var(--link-hover);
+    background-color: var(--dark-second);
 }
 

@@ -1,41 +1,44 @@
 import { useEffect, useState } from 'react';
 import styles from '../styles/installation_settings.module.css';
 import { v4 as uuidv4 } from 'uuid';
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import { addNotification } from '@renderer/features/overlay/notification/features/notificationList';
 import CustomSelect from '@renderer/components/CustomSelect/CustomSelect';
 import iconOptions from '@renderer/components/Installation_icons';
 import { Search } from 'iconoir-react';
 import Loader from '@renderer/components/loader/loader';
+import { OpenNewWindow } from 'iconoir-react';
 
 function Installation_settings(): React.JSX.Element {
     
     const { id } = useParams();
     const installationID = id;
 
-    type Installation = {
-        id: string;
-        img: string;
-        name: string;
-        version: string;
-        version_link: string;
-        mods: string[];
-        folder: string | null;
-    };
+    // type Installation = {
+    //     id: string;
+    //     img: string;
+    //     name: string;
+    //     version: string;
+    //     version_link: string;
+    //     mods: string[];
+    //     folder: string | null;
+    // };
 
-    const [ installationBuild, setInstallationBuild ] = useState<Installation>({
-        id: "",
-        img: "",
-        name: "",
-        version: "",
-        version_link: "",
-        mods: [],
-        folder: ""
-    });
+    // const [ installationBuild, setInstallationBuild ] = useState<any>({
+    //     id: "",
+    //     img: "",
+    //     name: "",
+    //     version: "",
+    //     version_link: "",
+    //     mods: [],
+    //     folder: ""
+    // });
+
+    const [ installationBuild, setInstallationBuild ] = useState<any>();
+
     const [ oldPath, setOldPath ] = useState("");
     const [ oldVersion, setOldVersion ] = useState("");
 
-    const [ modsFullData, setModsFullData ] = useState<any[]>([]);
     const [ modsLoader, setModsLoader ] = useState<boolean>(true);
     useEffect(() => {
         const getInstallationData = async () => {
@@ -43,18 +46,6 @@ function Installation_settings(): React.JSX.Element {
             setInstallationBuild(data);
             setOldPath(data.folder);
             setOldVersion(data.version);
-
-            const modsData: any[] = [];
-            for (const modID of data.mods) {
-                const modData = await window.api.getRequest(`http://mods.vintagestory.at/api/mod/${modID}`);
-                // if (!modData.success) {addNotification({status: "error", msg: ""})}
-                if (modData.res.mod.logofile == null) {
-                    modData.res.mod.logofile = "https://mods.vintagestory.at/web/img/mod-default.png";
-                };
-                modsData.push(modData);
-            }
-            setModsFullData(modsData);
-            console.log(modsData);
             setModsLoader(false);
         };
         getInstallationData();
@@ -102,7 +93,7 @@ function Installation_settings(): React.JSX.Element {
 
     const [ modsToDelete, setModsToDelete ] = useState<number[]>([]);
     const deleteMod = async (targetModID) => {
-        const updatedMods = installationBuild.mods.filter((modID: string) => modID !== targetModID);
+        const updatedMods = installationBuild.mods.filter((mod: any) => mod.modid !== targetModID);
         // await window.api.setStore(`installations.${installationBuild.id}.mods`, updatedMods);
         setInstallationBuild((prev) => ({
             ...prev,
@@ -148,6 +139,14 @@ function Installation_settings(): React.JSX.Element {
         // if (!installationBuild.folder) {
         //     return setBuildStatus("choose folder first");
         // };
+
+        if (installationBuild.name.length < 3) {
+            return addNotification({status: "warning", msg: "Installation name can't be less then 3 symbols"})
+        };
+
+        if (installationBuild.name.length > 50) {
+            return addNotification({status: "warning", msg: "Installation name can't be more then 50 symbols"})
+        }
 
 
 
@@ -246,14 +245,14 @@ function Installation_settings(): React.JSX.Element {
                                         ...prev,
                                         name: e.target.value
                                     }))}} 
-                                    placeholder={installationBuild.name}
-                                    value={installationBuild.name}/>
+                                    placeholder={installationBuild?.name}
+                                    value={installationBuild?.name}/>
                                     <div className={styles.name_muted}>From 5 to 50 symbols</div>
                                 </div>
                             </div>
 
                             <div className={styles.icon_box}>
-                                <CustomSelect value={installationBuild.img} onChange={(id) => {
+                                <CustomSelect value={installationBuild?.img} onChange={(id) => {
                                     const selected = iconOptions.find(i => i.id === id);
                                     if (!selected) return;
 
@@ -294,12 +293,14 @@ function Installation_settings(): React.JSX.Element {
                             <div className={`${styles.input} ${styles.input_mods}`}>
                                 <div className={styles.mods_grid}>
                                 {installationBuild.mods.length == 0 ? <div>No mods</div> :
-                                Object.values(modsFullData).filter(mod => installationBuild.mods.includes(mod.res.mod.modid)).map(mod => (
+                                installationBuild.mods.map(mod => (
                                     <div className={styles.mod_box}>
-                                        <img className={styles.mod_img} src={mod.res.mod.logofile} alt="" />
+                                        <img className={styles.mod_img} src={mod.logo} alt="" />
+                                        <Link className={styles.link_to_mod} to={`/mod/${mod.modid}`}><OpenNewWindow></OpenNewWindow></Link>
                                         <div className={styles.mod_basement}>
-                                            <div className={styles.mod_name}>{mod.res.mod.name}</div>
-                                            <button onClick={() => {deleteMod(mod.res.mod.modid)}} className={styles.mod_delete_btn}>Delete</button>
+                                            <div className={styles.mod_name}>{mod.name}</div>
+                                            <div className={styles.mod_version}>{mod.version}</div>
+                                            <button onClick={() => {deleteMod(mod.modid)}} className={styles.mod_delete_btn}>Delete</button>
                                         </div>
                                     </div>
                                 ))
@@ -315,7 +316,7 @@ function Installation_settings(): React.JSX.Element {
                             <div className={styles.folder_box}>
                                 <Search onClick={handleSelectFolder} className={styles.folder_btn}></Search>
                                 <div className={styles.foler_box_change}>
-                                    <div className={`${styles.folder_name} ${styles.input}`}>{installationBuild.folder}</div>
+                                    <div className={`${styles.folder_name} ${styles.input}`}>{installationBuild?.folder}</div>
                                 </div>
                             </div>
                         </div>

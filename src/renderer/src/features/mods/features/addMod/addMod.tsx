@@ -2,13 +2,13 @@ import { useState } from "react";
 import styles from "./addMod.module.css"
 import Overlay from "./overlay/overlay";
 
-function AddModButton({modID}): React.JSX.Element {
+function AddModButton({mod}): React.JSX.Element {
 
     const [ overlay, setOverlay ] = useState<boolean>(false);
 
     return(
         <>
-            {overlay ? <Overlay modID={modID} onClose={(e) => {setOverlay(false); e.stopPropagation()}}></Overlay> : <></>}
+            {overlay ? <Overlay mod={mod} onClose={(e) => {setOverlay(false); e.stopPropagation()}}></Overlay> : <></>}
             <div className={styles.add_mod_button_box}>
                 <button className={styles.add_mod_button} onClick={(e) => {
                     e.stopPropagation();

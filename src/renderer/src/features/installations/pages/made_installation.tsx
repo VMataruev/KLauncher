@@ -92,6 +92,14 @@ function Made_installation(): React.JSX.Element {
             return addNotification({status: "warning", msg: "Choose name first"})
         };
 
+        if (installationBuild.name.length < 3) {
+            return addNotification({status: "warning", msg: "Installation name can't be less then 3 symbols"})
+        };
+
+        if (installationBuild.name.length > 50) {
+            return addNotification({status: "warning", msg: "Installation name can't be more then 50 symbols"})
+        }
+
         if (!installationBuild.version) {
             return addNotification({status: "warning", msg: "Choose version first"})
         };
@@ -180,7 +188,7 @@ function Made_installation(): React.JSX.Element {
                                     name: e.target.value
                                 }))}} 
                                 placeholder='No name'/>
-                                <div className={styles.name_muted}>From 5 to 50 symbols</div>
+                                <div className={styles.name_muted}>From 3 to 50 symbols</div>
                             </div>
                         </div>
 

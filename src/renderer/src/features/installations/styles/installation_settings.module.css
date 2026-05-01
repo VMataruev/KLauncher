@@ -126,7 +126,7 @@
     background-color: var(--dark-third);
     display: flex;
     flex-direction: column;
-    gap: 4px;
+
     bottom: 0;
     height: 33%;
 }
@@ -136,6 +136,36 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    color: var(--text-main);
+}
+
+.link_to_mod {
+    position: absolute;
+    right: 0;
+    padding: 4px;
+    background-color: var(--dark-third);
+    margin: 4px;
+    top: -35px;
+    transition: .2s;
+    color: var(--link);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+}
+
+.link_to_mod:hover {
+    color: var(--link-hover);
+}
+
+.mod_box:hover .link_to_mod {
+    top: 0;
+    transition: .2s;
+}
+
+.mod_version {
+    color: var(--text-second);
+    padding: 0px 4px;
 }
 
 
