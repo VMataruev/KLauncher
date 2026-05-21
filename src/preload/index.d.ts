@@ -13,8 +13,20 @@ declare global {
     openLogin: () => Promise<any>
     getData: <T = any>() => Promise<T>  
     isFolderEmpty: (folderPath) => Promise<boolean>
-    download_and_install_game: (url: string, outputPath: string) => Promise
-    downloadProgress: (
+
+    // download_and_install_game: (url: string, outputPath: string) => Promise
+    // downloadProgress: (
+    //   callback: (data: {
+    //     state: string;
+    //     receivedBytes?: number;
+    //     totalBytes?: number;
+    //     percent?: number;
+    //     fileName?: string;
+    //   }) => void
+    // ) => () => void;
+
+    downloadGame: (url: string, outputPath: string) => Promise
+    downloadGameProgress: (
       callback: (data: {
         state: string;
         receivedBytes?: number;
@@ -23,6 +35,20 @@ declare global {
         fileName?: string;
       }) => void
     ) => () => void;
+
+    extractGame: (url: string, outputPath: string) => Promise
+    extractGameProgress: (
+      callback: (data: {
+          state: string;           // 'started' | 'extracting' | 'completed' | 'failed' | 'error'
+          percent?: number;        // процент распаковки (0-100)
+          fileName?: string;       // имя файла
+          message?: string;        // дополнительное сообщение
+          extractedFiles?: number; // количество извлечённых файлов
+          totalFiles?: number;     // всего файлов
+          currentFile?: string;    // текущий распаковываемый файл
+      }) => void
+    ) => () => void;
+
     open_file: (path: string) => Promise
     openExternalLink: (url: string) => Promise
     createFolder: (folderPath: string, folderName: string) => Promise

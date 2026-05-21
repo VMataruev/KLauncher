@@ -14,14 +14,36 @@ const api = {
   openLogin: (): Promise<void> => ipcRenderer.invoke('open-login'),
   getData: <T = any>(): Promise<T> => ipcRenderer.invoke('get-data'),
   isFolderEmpty: (folderPath) => ipcRenderer.invoke('isFolderEmpty', folderPath),
-  download_and_install_game: (url: string, outputPath: string) => ipcRenderer.invoke('download_and_install_game', url, outputPath),
-  downloadProgress: (callback: (data: any) => void) => {
+
+  // download_and_install_game: (url: string, outputPath: string) => ipcRenderer.invoke('download_and_install_game', url, outputPath),
+  // downloadProgress: (callback: (data: any) => void) => {
+  //   const listener = (_event: unknown, data: any) => callback(data);
+  //   ipcRenderer.on('download-progress', listener);
+  //   return () => {
+  //     ipcRenderer.removeListener('download-progress', listener);
+  //   }
+  // },
+
+  downloadGame: (url: string, outputPath: string) => ipcRenderer.invoke('download-Game', url, outputPath),
+  downloadGameProgress: (callback: (data: any) => void) => {
     const listener = (_event: unknown, data: any) => callback(data);
-    ipcRenderer.on('download-progress', listener);
+    ipcRenderer.on('download-game-progress', listener);
     return () => {
-      ipcRenderer.removeListener('download-progress', listener);
+      ipcRenderer.removeListener('download-game-progress', listener)
     }
   },
+
+  extractGame: (url: string, outputPath: string) => ipcRenderer.invoke('extract-Game', url, outputPath),
+  extractGameProgress: (callback: (data: any) => void) => {
+    const listener = (_event: unknown, data: any) => callback(data);
+    ipcRenderer.on('extract-game-progress', listener);
+    return () => {
+      ipcRenderer.removeListener('extract-game-progress', listener)
+    }
+  },
+
+
+
   open_file: (path: string) => ipcRenderer.invoke('open-file', path),
   openExternalLink: (url: string) => ipcRenderer.invoke("open-external-link", url),
   createFolder: (folderPath: string, folderName: string) => ipcRenderer.invoke('create-folder', folderPath, folderName),

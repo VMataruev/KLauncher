@@ -1,0 +1,34 @@
+.progressBar {
+    background-color: var(--dark-background);
+    position: fixed;
+    padding:12px;
+    bottom: 0;
+    left: 150px; /* ширина сайдбара */
+    width: calc(100% - 150px);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+}
+
+.bar {
+    position: relative;
+    width: 100%;
+    height: 30px;
+    background-color: var(--dark-second);
+    display: flex;
+    align-items: center;
+}
+
+.bar_complete {
+    position: absolute;
+    height: 100%;
+    background-color: var(--success);
+    transition: .5s;
+}
+
+.text_info {
+    position: absolute;
+    margin-left: 8px;
+    color: var(--dark-second);
+}

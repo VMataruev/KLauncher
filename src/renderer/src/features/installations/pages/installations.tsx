@@ -86,6 +86,7 @@ function Installations(): React.JSX.Element {
     );
     
     if (isNameExists) {
+        setMoreBtnId("")
         addNotification({
             status: "error", 
             msg: `Installation with name "${copyName}" already exists`
@@ -98,13 +99,13 @@ function Installations(): React.JSX.Element {
 
     const installationsFolder = await window.api.getStore('installationsFolder');
     await window.api.createFolder(`${installationsFolder}/${copyName}`, copyName);
-    await window.api.copyFiles(`${installation.folder}`, `${installationsFolder}/${copyName}`)
+    await window.api.copyFiles(`${installation.folder}`, `${installationsFolder}/${copyName}`);
 
     setInstallations(prev => ({
       ...prev,
       [newID]: copyInstallation
     }))
-    setMoreBtnId("")
+    setMoreBtnId("");
     addNotification({status: "success", msg: `${copyName} created`})
   }
   

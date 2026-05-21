@@ -4,9 +4,8 @@
 }
 
 .main_wrapper {
-    width: 100%;
+    width: calc(100% - 150px); /* учитываем сайдбар */
     min-height: 100svh;
-
 }
 
 .header {
@@ -81,7 +80,7 @@
 
 
 .mod_text {
-
+    
 }
 
 .mod_text a {

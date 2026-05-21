@@ -7,11 +7,14 @@ ipcMain.handle('download_and_install_game', async (ipcEvent, url: string, output
     return new Promise((resolve, reject) => {
         session.defaultSession.once('will-download', (_downloadEvent, item, webContents) => {
             const fileName = path.basename(new URL(url).pathname);
-            const fullPath = path.join(outputPath, fileName);
+            // const toolPath = path.join(process.resourcesPath, "tools", "innoextract.exe");
+            const toolPath = "E:\\Coding\\KLauncher\\KLauncher\\resources\\tools\\innounp.exe"
+            const gameInstaller = path.join(outputPath, fileName);
+            const logPath = path.join(outputPath, 'install.log');
             // console.log(outputPath);
             // console.log(fileName);
-            // console.log(fullPath);
-            item.setSavePath(fullPath);
+            // console.log(gameInstaller);
+            item.setSavePath(gameInstaller);
 
 
             item.on('updated', (event, state) => {
@@ -43,16 +46,30 @@ ipcMain.handle('download_and_install_game', async (ipcEvent, url: string, output
                         fileName,
                     });
 
-                    spawn(fullPath, ["/SILENT", "/SP-", `/DIR=${outputPath}`], {
-                    // spawn(fullPath, [`/DIR="x:\dirname"`], {
-                        detached: true,
-                        stdio: 'ignore'
-                    }).unref();
+
+                    // execFile(toolPath, ["-d", "game", installer], (err) => {
+                    //     if (err) console.error(err);
+                    // });
+                    const child = spawn(toolPath, [
+                        "-x", 
+                        gameInstaller,
+                    ], {
+                    // spawn(gameInstaller, [`/DIR="x:\dirname"`], {
+                        detached: false,
+                        stdio: 'pipe',
+                        cwd: outputPath
+                    });
+
+                    // child.unref();
+
+                    child.stdout?.on('data', (data) => {
+                        console.log(data.toString());
+                    });
 
                     resolve({
                         success: true,
                         message: 'downloaded and started',
-                        path: fullPath    
+                        path: gameInstaller    
                     });
                 } else {
                     ipcEvent.sender.send('download-progress', {

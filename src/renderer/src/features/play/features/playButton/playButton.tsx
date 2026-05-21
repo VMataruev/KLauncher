@@ -15,6 +15,27 @@ function PlayButton({installation_id}): React.JSX.Element {
     }, [])
     
     const [ isPlayButtonInWork, setIsPlayButtonInWork ] = useState<boolean>(false);
+    useEffect(() => {
+        const unsubscribe = window.api.downloadGameProgress((data) => {
+            const percent = data.percent;
+            setIsPlayButtonInWork(percent !== 100);
+        })
+        return () => {
+            unsubscribe()
+        }
+    }, []);
+
+    useEffect(() => {
+        const unsubscribe = window.api.extractGameProgress((data) => {
+            const percent = data.percent;
+            setIsPlayButtonInWork(percent !== 100);
+        })
+        return () => {
+            unsubscribe()
+        }
+    }, []);
+    
+    
     // Проверяет папку, докичает версии, перекидывает моды и запускает игру
     const playButton = async () => {
         setIsPlayButtonInWork(true);
@@ -24,16 +45,26 @@ function PlayButton({installation_id}): React.JSX.Element {
         await window.api.copyFiles(`${installation.folder}\\Mods`, modsFolder);
 
         const cleanedVersion = installation.version.slice(1);
-        const isVersionInstalled = await window.api.hasFolder(versionsFolder, cleanedVersion);
-        console.log(isVersionInstalled)
+
+        let isVersionInstalled = false;
+        const isVersionFolderExist = await window.api.hasFolder(versionsFolder, cleanedVersion);
+        const isVersionExeExist = await window.api.isFileExist(`${versionsFolder}/{app}/Vintagestory.exe`);
+        if (isVersionFolderExist && isVersionExeExist) {isVersionInstalled = true};
         
         if (!isVersionInstalled) {
+            // if (isVersionExeExist) {} тут должна распаковываться игра, а не скичаться заново
             await window.api.createFolder(versionsFolder, cleanedVersion);
-            await window.api.download_and_install_game(installation.version_link, `${versionsFolder}\\${cleanedVersion}`);
+            // window.api.download_and_install_game(installation.version_link, `${versionsFolder}\\${cleanedVersion}`);
+            await window.api.downloadGame(installation.version_link, `${versionsFolder}\\${cleanedVersion}`);
+            await window.api.extractGame(installation.version_link, `${versionsFolder}\\${cleanedVersion}`);
         };
 
         const answ = await window.api.gameStart(`${versionsFolder}\\${cleanedVersion}`);
-        addNotification({status: answ.status, msg: answ.msg})
+        if (answ.status) {
+            addNotification({status: answ.status, msg: answ.msg})
+        };
+
+        
         setIsPlayButtonInWork(false);
     };
 

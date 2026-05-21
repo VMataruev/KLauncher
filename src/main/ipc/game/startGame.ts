@@ -16,16 +16,26 @@ ipcMain.handle("game-start", async (_event, folder: string) => {
     }
 
     const exePath = path.join(folder, "Vintagestory.exe");
+    const fs = await import('fs');
+    if (!fs.existsSync(exePath)) {
+        return {
+            status: "error",
+            msg: `Game executable not found at: ${exePath}`
+        };
+    }
+
     game = spawn(exePath, [], {
         cwd: folder,
         detached: false
     });
-    console.log("Game started");
-    status = "success"
-    msg = "Game started"
+    // console.log("Game started");
+    // status = "success"
+    // msg = "Game started"
 
     game.on('spawn', () => {
         console.log('Process spawned');
+        status = "success"
+        msg = "Game started"
     });
 
     game.on('close', (code) => {
@@ -48,6 +58,8 @@ ipcMain.handle("game-start", async (_event, folder: string) => {
 
     game.stderr?.on('data', (data) => {
         console.error('[GAME ERROR]', data.toString());
+        status = "error";
+        msg = `[GAME ERROR] ${data.toString()}`;
     });
 
     return {status: status, msg: msg}

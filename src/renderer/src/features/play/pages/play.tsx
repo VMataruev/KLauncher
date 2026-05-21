@@ -2,6 +2,7 @@ import styles from "../styles/play.module.css"
 import img from "../../../assets/background.png"
 import PlayButton from "../features/playButton/playButton"
 import { useEffect, useState } from "react";
+import ProgressBar from "../features/progressBar/progressBar";
 
 function Play(): React.JSX.Element {
     type Installation = {
@@ -40,6 +41,7 @@ function Play(): React.JSX.Element {
     return(
         <>
             <div className={styles.page_wrapper}>
+                <ProgressBar></ProgressBar>
                 <div className={styles.main_box}>
                     <div className={styles.h1}>Vintage Story</div>
                     <div className={styles.span}>Place where fun and creativity begin</div>
