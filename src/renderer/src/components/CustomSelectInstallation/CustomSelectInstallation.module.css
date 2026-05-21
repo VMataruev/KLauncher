@@ -1,0 +1,9 @@
+.select_wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 12px;
+    background-color: var(--dark-first);
+    padding: 8px 12px;
+    width: 500px;
+}

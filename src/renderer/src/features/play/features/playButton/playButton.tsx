@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styles from './playButton.module.css'
 import { addNotification } from "@renderer/features/overlay/notification/features/notificationList";
 
-function PlayButton({installation_id}): React.JSX.Element {
+function PlayButton(): React.JSX.Element {
 
     const [ versionsFolder, setVersionsFolder ] = useState<string>("");
     const [ modsFolder, setModsFolder ] = useState<string>("");
@@ -37,7 +37,8 @@ function PlayButton({installation_id}): React.JSX.Element {
     // Проверяет папку, докичает версии, перекидывает моды и запускает игру
     const playButton = async () => {
         setButtonProcess('downloading');
-        const installation = await window.api.getStore(`installations.${installation_id}`);
+        const installation_to_start = await window.api.getStore('installation_to_start');
+        const installation = await window.api.getStore(`installations.${installation_to_start}`);
 
         await window.api.clearFolder(modsFolder);
         await window.api.copyFiles(`${installation.folder}\\Mods`, modsFolder);

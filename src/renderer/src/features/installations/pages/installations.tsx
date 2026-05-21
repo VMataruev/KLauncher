@@ -6,6 +6,7 @@ import { addNotification } from '@renderer/features/overlay/notification/feature
 import iconOptions from '@renderer/components/Installation_icons';
 import { MoreHoriz } from 'iconoir-react';
 import { v4 as uuidv4 } from 'uuid';
+import PlayButton from '@renderer/features/play/features/playButton/playButton';
 
 function Installations(): React.JSX.Element {
   const navigate = useNavigate();
@@ -77,6 +78,15 @@ function Installations(): React.JSX.Element {
       folder: copyFolder
     }
 
+    const nameLength = installation.name.length;
+    if (nameLength >= 45) {
+      addNotification({
+        status: "error",
+        msg: "Cannot copy. The name would be too long"
+      });
+      return;
+    }
+
     // check if copy already created
     const installations = await window.api.getStore('installations');
     
@@ -133,6 +143,7 @@ function Installations(): React.JSX.Element {
                   </div>
                   <div className={styles.right_box}>
                     <button className={`${styles.installation_button} ${styles.installation_button_play}`}>Play</button>
+                    {/* <PlayButton></PlayButton> */}
                     <button className={styles.installation_button} onClick={() => openFolder(installation.folder)}>Folder</button>
 
                     <div className={styles.installation_button_more_box}>

@@ -1,0 +1,89 @@
+.select_wrapper {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--dark-first);
+    /* padding: 8px 12px; */
+    cursor: pointer;
+    user-select: none;
+}
+
+.select_wrapper:hover {
+    background-color: var(--dark-second);
+    transition: .2s;
+}
+
+.box_left {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+
+.box_right {
+    margin-right: 12px;
+    transition: .5s;
+}
+
+.turn {
+    transform: rotate(90deg);
+    transition: .5s;
+}
+
+.relative {
+    position: relative;
+    width: 100%;
+}
+
+.dropdown_wrapper {
+    width: 100%;
+    background-color: var(--dark-first);
+    position: absolute;
+
+    overflow: auto;
+
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-10px);
+
+    transition: all 0.25s ease;
+    pointer-events: none;
+}
+
+.open {
+    max-height: 300px; /* или больше */
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.closed {
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+}
+
+.card {
+    width: 100%;
+    display: flex;
+    /* padding: 8px 12px; */
+    align-items: center;
+    cursor: pointer;
+    transition: .2s;
+    user-select: none;
+}
+
+.card:hover {
+    background-color: var(--dark-second);
+    transition: .2s;
+}
+
+.img {
+    width: 50px;
+}
+
+.card_version {
+    color: var(--text-muted);
+}

@@ -1,12 +1,26 @@
 .page_wrapper {
+    position: relative;
     width: 100%;
     height: 100svh;
-    background-image: url("../../../assets/background-play.png");
+    background-image: url("../../../assets/background.png");
     background-repeat: no-repeat;
     background-size: cover;
     justify-content: space-between;
     display: flex;
     flex-direction: column;
+}
+
+.character {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    z-index: 0;
+}
+
+.main_box, .vid_box {
+    position: relative;
+    z-index: 1;
 }
 
 .main_box {
