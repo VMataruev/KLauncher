@@ -11,7 +11,7 @@ import Installation_settings from './features/installations/pages/installation_s
 import Play from './features/play/pages/play'
 
 
-import Header from './features/header/pages/header';
+import Header from './components/header/pages/header';
 
 function App(): React.JSX.Element {
     
