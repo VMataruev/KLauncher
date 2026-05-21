@@ -46,20 +46,30 @@ function PlayButton({installation_id}): React.JSX.Element {
 
         const cleanedVersion = installation.version.slice(1);
 
-        let isVersionInstalled = false;
         const isVersionFolderExist = await window.api.hasFolder(versionsFolder, cleanedVersion);
-        const isVersionExeExist = await window.api.isFileExist(`${versionsFolder}/{app}/Vintagestory.exe`);
-        if (isVersionFolderExist && isVersionExeExist) {isVersionInstalled = true};
-        
-        if (!isVersionInstalled) {
-            // if (isVersionExeExist) {} тут должна распаковываться игра, а не скичаться заново
+        const installationName = installation.version_link.split('/').pop();
+        const isInstallationExeExist = await window.api.isFileExist(`${versionsFolder}\\${cleanedVersion}\\${installationName}`);
+        const isAppFolderExist = await window.api.hasFolder(`${versionsFolder}\\${cleanedVersion}`, 'app');
+        // const isVersionExeExist = await window.api.isFileExist(`${versionsFolder}\\${cleanedVersion}\\app\\Vintagestory.exe`);
+
+
+        if (!isVersionFolderExist) {
             await window.api.createFolder(versionsFolder, cleanedVersion);
-            // window.api.download_and_install_game(installation.version_link, `${versionsFolder}\\${cleanedVersion}`);
             await window.api.downloadGame(installation.version_link, `${versionsFolder}\\${cleanedVersion}`);
             await window.api.extractGame(installation.version_link, `${versionsFolder}\\${cleanedVersion}`);
         };
 
-        const answ = await window.api.gameStart(`${versionsFolder}\\${cleanedVersion}`);
+        if (isVersionFolderExist && !isInstallationExeExist && !isAppFolderExist) { // если есть игра, то нет смысла качать инсталятор ещё раз. Хз в каким случае такое может случиться, но пусть будет
+            await window.api.downloadGame(installation.version_link, `${versionsFolder}\\${cleanedVersion}`);
+            await window.api.extractGame(installation.version_link, `${versionsFolder}\\${cleanedVersion}`);
+        };
+
+        if (isVersionFolderExist && isInstallationExeExist && !isAppFolderExist) {
+            await window.api.extractGame(installation.version_link, `${versionsFolder}\\${cleanedVersion}`);
+        };
+        
+
+        const answ = await window.api.gameStart(`${versionsFolder}\\${cleanedVersion}\\app`);
         if (answ.status) {
             addNotification({status: answ.status, msg: answ.msg})
         };
