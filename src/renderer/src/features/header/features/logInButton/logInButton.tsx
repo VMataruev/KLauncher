@@ -12,9 +12,9 @@ function LogInButton(): React.JSX.Element {
                 const cookie_name = cookie.name;
                 const cookie_expireDate = new Date(cookie.expirationDate * 1000);
                 const now = new Date();
-                if (cookie_name == "vs_websessionkey" && cookie_expireDate > now) {
-                    setIsLogged(true);
-                }
+                // if (cookie_name == "vs_websessionkey" && cookie_expireDate > now) {
+                //     setIsLogged(true);
+                // }
             };
         }
         getCookies();

@@ -14,17 +14,6 @@ declare global {
     getData: <T = any>() => Promise<T>  
     isFolderEmpty: (folderPath) => Promise<boolean>
 
-    // download_and_install_game: (url: string, outputPath: string) => Promise
-    // downloadProgress: (
-    //   callback: (data: {
-    //     state: string;
-    //     receivedBytes?: number;
-    //     totalBytes?: number;
-    //     percent?: number;
-    //     fileName?: string;
-    //   }) => void
-    // ) => () => void;
-
     downloadGame: (url: string, outputPath: string) => Promise
     downloadGameProgress: (
       callback: (data: {

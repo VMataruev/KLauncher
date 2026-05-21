@@ -15,15 +15,6 @@ const api = {
   getData: <T = any>(): Promise<T> => ipcRenderer.invoke('get-data'),
   isFolderEmpty: (folderPath) => ipcRenderer.invoke('isFolderEmpty', folderPath),
 
-  // download_and_install_game: (url: string, outputPath: string) => ipcRenderer.invoke('download_and_install_game', url, outputPath),
-  // downloadProgress: (callback: (data: any) => void) => {
-  //   const listener = (_event: unknown, data: any) => callback(data);
-  //   ipcRenderer.on('download-progress', listener);
-  //   return () => {
-  //     ipcRenderer.removeListener('download-progress', listener);
-  //   }
-  // },
-
   downloadGame: (url: string, outputPath: string) => ipcRenderer.invoke('download-Game', url, outputPath),
   downloadGameProgress: (callback: (data: any) => void) => {
     const listener = (_event: unknown, data: any) => callback(data);
@@ -41,8 +32,6 @@ const api = {
       ipcRenderer.removeListener('extract-game-progress', listener)
     }
   },
-
-
 
   open_file: (path: string) => ipcRenderer.invoke('open-file', path),
   openExternalLink: (url: string) => ipcRenderer.invoke("open-external-link", url),

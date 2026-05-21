@@ -14,11 +14,10 @@ function PlayButton({installation_id}): React.JSX.Element {
         getFolders();
     }, [])
     
-    const [ isPlayButtonInWork, setIsPlayButtonInWork ] = useState<boolean>(false);
+    const [ buttonProcess, setButtonProcess ] = useState<"idle" | "downloading" | "extracting">("idle");
     useEffect(() => {
         const unsubscribe = window.api.downloadGameProgress((data) => {
-            const percent = data.percent;
-            setIsPlayButtonInWork(percent !== 100);
+            setButtonProcess(data.percent === 100 ? "extracting" : "downloading");
         })
         return () => {
             unsubscribe()
@@ -27,8 +26,7 @@ function PlayButton({installation_id}): React.JSX.Element {
 
     useEffect(() => {
         const unsubscribe = window.api.extractGameProgress((data) => {
-            const percent = data.percent;
-            setIsPlayButtonInWork(percent !== 100);
+            setButtonProcess(data.percent === 100 ? "idle" : "extracting");
         })
         return () => {
             unsubscribe()
@@ -38,7 +36,7 @@ function PlayButton({installation_id}): React.JSX.Element {
     
     // Проверяет папку, докичает версии, перекидывает моды и запускает игру
     const playButton = async () => {
-        setIsPlayButtonInWork(true);
+        setButtonProcess('downloading');
         const installation = await window.api.getStore(`installations.${installation_id}`);
 
         await window.api.clearFolder(modsFolder);
@@ -75,13 +73,13 @@ function PlayButton({installation_id}): React.JSX.Element {
         };
 
         
-        setIsPlayButtonInWork(false);
+        setButtonProcess('idle');
     };
 
     return (
         <>
             {/* <button className={`${styles.play_btn} ${styles.play_btn_inactive}`} onClick={playButton}> */}
-            <button className={`${styles.play_btn} ${isPlayButtonInWork ? styles.play_btn_in_work : styles.nothing}`} onClick={playButton}>
+            <button className={`${styles.play_btn} ${buttonProcess != 'idle' ? styles.play_btn_in_work : styles.nothing}`} onClick={playButton}>
                 {/* {status ? `Downloading installer: ${progress}%` : "PLAY"} */}
                 PLAY
             </button>
