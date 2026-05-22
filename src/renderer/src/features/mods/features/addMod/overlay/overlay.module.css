@@ -70,7 +70,6 @@ table {
 
     width: 100%;
     border-collapse: collapse;
-
 }
 
 thead th {
@@ -125,3 +124,9 @@ td {
     background-color: var(--dark-second);
 }
 
+
+
+.loader_box {
+    width: 100%;
+    background-color: var(--dark-first);
+}

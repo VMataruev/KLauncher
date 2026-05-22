@@ -4,6 +4,7 @@ import ReactDOM from "react-dom";
 import { useState } from "react";
 import { addNotification } from "@renderer/features/overlay/notification/features/notificationList";
 import { Download } from "iconoir-react";
+import Loader from "@renderer/components/loader/loader";
 
 type OverlayProps = {
   onClose: (e: React.MouseEvent) => void;
@@ -33,7 +34,7 @@ type Release = {
 }
 
 function Overlay({onClose, mod}: OverlayProps): React.JSX.Element {
-
+    const [ loading, setLoading ] = useState<boolean>(true);
 
     const [ installationID, setInstallationID ] = useState<string>("");
 
@@ -70,6 +71,7 @@ function Overlay({onClose, mod}: OverlayProps): React.JSX.Element {
             console.log(releases)
             setReleases(releases);
             setModName(mod_.res.mod.name)
+            setLoading(false);
         }
         getModReleases();
     }, [])
@@ -104,6 +106,7 @@ function Overlay({onClose, mod}: OverlayProps): React.JSX.Element {
         addNotification({status: "success", msg: `${modName} added to "${installationName}"`})
         onClose({} as React.MouseEvent); // close overlay
     };
+
     
 
 
@@ -138,7 +141,6 @@ function Overlay({onClose, mod}: OverlayProps): React.JSX.Element {
                                     <th>Actions</th>
                                 </tr>
                             </thead>
-
                             <tbody>
                                 {Object.values(releases).map((release) => (
                                     <tr key={release.modversion}>
@@ -157,6 +159,7 @@ function Overlay({onClose, mod}: OverlayProps): React.JSX.Element {
                             </tbody>
                         </table>
                     </div>
+                    <div className={styles.loader_box}>{loading ? <Loader></Loader> : <></>}</div>
 
                 </div>
             </div>

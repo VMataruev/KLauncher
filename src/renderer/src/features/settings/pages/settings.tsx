@@ -78,8 +78,8 @@ function Settings(): React.JSX.Element {
                             </div>
                         </div>
 
-                        {/* Может и не надо это делать, а просто оставить дефолтно */}
-                        <div className={styles.setting}>
+                        {/* Может и не надо это делать, а просто оставить дефолтную папку, потому что моды всё равно должы быть на диске С */}
+                        {/* <div className={styles.setting}>
                             <div className={styles.setting_name}>Mods</div>   
                             <div className={styles.fromname_pading}>
                                 <button className={styles.setting_folder_btn} onClick={() => {selectModsFolder()}}><Search className={styles.img_btn}></Search></button>
@@ -93,7 +93,7 @@ function Settings(): React.JSX.Element {
                                 <button className={styles.setting_folder_btn} onClick={() => {selectBackupsFolder()}}><Search className={styles.img_btn}></Search></button>
                                 <div className={styles.setting_folder_name}>{backupsFolder}</div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

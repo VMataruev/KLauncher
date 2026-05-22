@@ -10,6 +10,8 @@ import { Download } from 'iconoir-react';
 import { Message } from "iconoir-react";
 import { User } from "iconoir-react";
 import Loader from "@renderer/components/loader/loader";
+import { Refresh } from "iconoir-react";
+import { Erase } from "iconoir-react";
 
 
 const BLOCK_SIZE = 40; // сколько модов загружаем за один раз
@@ -39,12 +41,14 @@ function Mods(): React.JSX.Element {
     const [hasMore, setHasMore] = useState(true);
     const [loading, setLoading] = useState<boolean>(true);
 
+    const [isSortByOpen, setIsSortByOpen] = useState<boolean>(false);
+
     // ==== Filters =====
     const [searchName, setSearchName] = useState("");
     const [searchAuthor, setSearchAuthor] = useState("");
     const [selectedVersion, setSelectedVersion] = useState("");
     const [selectedTag, setSelectedTag] = useState("");
-    const [selectedSide, setSelectedSide] = useState("Both");
+    const [selectedSide, setSelectedSide] = useState("Any");
 
     const [sortType, setSortType] = useState<"downloads" | "follows" | "newest" | "name" | "">("");
     const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
@@ -82,10 +86,24 @@ function Mods(): React.JSX.Element {
         }
 
         // ===== Фильтр по стороне =====
-        if (selectedSide !== "Both") {
-            result = result.filter((mod) =>
-                mod.side.toLowerCase() === selectedSide.toLowerCase()
-            );
+        if (selectedSide !== "Any") {
+            result = result.filter((mod) => {
+                const side = mod.side.toLowerCase();
+
+                switch (selectedSide.toLowerCase()) {
+                    case "client":
+                        return side === "client" || side === "both";
+
+                    case "server":
+                        return side === "server" || side === "both";
+
+                    case "both":
+                        return side === "both";
+
+                    default:
+                        return true;
+                }
+            });
         }
 
         // ===== Сортировка =====
@@ -101,8 +119,8 @@ function Mods(): React.JSX.Element {
             case "follows":
                 result.sort((a, b) =>
                     sortOrder === "asc"
-                        ? a.downloads - b.downloads
-                        : b.downloads - a.downloads
+                        ? a.follows - b.follows
+                        : b.follows - a.follows
                 );
                 break;
 
@@ -114,13 +132,13 @@ function Mods(): React.JSX.Element {
                 );
                 break;
 
-            case "name":
-                result.sort((a, b) =>
-                    sortOrder === "asc"
-                        ? a.name.localeCompare(b.name)
-                        : b.name.localeCompare(a.name)
-                );
-                break;
+            // case "name":
+            //     result.sort((b, a) =>
+            //         sortOrder === "asc"
+            //             ? a.name.localeCompare(b.name)
+            //             : b.name.localeCompare(a.name)
+            //     );
+            //     break;
         }
 
         return result;
@@ -148,7 +166,7 @@ function Mods(): React.JSX.Element {
         setSearchAuthor("");
         setSelectedVersion("");
         setSelectedTag("");
-        setSelectedSide("Both");
+        setSelectedSide("Any");
         setSortType("");
     };
 
@@ -272,8 +290,8 @@ function Mods(): React.JSX.Element {
         <div className={styles.main_wrapper}>
             <div className={styles.header}>
 
-                <input className={styles.header_input} placeholder="Mod name" type="text" onChange={(e) =>setSearchName(e.target.value)} value={searchName} />
-                <input className={styles.header_input} placeholder="Author" type="text" onChange={(e) =>setSearchAuthor(e.target.value)} value={searchAuthor} />
+                <input className={`${styles.header_input} ${styles.cursor_text}`} placeholder="Mod name" type="text" onChange={(e) =>setSearchName(e.target.value)} value={searchName} />
+                <input className={`${styles.header_input} ${styles.cursor_text}`} placeholder="Author" type="text" onChange={(e) =>setSearchAuthor(e.target.value)} value={searchAuthor} />
 
                 <select className={styles.header_input} name="" id="" value={selectedVersion} onChange={(e) =>setSelectedVersion(e.target.value)}>
                     <option disabled value="">Versions</option>
@@ -284,19 +302,29 @@ function Mods(): React.JSX.Element {
                 </select>
                     
                 <select className={styles.header_input} name="" id="" value={selectedSide} onChange={(e) =>setSelectedSide(e.target.value)}>
+                    <option value="Any">Any</option>
                     <option value="Both">Both</option>
                     <option value="Server">Server</option>
                     <option value="Client">Client</option>
                 </select>
 
                 {/* TODO: Скрыть пункты ниже под одной кнопкой */}
-                {/* <input className={styles.header_input} placeholder="isInstalled" type="text" />
-                <button className={styles.header_input} onClick={() => handleSort("downloads")}>Downloads {sortType=== "downloads" && (sortOrder === "asc" ? "↑" : "↓")}</button>
-                <button className={styles.header_input} onClick={() => handleSort("follows")}>Follows {sortType ==="follows" && (sortOrder === "asc" ? "↑" : "↓")}</button>
-                <button className={styles.header_input} onClick={() => handleSort("newest")}>Newest {sortType ==="newest" && (sortOrder === "asc" ? "↑" : "↓")}</button>
-                <button className={styles.header_input} onClick={() => handleSort("name")}>A-Z {sortType ==="name" && (sortOrder === "asc" ? "↑" : "↓")}</button> */}
-                <button className={styles.header_input} onClick={() => resetFilters()}>Reset filters</button>
-                <button className={styles.header_input} onClick={() => refreshMods()}>Refresh Mods</button>
+                <div>
+                    <div className={`${styles.header_input} ${styles.cursor_pointer}`} onClick={() => {setIsSortByOpen(!isSortByOpen)}}>Sort By</div>
+
+                    <div className={`${styles.dropdown} ${isSortByOpen ? styles.open : styles.closed}`}>
+                        {/* <input className={styles.header_input} placeholder="isInstalled" type="text" /> */}
+                        <button className={styles.header_input} onClick={() => handleSort("downloads")}>Downloads {sortType=== "downloads" && (sortOrder === "asc" ? "↑" : "↓")}</button>
+                        <button className={styles.header_input} onClick={() => handleSort("follows")}>Follows {sortType ==="follows" && (sortOrder === "asc" ? "↑" : "↓")}</button>
+                        <button className={styles.header_input} onClick={() => handleSort("newest")}>Newest {sortType ==="newest" && (sortOrder === "asc" ? "↑" : "↓")}</button>
+                        {/* <button className={styles.header_input} onClick={() => handleSort("name")}>A-Z {sortType ==="name" && (sortOrder === "asc" ? "↑" : "↓")}</button> */}
+                    </div>
+                </div>
+                
+
+
+                <button className={`${styles.header_input} ${styles.no_padding}`} onClick={() => resetFilters()}><Erase className={styles.header_input_icon}></Erase></button>
+                <button className={`${styles.header_input} ${styles.no_padding}`} onClick={() => refreshMods()}><Refresh className={styles.header_input_icon}></Refresh></button>
 
             </div>
 
@@ -304,8 +332,8 @@ function Mods(): React.JSX.Element {
             <div className={styles.mods_wrapper}>
 
                 {loading ? <></> : ( // пережиток прошлого, который можно почистить, тут больше нет условия, лоадер теперь грузится через return
-                    displayedMods.map(mod => (
-                        <div className={styles.mod_box} key={mod.modid} onClick={() => handleModClick(mod.modid)}>
+                    displayedMods.map((mod, index) => (
+                        <div className={styles.mod_box} style={{ animationDelay: index < BLOCK_SIZE ? `${index * 0.06}s` : ""}} key={mod.modid} onClick={() => handleModClick(mod.modid)}>
                             {mod.logo ? (<img className={styles.mod_img} src={mod.logo} alt="" />) : (<img className={styles.mod_img} src="https://mods.vintagestory.at/web/img/mod-default.png" alt="" />)}
                             <div className={styles.add_mod_button_box}><AddModButton mod={mod}></AddModButton></div>
                             <div className={styles.mod_info_box}>

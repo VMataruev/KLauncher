@@ -8,6 +8,7 @@
     justify-content: space-between;
     display: flex;
     flex-direction: column;
+
 }
 
 .character {
@@ -18,8 +19,12 @@
     z-index: 0;
 }
 
-.main_box, .vid_box {
+.main_box {
     position: relative;
+    z-index: 2;
+}
+
+.vid_box {
     z-index: 1;
 }
 
@@ -31,6 +36,7 @@
     margin-left: 50px;
     margin-top: 160px;
 }
+
 
 .h1 {
     font-size: 48px;
@@ -46,6 +52,7 @@
     display: flex;
     gap: 12px;
 }
+
 
 .vid {
     width: 270px;

@@ -50,6 +50,20 @@
     background-color: var(--dark-first);
     border-radius: 4px;
     padding: 0px 12px 0px 0px;
+
+    opacity: 0;
+    animation: installIn 0.4s ease forwards;
+}
+
+@keyframes installIn {
+    from {
+        opacity: 0;
+        margin-top: -12px;
+    }
+    to {
+        opacity: 1;
+        margin-top: 0;
+    }
 }
 
 .left_box {
@@ -57,7 +71,7 @@
 }
 
 .img {
-    max-width: 70px;
+    width: 70px;
 }
 
 .name_verison_box {
@@ -132,25 +146,28 @@
 
 .installation_button_more_box {
     position: relative;
+    z-index: 999;
 }
 
 
 
 .installation_button_buttons_box {
     position: absolute;
-    z-index: 10;
+    z-index: 999;
     /* left: -70%; */
     background-color: var(--dark-second);
     display: flex;
     flex-direction: column;
     gap: 4px;
     box-shadow: 0px 0px 10px rgb(10, 10, 10);
+    bottom: 100%; /* FIXME: Показывать над кнопкой из-за анимации, которая всё ломает нахуй */
 
     visibility: hidden;
 }
 
 .installation_button_buttons_box_visible {
     visibility: visible;
+    z-index: 999;
 }
 
 .more_button {

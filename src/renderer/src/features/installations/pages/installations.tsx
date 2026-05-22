@@ -125,14 +125,14 @@ function Installations(): React.JSX.Element {
         <div className={styles.page_wrapper}>
 
           <div className={styles.new_install}>
-            <Link className={styles.new_install_button} to="/Made_installation">New install</Link>
+            <Link className={styles.new_install_button} to="/Made_installation">New installation</Link>
           </div>
 
           <div className={styles.installs}>
 
             { Object.values(installations).length != 0 ?
-              Object.values(installations).map(installation => (
-                <div className={styles.install}>
+              Object.values(installations).map((installation, index) => (
+                <div className={styles.install} style={{ animationDelay: `${index * 0.06}s` }}>
                   <div className={styles.left_box}>
                     
                     <img src={getInstallationIcon(installation.img)} alt="" className={styles.img}/>
