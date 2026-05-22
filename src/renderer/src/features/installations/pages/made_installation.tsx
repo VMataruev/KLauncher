@@ -56,8 +56,9 @@ function Made_installation(): React.JSX.Element {
             if (res.status != "ok") {return}
             const versions_stable = res.versions_stable;
             const versions_unstable = res.versions_unstable;
-            setData(versions_stable);
-            console.log(versions_stable);
+            const combinedVersions = [...versions_stable, ...versions_unstable];
+            setData(combinedVersions);
+            // console.log(versions_stable);
             setInstallationBuild((prev) => ({
                 ...prev,
                 version: versions_stable[0].name,

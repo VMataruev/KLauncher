@@ -18,7 +18,7 @@ ipcMain.handle("get-mods-in-cache", async () => {
     }
 
     try {
-        const res = await axios.get("http://mods.vintagestory.at/api/mods");
+        const res = await axios.get("https://mods.vintagestory.at/api/mods");
         modsCache = res.data.mods;
         modsCacheTime = now;
 

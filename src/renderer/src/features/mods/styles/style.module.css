@@ -32,6 +32,12 @@
     font-size: 12px;
     user-select: none;
     cursor: pointer;
+    transition: .2s;
+}
+
+.header_input:hover {
+    color: var(--text-second);
+    transition: .2s;
 }
 
 .header_input_icon {
