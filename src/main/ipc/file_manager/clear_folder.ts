@@ -14,6 +14,7 @@ ipcMain.handle('clear-folder', async (_event, folderPath: string) => { // pathFo
                 })
             )
         );
+        return {status: "ok"}
     } catch (error) {
         return {status: "error", error: error}
     }

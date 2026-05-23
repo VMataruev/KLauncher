@@ -1,12 +1,11 @@
 import { BrowserWindow, ipcMain, session } from "electron";
-const fs = require('fs');
-import axios from "axios";
+// const fs = require('fs');
 
-ipcMain.handle('downloadFile', async (event, url, savePath) => {
+ipcMain.handle('downloadFile', async (_event, url, savePath) => {
     const win = BrowserWindow.getFocusedWindow();
 
     return new Promise((resolve, reject) => {
-        session.defaultSession.once('will-download', (event2, item) => {
+        session.defaultSession.once('will-download', (_event2, item) => {
 
             item.setSavePath(savePath);
             const fileName = item.getFilename();
@@ -25,7 +24,7 @@ ipcMain.handle('downloadFile', async (event, url, savePath) => {
                 });
             });
 
-            item.once('done', (e, state) => {
+            item.once('done', (_e, state) => {
                 if (state === 'completed') {
                     resolve(true);
                 } else {
