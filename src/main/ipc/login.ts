@@ -1,6 +1,8 @@
 import { ipcMain } from "electron";
 import { store } from '../store'
 
+// спизженная страница, нигде не использовал, не нашёл применения
+
 ipcMain.handle("vs-login", async (_event, url, body: { email: string; password: string; twofacode?: string; preLoginToken?: string }): Promise<string> => {
   const reqData = new URLSearchParams()
   reqData.append("email", body.email)

@@ -1,3 +1,12 @@
+.loginbox {
+    padding: 8px;
+    display: flex;
+    width: 100%;
+    background-color: var(--dark-second);
+    border-radius: 4px;
+    color: var(--text-second);
+}
+
 .page_wrapper {
     width: 100%;
     height: 100svh;

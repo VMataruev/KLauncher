@@ -56,7 +56,8 @@ const api = {
   gameStart: (folder: string) => ipcRenderer.invoke('game-start', folder),
   gameKill: () => ipcRenderer.invoke('game-kill'),
   copyFiles: (pathFrom: string, pathTo: string) => ipcRenderer.invoke('copy-files', pathFrom, pathTo),
-  hasFolder: (folderPath: string, targetName: string) => ipcRenderer.invoke('hasFolder', folderPath, targetName)
+  hasFolder: (folderPath: string, targetName: string) => ipcRenderer.invoke('hasFolder', folderPath, targetName),
+  getUserName: () => ipcRenderer.invoke('get-user-name')
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

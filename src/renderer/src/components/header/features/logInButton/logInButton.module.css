@@ -4,14 +4,59 @@
   align-items: center;
   background-color: var(--dark-first);
   border-radius: 4px;
-  margin: 8px 8px 30px 8px;
-  padding: 5px 20px;
+  /* padding: 5px 20px; */
+  padding: 8px;
   cursor: pointer;
-  gap: 4px;
   transition: .2s;
+  position: relative;
+  user-select: none;
 }
 
 .logInBox:hover {
   color: var(--text-second);
   transition: .2s;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  margin: 8px 8px 30px 8px;
+  gap: 4px;
+  position: relative;
+}
+
+.drop {
+  width: 100%;
+  background-color: var(--dark-first);
+  border-radius: 4px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  top: 40px;
+
+  transform: translateY(-10px);
+  opacity: 0;
+  visibility: hidden;
+  transition: .2s ease;
+
+  color: var(--link);
+  cursor: pointer;
+  pointer-events: none; 
+}
+
+.drop:hover {
+  color: var(--link-hover);
+  transition: .2s;
+}
+
+.open {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto; 
+  transition: .2s ease;
 }

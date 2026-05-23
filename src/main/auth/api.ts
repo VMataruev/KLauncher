@@ -23,6 +23,13 @@ export async function fetchProtectedData(): Promise<any> {
 
     const $ = cheerio.load(res.data);
 
+    const captcha = $('.g-recaptcha');
+    if (captcha.length > 0) {
+        return{
+            status: "not logged in"
+        }
+    }
+
     // if no cookies (not logged in)
     // const logoutButton = $('.menuItem.right');
     // if (logoutButton.length) {

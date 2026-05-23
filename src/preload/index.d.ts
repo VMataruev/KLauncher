@@ -63,6 +63,7 @@ declare global {
     gameKill: () => Promise
     copyFiles: (pathFrom, pathTo) => Promise
     hasFolder: (folderPath, targetName) => Promise
+    getUserName: () => Promise
   };
   interface Window {
     electron: ElectronAPI
