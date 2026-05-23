@@ -1,12 +1,10 @@
 import styles from '../styles/styles.module.css'
-import img from '../../../assets/temporal.png'
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { addNotification } from '@renderer/features/overlay/notification/features/notificationList';
 import iconOptions from '@renderer/components/Installation_icons';
 import { MoreHoriz } from 'iconoir-react';
 import { v4 as uuidv4 } from 'uuid';
-import PlayButton from '@renderer/features/play/features/playButton/playButton';
 
 function Installations(): React.JSX.Element {
   const navigate = useNavigate();

@@ -3,7 +3,7 @@ import styles from "./logInButton.module.css"
 import { User as UserIcon } from "iconoir-react";
 
 function LogInButton(): React.JSX.Element {
-    const [ isLogged, setIsLogged ] = useState<boolean>(false);
+    // const [ isLogged, setIsLogged ] = useState<boolean>(false);
     const [ userName, setUserName ] = useState<string>("");
 
     // Old method to see if user logged via cookies

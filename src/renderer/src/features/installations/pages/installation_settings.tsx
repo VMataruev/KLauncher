@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import styles from '../styles/installation_settings.module.css';
-import { v4 as uuidv4 } from 'uuid';
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { addNotification } from '@renderer/features/overlay/notification/features/notificationList';
 import CustomSelect from '@renderer/components/CustomSelect/CustomSelect';
@@ -39,7 +38,7 @@ function Installation_settings(): React.JSX.Element {
     const [ installationBuild, setInstallationBuild ] = useState<any>();
 
     const [ oldPath, setOldPath ] = useState("");
-    const [ oldVersion, setOldVersion ] = useState("");
+    const [ _oldVersion, setOldVersion ] = useState("");
 
     const [ modsLoader, setModsLoader ] = useState<boolean>(true);
     useEffect(() => {
@@ -57,7 +56,7 @@ function Installation_settings(): React.JSX.Element {
     // console.log(installationBuild.version)
     
     
-    const [ folderPath, setFolderPath ] = useState<string>();
+    const [ _folderPath, setFolderPath ] = useState<string>();
     const handleSelectFolder = async () => {
         try {
             const selectedPath = await window.api.selectFolder();
@@ -88,7 +87,8 @@ function Installation_settings(): React.JSX.Element {
             }
             const versions_stable = res.versions_stable;
             const versions_unstable = res.versions_unstable;
-            setData(versions_stable);
+            const combinedVersions = [...versions_stable, ...versions_unstable];
+            setData(combinedVersions);
             // console.log(res);
             // setInstallationBuild((prev) => ({
             //     ...prev,
@@ -167,7 +167,7 @@ function Installation_settings(): React.JSX.Element {
                 .replace(/\.+$/, '');                  // убрать точки в конце
         };
         const finalName = sanitizeFolderName(installationBuild.name)
-        const finalPath = `${installationBuild.folder}\\${finalName}`
+        // const finalPath = `${installationBuild.folder}\\${finalName}`
 
         const parentPath = oldPath.split("\\").slice(0, -1).join("\\");
         const newPath = `${parentPath}\\${finalName}`;

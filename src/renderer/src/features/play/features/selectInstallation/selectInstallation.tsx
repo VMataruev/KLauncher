@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import CustomSelectInstallation from "../../../../components/CustomSelectInstallation/CustomSelectInstallation";
 import styles from "./selectInstallation.module.css";
 import iconOptions from "@renderer/components/Installation_icons";
 
@@ -23,7 +22,7 @@ function SelectInstallations(): React.JSX.Element {
         folder: string | null;
     };
     
-    const [ installationID, setInstallationID] = useState<string>();
+    const [ _installationID, setInstallationID] = useState<string>();
     const [ installations, setInstallations ] = useState<Record<string, Installation>>({});
     const [ installationToShow, setInstallationToShow ] = useState<Installation>();
     useEffect(() => {
