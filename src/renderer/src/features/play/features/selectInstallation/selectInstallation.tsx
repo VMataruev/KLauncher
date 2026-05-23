@@ -41,6 +41,7 @@ function SelectInstallations(): React.JSX.Element {
                 setInstallationID(saved);
                 const installation = await window.api.getStore(`installations.${saved}`);
                 setInstallationToShow(installation);
+                set_installation_to_start(installation.id);
             } else {
                 // иначе берём первый
                 const first = Object.values(res)[0] as Installation | undefined;
@@ -48,6 +49,7 @@ function SelectInstallations(): React.JSX.Element {
                     setInstallationID(first.id);
                     const installation = await window.api.getStore(`installations.${first.id}`);
                     setInstallationToShow(installation);
+                    set_installation_to_start(installation.id);
                 }
             }
         };
@@ -71,7 +73,7 @@ function SelectInstallations(): React.JSX.Element {
                     </div>
                 </div>
                 )}
-
+                {Object.values(installations).length === 0 ? <div className={styles.no_installations}>No installations</div> : <></>}
                 <div className={`${styles.box_right} ${isOpen ? styles.turn : styles.nothing}`}>{'>'}</div>
             </div>
 

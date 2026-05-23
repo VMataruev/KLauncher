@@ -39,6 +39,14 @@ function PlayButton(): React.JSX.Element {
         setButtonProcess('downloading');
         const installation_to_start = await window.api.getStore('installation_to_start');
         const installation = await window.api.getStore(`installations.${installation_to_start}`);
+        if (!installation) {
+            addNotification({
+                status: "error",
+                msg: "Installation not found"
+            });
+            setButtonProcess("idle");
+            return;
+        }
 
         await window.api.clearFolder(modsFolder);
         await window.api.copyFiles(`${installation.folder}\\Mods`, modsFolder);
