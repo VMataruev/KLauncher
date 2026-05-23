@@ -1,5 +1,5 @@
 import styles from "./overlay.module.css"
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import { useState } from "react";
 import { addNotification } from "@renderer/features/overlay/notification/features/notificationList";

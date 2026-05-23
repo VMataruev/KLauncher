@@ -1,4 +1,3 @@
-import { addNotification } from "@renderer/features/overlay/notification/features/notificationList";
 import styles from "../styles/style.module.css"
 import * as cheerio from 'cheerio';
 import { useEffect, useState } from "react";

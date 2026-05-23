@@ -1,5 +1,4 @@
 import styles from "../styles/header.module.css"
-import { User } from 'iconoir-react';
 import { Home as HomeIcon } from 'iconoir-react';
 import { Play as PlayIcon } from 'iconoir-react';
 import { Folder as FolderIcon } from 'iconoir-react';

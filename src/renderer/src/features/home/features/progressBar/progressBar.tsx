@@ -72,7 +72,7 @@ function ProgressBar(): React.JSX.Element {
     }, []);
 
     useEffect(() => {
-        const unsubscribe = window.api.downloadProgress((data) => {
+        const unsubscribe = window.api.downloadGameProgress((data) => {
             if (data.percent !== undefined) {
                 setProgressGameInstaller(data.percent);
             }

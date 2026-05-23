@@ -1,7 +1,5 @@
 import styles from "../styles/play.module.css"
-import img from "../../../assets/background.png"
 import PlayButton from "../features/playButton/playButton"
-import { useEffect, useState } from "react";
 import ProgressBar from "../features/progressBar/progressBar";
 import SelectInstallations from "../features/selectInstallation/selectInstallation";
 import character from "@renderer/assets/character.png";
@@ -17,7 +15,7 @@ function Play(): React.JSX.Element {
     //     folder: string | null;
     // };
 
-    const [ installationID, setInstallationID ] = useState<string>();
+    // const [ installationID, setInstallationID ] = useState<string>();
     // const [ installations, setInstallations ] = useState<Record<string, Installation>>({});
     // useEffect(() => {
     //     const init = async () => {
