@@ -4,8 +4,6 @@ const { FuseV1Options, FuseVersion } = require('@electron/fuses');
 module.exports = {
   packagerConfig: {
     asar: true,
-    dir: './out',
-    main: './main/index.js',
   },
   rebuildConfig: {},
   makers: [
@@ -43,18 +41,4 @@ module.exports = {
       [FuseV1Options.OnlyLoadAppFromAsar]: true,
     }),
   ],
-
-  publishers: [
-    {
-      name: '@electron-forge/publisher-github',
-      config: {
-        repository: {
-          owner: 'vmataruev',
-          name: 'KLauncher'
-        },
-        prerelease: false,
-        draft: true
-      }
-    }
-  ]
 };

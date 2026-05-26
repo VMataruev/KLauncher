@@ -25,7 +25,7 @@ function Header(): React.JSX.Element {
     useEffect(() => {
         const el = refs[location.pathname]?.current;
         if (el) {
-            setOffset(el.offsetTop + el.offsetHeight / 2 - 80);
+            setOffset(el.offsetTop + el.offsetHeight / 2 - 85);
         }
     }, [location.pathname]);
 

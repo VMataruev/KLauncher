@@ -11,6 +11,7 @@ function Home({}): React.JSX.Element {
 
     const [articles, setArticles] = useState<BlogArticle[]>([]);
     const [ isLoading, setIsLoading ] = useState<boolean>(true);
+    
     useEffect(() => {
         const getBlogData = async () => {
             const res = await window.api.getRequest('https://www.vintagestory.at/blog.html/');
