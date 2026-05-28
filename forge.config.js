@@ -18,6 +18,7 @@ module.exports = {
   ],
   packagerConfig: {
     asar: true,
+    icon: './build/icon' // no file extension required
   },
   rebuildConfig: {},
   makers: [
