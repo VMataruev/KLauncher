@@ -2,11 +2,12 @@ import { app, shell, BrowserWindow } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/Logo.png?asset'
-import "./ipc"
+import "./ipc";
+import fs from 'fs-extra';
 // import { store } from './store'
 import "./auth"
 const path = require('path');
-require('update-electron-app')();
+// require('update-electron-app')();
 
 function createWindow(): void {
   // Create the browser window.
@@ -44,6 +45,27 @@ function createWindow(): void {
   }
 }
 
+
+// Создаём папку для данных приложения
+async function initAppDataFolder(folderName: string) {
+    try {
+      // Получаем путь к папке AppData/Roaming
+      // Результат: C:\Users\username\AppData\Roaming
+        const userDataPath = app.getPath('appData');
+        const customFolder = path.join(userDataPath, folderName);
+        
+        if (!fs.existsSync(customFolder)) {
+            await fs.ensureDir(customFolder);
+            console.log('Folder created:', customFolder);
+        }
+        
+        return customFolder;
+    } catch (error) {
+        console.error(`Error creating folder ${folderName}:`, error);
+        return null;
+    }
+}
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
@@ -57,7 +79,8 @@ app.whenReady().then(() => {
   app.on('browser-window-created', (_, window) => {
     optimizer.watchWindowShortcuts(window)
   })
-
+  initAppDataFolder('KLuncher_VS_versions');
+  initAppDataFolder('KLuncher_installations');
   createWindow()
 
   app.on('activate', function () {

@@ -1,6 +1,7 @@
 const { FusesPlugin } = require('@electron-forge/plugin-fuses');
 const { FuseV1Options, FuseVersion } = require('@electron/fuses');
-require('dotenv').config();
+const path = require('path');
+// require('dotenv').config();
 
 module.exports = {
   publishers: [
@@ -18,13 +19,16 @@ module.exports = {
   ],
   packagerConfig: {
     asar: true,
-    icon: './build/icon' // no file extension required
+    icon: path.resolve(__dirname, 'build', 'icon'), // абсолютный путь без расширения
   },
   rebuildConfig: {},
   makers: [
     {
       name: '@electron-forge/maker-squirrel',
-      config: {},
+      config: {
+        name: "KLauncher",
+        setupIcon: path.resolve(__dirname, 'build', 'icon.ico')
+      },
     },
     {
       name: '@electron-forge/maker-zip',
@@ -32,11 +36,17 @@ module.exports = {
     },
     {
       name: '@electron-forge/maker-deb',
-      config: {},
+      config: {
+        options: {
+          icon: "./build/icon.png"
+        }
+      },
     },
     {
       name: '@electron-forge/maker-rpm',
-      config: {},
+      config: {
+        icon: "./build/icon.png"
+      },
     },
   ],
   plugins: [
