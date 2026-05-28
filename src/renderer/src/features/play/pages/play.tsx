@@ -69,11 +69,15 @@ function Play(): React.JSX.Element {
                 </div>
                 <div className={styles.vid_box}>
                     <iframe
-                    src="https://www.youtube.com/embed/NJjifFq1NGY"
+                    src="https://www.youtube-nocookie.com/embed/NJjifFq1NGY"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerPolicy='strict-origin-when-cross-origin'
                     allowFullScreen
                     />
                     <iframe
-                    src="https://www.youtube.com/embed/mgvzBB_--xM?si=z2JRDAErFWIseeT2"
+                    src="https://www.youtube-nocookie.com/embed/mgvzBB_--xM?si=z2JRDAErFWIseeT2"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerPolicy='strict-origin-when-cross-origin'
                     allowFullScreen
                     />
                 </div>

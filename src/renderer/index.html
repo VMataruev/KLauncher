@@ -8,12 +8,14 @@
       http-equiv="Content-Security-Policy"
       content="
         default-src 'self'; 
-        script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; 
+        script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://www.youtube.com https://www.youtube-nocookie.com https://s.ytimg.com https://www.youtube.com/s/player/; 
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
         frame-src 'self' http://www.youtube.com http://www.youtube-nocookie.com;
         child-src 'self' http://www.youtube.com http://www.youtube-nocookie.com;
         media-src http://www.youtube.com http://www.youtube-nocookie.com http:;
         img-src 'self' data: https://moddbcdn.vintagestory.at http://moddbcdn.vintagestory.at https://mods.vintagestory.at/ https://www.vintagestory.at http://media.vintagestory.at https://media.vintagestory.at https://cdn.jsdelivr.net; 
         font-src 'self' data: https://fonts.gstatic.com;
+        connect-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://www.youtube.com/api/stats/;
       "
     />
   </head>

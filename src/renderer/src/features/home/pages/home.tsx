@@ -22,6 +22,25 @@ function Home({}): React.JSX.Element {
             };
             const $ = cheerio.load(res.res);
 
+            // Добавляем стили ко всем эмодзи через cheerio
+            $("img.ipsEmoji").each((_, el) => {
+                $(el).addClass("emoji-styled");
+                $(el).css({
+                    height: "18px",
+                    width: "auto",
+                    display: "inline-block",
+                    verticalAlign: "middle"
+                });
+            });
+
+            $("iframe").each((_, el) => {
+                $(el).addClass("iframe-styled");
+                $(el).css({
+                    height: "500px",
+                    width: "100%",
+                });
+            });
+
             const parsedArticles: BlogArticle[] = $("article.cCmsCategoryFeaturedEntry")
             .map((_, el) => {
                 const article = $(el);
@@ -59,6 +78,18 @@ function Home({}): React.JSX.Element {
             await window.api.openExternalLink(href);
         }
     };
+
+    const normalizeHtml = (html) => {
+        return html
+        .replace(
+            /src="\/\/(.*?)"/g,
+            'src="https://$1"'
+        )
+        .replace(
+            /data-embed-src=/g,
+            'src='
+        )
+    };
     if (isLoading) {return <div className={styles.loader_wrapper}><Loader></Loader></div>}
     return(
         <div className={styles.blog_box}>
@@ -66,8 +97,8 @@ function Home({}): React.JSX.Element {
             {articles ? articles.map((article, index) => (
                 <div className={styles.blog} onClick={handleExternalLinks}>
                     <div key={index} className={styles.article_box}>
-                        <div className={styles.blog_header} dangerouslySetInnerHTML={{ __html: article.headerHtml }} />
-                        <div className={styles.blog_body} dangerouslySetInnerHTML={{ __html: article.contentHtml }} />
+                        <div className={styles.blog_header} dangerouslySetInnerHTML={{ __html: normalizeHtml(article.headerHtml) }} />
+                        <div className={styles.blog_body} dangerouslySetInnerHTML={{ __html: normalizeHtml(article.contentHtml) }} />
                     </div>
                 </div>
             )) : <></>}
