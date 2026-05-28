@@ -1,12 +1,16 @@
-# klauncher
+# KLauncher 
 
-An Electron application with React and TypeScript
+KLauncher is a tool for downloading VS versions, installing mods and quickly switching between installations
+Also u can read VS blog inside
+More features later ||maybe...||
 
-## Recommended IDE Setup
+![alt text](https://i.imgur.com/DI5XN0v.png)
 
-- [VSCode](https://code.visualstudio.com/) + [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) + [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 
-## Project Setup
+
+
+
+## Project Setup from code
 
 ### Install
 
@@ -23,12 +27,5 @@ $ npm run dev
 ### Build
 
 ```bash
-# For windows
-$ npm run build:win
-
-# For macOS
-$ npm run build:mac
-
-# For Linux
-$ npm run build:linux
+$ npm run make
 ```
