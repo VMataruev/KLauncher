@@ -9,7 +9,7 @@ More features later maybe...
 
 
 ## Project install for use
-Go to [releases](https://github.com/VMataruev/KLauncher/releases), open assets and download latest version installer
+Go to [releases](https://github.com/VMataruev/KLauncher/releases), choose latest version and download installer
 
 
 ## Project Setup from code
