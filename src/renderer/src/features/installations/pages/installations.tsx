@@ -55,6 +55,22 @@ function Installations(): React.JSX.Element {
     if (installation.folder != null) {
         await window.api.deleteFolder(installation.folder);
     };
+
+    // if no installations with same version - delete version
+    let hasSameVersion = false;
+    for (const installation_ of Object.values(installations)) {
+      if ((installation.version == installation_.version) && (installation.id != installation_.id)) {
+        hasSameVersion = true;
+        break;
+      };
+    };
+    if (!hasSameVersion) {
+      const versionsFolder = await window.api.getStore("VS_versions");
+      const cleanedVersion = installation.version.slice(1);
+      await window.api.deleteFolder(`${versionsFolder}\\${cleanedVersion}`);
+    }
+    // =====================
+
     setInstallations(prev => {
         const updated = { ...prev };
         delete updated[installationID];
