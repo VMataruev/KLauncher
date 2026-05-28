@@ -26,11 +26,31 @@
     "app:dir": "electron-builder --dir",
     "app:dist": "electron-builder"
   },
-  "build": {
-    "files": [
-      "out/**/*"
-    ]
-  },
+    "build": {
+      "appId": "com.yourcompany.klauncher",
+      "productName": "KLauncher",
+      "directories": {
+        "output": "release"
+      },
+      "files": [
+        "dist/**/*",
+        "node_modules/**/*"
+      ],
+      "win": {
+        "target": ["nsis", "portable"],
+        "publisherName": "Your Publisher Name",
+        "verifyUpdateCodeSignature": false
+      },
+      "mac": {
+        "target": ["dmg", "zip"],
+        "category": "public.app-category.games",
+        "hardenedRuntime": true,
+        "gatekeeperAssess": false
+      },
+      "linux": {
+        "target": ["AppImage", "deb"]
+      }
+    },
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.2",
     "@electron-toolkit/utils": "^4.0.0",
