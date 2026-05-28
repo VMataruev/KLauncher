@@ -6,6 +6,7 @@ import "./ipc"
 // import { store } from './store'
 import "./auth"
 const path = require('path');
+require('update-electron-app')();
 
 function createWindow(): void {
   // Create the browser window.
