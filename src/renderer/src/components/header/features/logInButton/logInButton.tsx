@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from "./logInButton.module.css"
 import { User as UserIcon } from "iconoir-react";
+import { addNotification } from "@renderer/features/overlay/notification/features/notificationList";
 
 function LogInButton(): React.JSX.Element {
     // const [ isLogged, setIsLogged ] = useState<boolean>(false);
@@ -37,8 +38,9 @@ function LogInButton(): React.JSX.Element {
             await window.api.openLogin()
         } catch (error) {
             console.log(error);
+            addNotification({status: "error", msg: String(error)})
         }
-    }
+    };
 
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
 
