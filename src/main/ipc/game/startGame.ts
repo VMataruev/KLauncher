@@ -42,6 +42,9 @@ ipcMain.handle("game-start", async (_event, folder: string, installation_id) => 
         playtimeInterval = setInterval(async () => {
             const currentTimePlayed = store.get(`installations.${installation_id}.time_played`);
             store.set(`installations.${installation_id}.time_played`, currentTimePlayed + 1);
+
+            const totalPlayedTime = store.get(`total_played_time`);
+            store.set(`total_played_time`, totalPlayedTime + 1);
         }, 1 * 60 * 1000); // 1 60 1000 - 1 minute
     });
 

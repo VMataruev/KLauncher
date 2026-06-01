@@ -18,14 +18,29 @@ function SelectInstallations(): React.JSX.Element {
     const [ _installationID, setInstallationID] = useState<string>();
     const [ installations, setInstallations ] = useState<Record<string, Installation>>({});
     const [ installationToShow, setInstallationToShow ] = useState<Installation>();
-    const [ totalPlayedTime, setTotalPlayedTime ] = useState<number>(0);
+    const [ totalPlayedTime, setTotalPlayedTime ] = useState<string>("");
+
+    useEffect(() => {
+        const getTotalPlayedTime = async () => {
+            const time = await window.api.getStore("total_played_time");
+            let finalTime = ""
+            if (time > 60) {
+                finalTime = `${(time / 60).toFixed(1)}h`;
+            } else {
+                finalTime = `${time}m` 
+            };
+            setTotalPlayedTime(finalTime);
+        }
+        getTotalPlayedTime();
+    }, []);
+
     useEffect(() => {
         const init = async () => {
             const res = await window.api.getStore("installations") as Record<string, Installation>;
             setInstallations(res);
-            const totalPlayedTime = Object.values(res).reduce((sum, installation) => sum + installation.time_played, 0);
-            const totalPlayedTimeInHours = (totalPlayedTime / 60).toFixed(1);
-            setTotalPlayedTime(Number(totalPlayedTimeInHours));
+            // const totalPlayedTime = Object.values(res).reduce((sum, installation) => sum + installation.time_played, 0);
+            // const totalPlayedTimeInHours = (totalPlayedTime / 60).toFixed(1);
+            // setTotalPlayedTime(Number(totalPlayedTimeInHours));
 
             const saved = await window.api.getStore("installation_to_start"); // id
             const saved_installation = await window.api.getStore(`installations.${saved}`);
@@ -67,7 +82,9 @@ function SelectInstallations(): React.JSX.Element {
                         <div>{installationToShow.name}</div>
                         <div className={styles.installation_info_box}>
                             <div className={styles.card_version}>{installationToShow.version}</div>
-                            <div className={styles.card_version_icon_box}><Clock className={styles.card_version_icon}></Clock>{(installationToShow.time_played / 60).toFixed(1)}h</div>
+                            <div className={styles.card_version_icon_box}><Clock className={styles.card_version_icon}></Clock>
+                            {installationToShow.time_played > 60 ? `${(installationToShow.time_played / 60).toFixed(1)}h` : `${installationToShow.time_played}m`}
+                            </div>
                             {!(installationToShow.mods.length > 0) ? <></> : <div className={styles.card_version_icon_box}><Wrench className={styles.card_version_icon}></Wrench><div className={styles.card_version}>{installationToShow.mods.length}</div></div>}
                         </div>
                     </div>
@@ -89,7 +106,9 @@ function SelectInstallations(): React.JSX.Element {
                         <div>{installation.name}</div>
                         <div className={styles.installation_info_box}>
                             <div className={styles.card_version}>{installation.version}</div>
-                            <div className={styles.card_version_icon_box}><Clock className={styles.card_version_icon}></Clock>{(installation.time_played / 60).toFixed(1)}h</div>
+                            <div className={styles.card_version_icon_box}><Clock className={styles.card_version_icon}></Clock>
+                            {installation.time_played > 60 ? `${(installation.time_played / 60).toFixed(1)}h` : `${installation.time_played}m`}
+                            </div>
                             {!(installation.mods.length > 0) ? <></> : <div className={styles.card_version_icon_box}><Wrench className={styles.card_version_icon}></Wrench><div className={styles.card_version}>{installation.mods.length}</div></div>}
                         </div>
                     </div>
@@ -98,7 +117,7 @@ function SelectInstallations(): React.JSX.Element {
                 <div className={styles.time_played_total_box}>
                     <div className={styles.time_played_total_icon_box}><Globe className={styles.time_played_total_icon}></Globe></div>
                     <div className={styles.time_played_total_info_box}>
-                        <div className={styles.time_played_total_hours}>{totalPlayedTime}h</div>
+                        <div className={styles.time_played_total_hours}>{totalPlayedTime}</div>
                         <div className={styles.time_played_total_text}>Total played time</div>
                     </div>
                 </div>

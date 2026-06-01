@@ -10,7 +10,8 @@ export const store = new Store({
         VS_versions: path.join(app.getPath('userData'), 'KLuncher_VS_versions'),
         modsFolder: "",
         backupsFolder: path.join(app.getPath('userData'), 'KLuncher_backups'),
-        installation_to_start: ""
+        installation_to_start: "",
+        total_played_time: 0
     }
 });
 

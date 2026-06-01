@@ -80,7 +80,8 @@ function Installations(): React.JSX.Element {
       ...installation,
       id: newID,
       name: copyName,
-      folder: copyFolder
+      folder: copyFolder,
+      time_played: 0
     }
 
     const nameLength = installation.name.length;
@@ -145,7 +146,9 @@ function Installations(): React.JSX.Element {
                       <div className={styles.name}>{installation.name}</div>
                       <div className={styles.installation_info_box}>
                             <div className={styles.version}>{installation.version}</div>
-                            <div className={styles.card_version_icon_box}><Clock className={styles.card_version_icon}></Clock>{(installation.time_played / 60).toFixed(1)}h</div>
+                            <div className={styles.card_version_icon_box}><Clock className={styles.card_version_icon}></Clock>
+                            {installation.time_played > 60 ? `${(installation.time_played / 60).toFixed(1)}h` : `${installation.time_played}m`}
+                            </div>
                             {!(installation.mods.length > 0) ? <></> : <div className={styles.card_version_icon_box}><Wrench className={styles.card_version_icon}></Wrench><div className={styles.card_version}>{installation.mods.length}</div></div>}
                         </div>
                     </div>
