@@ -5,20 +5,11 @@ import { addNotification } from '@renderer/features/overlay/notification/feature
 import iconOptions from '@renderer/components/Installation_icons';
 import { MoreHoriz } from 'iconoir-react';
 import { v4 as uuidv4 } from 'uuid';
+import { Clock } from "iconoir-react";
+import { Wrench } from "iconoir-react";
 
 function Installations(): React.JSX.Element {
   const navigate = useNavigate();
-
-
-  type Installation = {
-    id: string;
-    img: string;
-    name: string;
-    version: string;
-    version_link: string;
-    mods: string[];
-    folder: string | null;
-  };
 
   const [ installations, setInstallations ] = useState<Record<string, Installation>>({});
   useEffect(() => {
@@ -152,7 +143,11 @@ function Installations(): React.JSX.Element {
                     <img src={getInstallationIcon(installation.img)} alt="" className={styles.img}/>
                     <div className={styles.name_verison_box}>
                       <div className={styles.name}>{installation.name}</div>
-                      <div className={styles.version}>{installation.version}</div>
+                      <div className={styles.installation_info_box}>
+                            <div className={styles.version}>{installation.version}</div>
+                            <div className={styles.card_version_icon_box}><Clock className={styles.card_version_icon}></Clock>{(installation.time_played / 60).toFixed(1)}h</div>
+                            {!(installation.mods.length > 0) ? <></> : <div className={styles.card_version_icon_box}><Wrench className={styles.card_version_icon}></Wrench><div className={styles.card_version}>{installation.mods.length}</div></div>}
+                        </div>
                     </div>
                   </div>
                   <div className={styles.right_box}>

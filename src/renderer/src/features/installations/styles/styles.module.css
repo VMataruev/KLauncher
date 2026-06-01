@@ -25,7 +25,23 @@
     border-radius: 4px;
 }
 
+.installation_info_box {
+    display: flex;
+    gap: 8px;
+}
 
+.card_version_icon_box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    gap: 1px;
+}
+
+.card_version_icon {
+    height: 12px;
+    width: 12px;
+}
 
 .releases_v {
     display: flex;

@@ -59,7 +59,7 @@ declare global {
     getModsInCache: () => Promise;
     clearModsCache: () => Promise<boolean>;
     getCookies: () => Promise
-    gameStart: (folder: string) => Promise
+    gameStart: (folder: string, installation_id: string) => Promise
     gameKill: () => Promise
     copyFiles: (pathFrom, pathTo) => Promise
     hasFolder: (folderPath, targetName) => Promise

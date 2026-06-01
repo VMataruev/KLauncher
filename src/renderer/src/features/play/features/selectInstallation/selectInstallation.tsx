@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import styles from "./selectInstallation.module.css";
 import iconOptions from "@renderer/components/Installation_icons";
+import { Clock } from "iconoir-react";
+import { Wrench } from "iconoir-react";
+import { Globe } from "iconoir-react";
 
 
 
@@ -11,24 +14,18 @@ function SelectInstallations(): React.JSX.Element {
     );
 
     const [isOpen, setIsOpen] = useState<boolean>(false);
-
-    type Installation = {
-        id: string;
-        img: string;
-        name: string;
-        version: string;
-        version_link: string;
-        mods: string[];
-        folder: string | null;
-    };
     
     const [ _installationID, setInstallationID] = useState<string>();
     const [ installations, setInstallations ] = useState<Record<string, Installation>>({});
     const [ installationToShow, setInstallationToShow ] = useState<Installation>();
+    const [ totalPlayedTime, setTotalPlayedTime ] = useState<number>(0);
     useEffect(() => {
         const init = async () => {
-            const res = await window.api.getStore("installations");
+            const res = await window.api.getStore("installations") as Record<string, Installation>;
             setInstallations(res);
+            const totalPlayedTime = Object.values(res).reduce((sum, installation) => sum + installation.time_played, 0);
+            const totalPlayedTimeInHours = (totalPlayedTime / 60).toFixed(1);
+            setTotalPlayedTime(Number(totalPlayedTimeInHours));
 
             const saved = await window.api.getStore("installation_to_start"); // id
             const saved_installation = await window.api.getStore(`installations.${saved}`);
@@ -68,7 +65,11 @@ function SelectInstallations(): React.JSX.Element {
                     <div className={styles.box_1}><img src={iconMap[installationToShow.img]} className={styles.img} alt="" /></div>
                     <div className={styles.box_2}>
                         <div>{installationToShow.name}</div>
-                        <div className={styles.card_version}>{installationToShow.version}</div>
+                        <div className={styles.installation_info_box}>
+                            <div className={styles.card_version}>{installationToShow.version}</div>
+                            <div className={styles.card_version_icon_box}><Clock className={styles.card_version_icon}></Clock>{(installationToShow.time_played / 60).toFixed(1)}h</div>
+                            {!(installationToShow.mods.length > 0) ? <></> : <div className={styles.card_version_icon_box}><Wrench className={styles.card_version_icon}></Wrench><div className={styles.card_version}>{installationToShow.mods.length}</div></div>}
+                        </div>
                     </div>
                 </div>
                 )}
@@ -86,10 +87,21 @@ function SelectInstallations(): React.JSX.Element {
                     <div className={styles.left_box}><img src={iconMap[installation.img]} className={styles.img}alt="" /></div>
                     <div className={styles.right_box}>
                         <div>{installation.name}</div>
-                        <div className={styles.card_version}>{installation.version}</div>
+                        <div className={styles.installation_info_box}>
+                            <div className={styles.card_version}>{installation.version}</div>
+                            <div className={styles.card_version_icon_box}><Clock className={styles.card_version_icon}></Clock>{(installation.time_played / 60).toFixed(1)}h</div>
+                            {!(installation.mods.length > 0) ? <></> : <div className={styles.card_version_icon_box}><Wrench className={styles.card_version_icon}></Wrench><div className={styles.card_version}>{installation.mods.length}</div></div>}
+                        </div>
                     </div>
                 </div>
                 ))}
+                <div className={styles.time_played_total_box}>
+                    <div className={styles.time_played_total_icon_box}><Globe className={styles.time_played_total_icon}></Globe></div>
+                    <div className={styles.time_played_total_info_box}>
+                        <div className={styles.time_played_total_hours}>{totalPlayedTime}h</div>
+                        <div className={styles.time_played_total_text}>Total played time</div>
+                    </div>
+                </div>
             </div>
         </div>
     );

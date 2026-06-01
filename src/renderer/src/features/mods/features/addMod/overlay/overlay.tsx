@@ -11,16 +11,6 @@ type OverlayProps = {
   mod: any;
 };
 
-type Installation = {
-    id: string;
-    img: string;
-    name: string;
-    version: string;
-    version_link: string;
-    mods: string[];
-    folder: string | null;
-};
-
 type Release = {
     created: string,
     downloads: number,

@@ -49,7 +49,8 @@ function Made_installation(): React.JSX.Element {
         version: "",
         version_link: "",
         mods: [],
-        folder: null as string | null
+        folder: null as string | null,
+        time_played: 0
     });
 
     const [data, setData] = useState<any>(null);
@@ -144,15 +145,6 @@ function Made_installation(): React.JSX.Element {
 
 
         // If name already exist (used finalName from previous check) ======================
-        type Installation = {
-            id: string;
-            img: string;
-            name: string;
-            version: string;
-            version_link: string;
-            mods: string[];
-            folder: string | null;
-        };
         const installations = await window.api.getStore("installations") as Record<string, Installation>;
         const isNameExists = Object.values(installations).some(
             (installation) => installation.name === finalName

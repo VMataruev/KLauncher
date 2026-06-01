@@ -76,7 +76,7 @@ function PlayButton(): React.JSX.Element {
         };
         
 
-        const answ = await window.api.gameStart(`${versionsFolder}\\${cleanedVersion}\\app`);
+        const answ = await window.api.gameStart(`${versionsFolder}\\${cleanedVersion}\\app`, installation_to_start);
         if (answ.status) {
             addNotification({status: answ.status, msg: answ.msg})
         };

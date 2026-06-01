@@ -15,16 +15,6 @@ function Installation_settings(): React.JSX.Element {
     const { id } = useParams();
     const installationID = id;
 
-    // type Installation = {
-    //     id: string;
-    //     img: string;
-    //     name: string;
-    //     version: string;
-    //     version_link: string;
-    //     mods: string[];
-    //     folder: string | null;
-    // };
-
     // const [ installationBuild, setInstallationBuild ] = useState<any>({
     //     id: "",
     //     img: "",
@@ -184,15 +174,6 @@ function Installation_settings(): React.JSX.Element {
 
 
         // If name already exist (used finalName from previous check) ======================
-        type Installation = {
-            id: string;
-            img: string;
-            name: string;
-            version: string;
-            version_link: string;
-            mods: string[];
-            folder: string | null;
-        };
         const installations = await window.api.getStore("installations") as Record<string, Installation>;
         const isNameExists = Object.values(installations).some(
             (installation) => 
