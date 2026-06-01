@@ -32,11 +32,12 @@ function Overlay({onClose, mod}: OverlayProps): React.JSX.Element {
     useEffect(() => {
         const get_installations = async () => {
             const res = await window.api.getStore("installations") as Record<string, Installation>;
+            console.log(res)
 
             // mod already in installation?
             const installations_filtered: Record<string, Installation> = Object.fromEntries(
                 Object.entries(res || {}).filter(([_, installation]) => {
-                    return !installation.mods.includes(mod.modid);
+                    return !installation.mods.some(m => m.modid === mod.modid);
                 })
             );
 
