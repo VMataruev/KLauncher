@@ -216,6 +216,65 @@ function Installation_settings(): React.JSX.Element {
         navigate("/installations");
     };
 
+
+
+
+    const exportMods = async () => {
+        await navigator.clipboard.writeText(JSON.stringify(installationBuild.mods))
+        addNotification({status: "success", msg: "Mods copied to clipboard"})
+    };
+
+    const [ isOverlayImportOpen, setIsOverlayImportOpen ] = useState<boolean>(false);
+    const openModsImportOverlay = () => {
+        setIsOverlayImportOpen(!isOverlayImportOpen);
+    }
+
+    const [ importedModsRaw, setImportedModsRaw ] = useState<string>("")
+    // const [ importedMods, setImportedMods ] = useState([]);
+    const [ isModsLoading, setIsModsLoading ] = useState<boolean>(false);
+    // TODO: сделать, чтобы кнопка не работало на время всей скачки, а не каждого отдельного файла
+    // useEffect(() => {
+    //     const unsubscribe = window.api.downloadFileProgress((data) => {
+    //         setIsModsLoading(data.percent === 100 ? false : true);
+    //     })
+    //     return () => {
+    //         unsubscribe()
+    //     }
+    // }, []);
+
+    const importMods = async () => {
+        setIsModsLoading(true);
+        openModsImportOverlay();
+        addNotification({status: "success", msg: `Mods added to ${installationBuild.name}`});
+        let modList = JSON.parse(importedModsRaw);
+        for (let mod of modList) {
+            const installation = await window.api.getStore(`installations.${installationID}`)
+            const modExists = installation.mods?.some(existingMod => existingMod.modid === mod.modid);
+            if (!modExists) {
+                const mod_ = await window.api.getRequest(`https://mods.vintagestory.at/api/mod/${mod.modid}`);
+                if (!mod_.success) {
+                    addNotification({status: "error", msg: `Something went wrong for ${mod.name}`});
+                };
+
+                const releases = mod_.res.mod.releases;
+                for (let release of releases) {
+                    if (release.modversion == mod.version) {
+                        const installation = await window.api.getStore(`installations.${installationID}`)
+                        const currentMods = installation.mods || [];
+                        await window.api.setStore(
+                            `installations.${installation.id}.mods`,
+                            [...currentMods, mod]
+                        );
+                        await window.api.downloadFile(release.mainfile, `${installationBuild.folder}\\Mods\\${mod.modid}-${release.modidstr}-${release.modversion}.zip`);
+                    }
+                }
+                const buildWithImportedMods = await window.api.getStore(`installations.${installationID}`);
+                setInstallationBuild(buildWithImportedMods);
+            }
+        }
+        setIsModsLoading(false);
+    };
+
     
 
     return(
@@ -259,7 +318,7 @@ function Installation_settings(): React.JSX.Element {
                             
                             <div className={styles.setting_box}>
                                 <div className={styles.setting_name}>Version</div>
-                                {isUserStatusLoading ? <Loader></Loader> : 
+                                {isUserStatusLoading ? <Loader fontSize="18px"></Loader> : 
                                     !isUserLogged ? <div className={styles.loginbox}>Please Log In to see game versions</div> :
                                     <select className={`${styles.version_input} ${styles.input}`} name="" id="" value={installationBuild?.version || ""} onChange={(e) => {
                                         const select = e.target;
@@ -281,27 +340,39 @@ function Installation_settings(): React.JSX.Element {
 
                             <div className={styles.setting_box}>
                                 <div className={styles.setting_name}>Mods</div>
-                                {modsLoader ? <div className={`${styles.input}`}><Loader></Loader></div> :
-                                <div className={`${styles.input} ${styles.input_mods}`}>
-                                    <div className={styles.mods_grid}>
-                                    {installationBuild.mods.length == 0 ? <div>No mods</div> :
-                                    installationBuild.mods.map(mod => (
-                                        <div className={styles.mod_box}>
-                                            <img className={styles.mod_img} src={mod.logo} alt="" />
-                                            <Link className={styles.link_to_mod} to={`/mod/${mod.modid}`}><OpenNewWindow></OpenNewWindow></Link>
-                                            <div className={styles.mod_basement}>
-                                                <div className={styles.mod_name}>{mod.name}</div>
-                                                <div className={styles.mod_version}>{mod.version}</div>
-                                                <button onClick={() => {deleteMod(mod.modid)}} className={styles.mod_delete_btn}>Delete</button>
-                                            </div>
+                                <div className={styles.mods_box}>
+                                    {modsLoader ? <div className={`${styles.input}`}><Loader fontSize="18px"></Loader></div> :
+                                    <div className={`${styles.input} ${styles.input_mods}`}>
+                                        <div className={styles.mods_grid}>
+                                        {installationBuild.mods.length == 0 ? <div>No mods</div> :
+                                            installationBuild.mods.map(mod => (
+                                                <div className={styles.mod_box}>
+                                                    <img className={styles.mod_img} src={mod.logo} alt="" />
+                                                    <Link className={styles.link_to_mod} to={`/mod/${mod.modid}`}><OpenNewWindow></OpenNewWindow></Link>
+                                                    <div className={styles.mod_basement}>
+                                                        <div className={styles.mod_name}>{mod.name}</div>
+                                                        <div className={styles.mod_version}>{mod.version}</div>
+                                                        <button onClick={() => {deleteMod(mod.modid)}} className={styles.mod_delete_btn}>Delete</button>
+                                                    </div>
+                                                </div>
+                                            ))
+                                        }
                                         </div>
-                                    ))
-                                    
-                                    }
                                     </div>
+                                    }
                                 </div>
-                                }
                             </div>
+
+                            {modsLoader ? <></> : 
+                                <div className={styles.mods_export_import_btns_box}>
+                                    <div className={styles.mod_export_import_btn} onClick={() => {openModsImportOverlay()}}>Import</div>
+                                    {installationBuild.mods.length == 0 ? <></> :
+                                    <div className={styles.mod_export_import_btn} onClick={() => {exportMods()}}>Export</div>
+                                    }
+                                </div>
+                            }
+
+                            
 
                             <div className={styles.setting_box}>
                                 <div className={styles.setting_name}>Installation Folder</div>
@@ -321,10 +392,30 @@ function Installation_settings(): React.JSX.Element {
                 <div className={styles.page_basement}>
                     <div className={styles.basement_btns_box}>
                         <button className={styles.basement_btn} onClick={() => cancel_installation()}>Cancel</button>
-                        <button className={`${styles.basement_btn} ${styles.basement_btn_main}`} onClick={() => storeBuild()}>Save</button>
+                        {isModsLoading ?  
+                            <button className={`${styles.basement_btn} ${styles.basement_btn_main}`}><Loader fontSize="18px"></Loader></button>
+                        : 
+                            <button className={`${styles.basement_btn} ${styles.basement_btn_main}`} onClick={() => storeBuild()}>Save</button>
+                        }
                     </div>
                 </div>
+
+
+                
             </div>
+
+            {!isOverlayImportOpen ? <></> : 
+                <div className={styles.mod_export_import_overlay} onClick={() => {openModsImportOverlay()}}>
+                    <div className={styles.mod_export_import_overlay_box} onClick={(e) => {e.stopPropagation()}}>
+                        <div className={styles.mod_export_import_overlay_header}>Insert exported mods</div>
+                        <textarea onChange={(e) => {setImportedModsRaw(e.target.value)}} className={styles.mod_export_import_overlay_input} />
+                        <div className={styles.mod_export_import_overlay_btns_box}>
+                            <div className={styles.mod_export_import_overlay_btn} onClick={() => {openModsImportOverlay()}}>Cancel</div>
+                            <div className={styles.mod_export_import_overlay_btn_primary} onClick={() => {importMods()}}>Submit</div>
+                        </div>
+                    </div>
+                </div>
+            }
         </>
     )
 }
