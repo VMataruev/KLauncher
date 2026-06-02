@@ -1,5 +1,6 @@
 import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
+import packageJson from '../../package.json';
 
 // Custom APIs for renderer
 const api = {
@@ -67,6 +68,7 @@ if (process.contextIsolated) {
   try {
     contextBridge.exposeInMainWorld('electron', electronAPI)
     contextBridge.exposeInMainWorld('api', api)
+    contextBridge.exposeInMainWorld('appInfo', {version: packageJson.version,})
   } catch (error) {
     console.error(error)
   }

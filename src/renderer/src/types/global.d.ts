@@ -20,17 +20,22 @@ declare global {
         version: string;
     };
 
-  type Installation = {
-    id: string;
-    img: string;
-    name: string;
-    version: string;
-    version_link: string;
-    mods: Mod[];
-    folder: string | null;
-    time_played: number;
-  };
+    type Installation = {
+        id: string;
+        img: string;
+        name: string;
+        version: string;
+        version_link: string;
+        mods: Mod[];
+        folder: string | null;
+        time_played: number;
+    };
   
+    interface Window {
+        appInfo: {
+            version: string;
+        };
+    };
 }
 
 export {}; // Важно: чтобы файл считался модулем

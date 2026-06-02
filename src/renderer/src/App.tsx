@@ -13,6 +13,8 @@ import Play from './features/play/pages/play'
 
 import Header from './components/header/pages/header';
 
+document.title = `KLauncher - v${window.appInfo.version}`;
+
 function App(): React.JSX.Element {
     
 
