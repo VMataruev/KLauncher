@@ -196,6 +196,10 @@
     padding: 8px 12px;
 }
 
+.more_button_danger {
+    color: var(--error);
+}
+
 .more_button:hover {
     background-color: var(--dark-third);
 }
@@ -217,4 +221,84 @@
     border-radius: 4px;
     padding: 20px;
     color: var(--text-second);
+}
+
+
+
+
+
+
+
+
+.delete_installation_overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+}
+
+.delete_installation_overlay_box {
+    margin-left: 150px; /* to centre because of header 150px and проебался короче с оверлеем и это костыль */
+    background-color: var(--dark-first);
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.delete_installation_overlay_header {
+    margin-bottom: 12px;
+    font-size: 24px;
+}
+
+.delete_installation_overlay_input {
+    width: 800px;
+    height: 200px;
+    background-color: var(--dark-second);
+    border: none;
+    color: var(--text-second);
+    outline: none;
+    padding: 8px;
+    resize: none;
+}
+
+.delete_installation_overlay_btns_box {
+    display: flex;
+    gap: 12px;
+    user-select: none;
+}
+
+.delete_installation_overlay_btn_primary {
+    margin-top: 12px;
+    background-color: var(--dark-second);
+    padding: 12px 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: .2s;
+    color: var(--error);
+}
+
+.delete_installation_overlay_btn_primary:hover {
+    background-color: var(--dark-third);
+    transition: .2s;
+}
+
+.delete_installation_overlay_btn {
+    margin-top: 12px;
+    border: 1px solid var(--dark-second);
+    padding: 12px 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.delete_installation_overlay_btn:hover {
+    background-color: var(--dark-third);
+    transition: .2s;
 }

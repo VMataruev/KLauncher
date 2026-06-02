@@ -108,9 +108,10 @@
     background-position: center;
     background-repeat: no-repeat; */
 
-    opacity: 0;
+    /* TODO: make normal animations some day... */
+    /* opacity: 0;
     transform: translateY(-12px);
-    animation: modIn 0.4s ease forwards;
+    animation: modIn 0.4s ease forwards; */
 }
 
 @keyframes modIn {

@@ -308,7 +308,7 @@ function Mods(): React.JSX.Element {
                     <option value="Client">Client</option>
                 </select>
 
-                {/* TODO: Скрыть пункты ниже под одной кнопкой */}
+                
                 <div>
                     <div className={`${styles.header_input} ${styles.cursor_pointer}`} onClick={() => {setIsSortByOpen(!isSortByOpen)}}>Sort By</div>
 

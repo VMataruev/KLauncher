@@ -211,7 +211,7 @@ function Made_installation(): React.JSX.Element {
                         
                         <div className={styles.setting_box}>
                             <div className={styles.setting_name}>Version</div>
-                            {isUserStatusLoading ? <Loader></Loader> : 
+                            {isUserStatusLoading ? <Loader fontSize="18px"></Loader> : 
                                 !isUserLogged ? <div className={styles.loginbox}>Please Log In to see game versions</div> :
                                 <select className={`${styles.version_input} ${styles.input}`} name="" id="" onChange={(e) => {
                                     const select = e.target;

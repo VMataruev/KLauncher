@@ -124,6 +124,13 @@ function Installations(): React.JSX.Element {
     setMoreBtnId("");
     addNotification({status: "success", msg: `${copyName} created`})
   }
+
+  const [ isOverlayDeleteOpen, setIsOverlayDeleteOpen ] = useState<boolean>(false);
+  const [ installationIDToDelete, setInstallationIDToDelete ] = useState<string>("");
+  const [ installationIDToDeleteName, setInstallationIDToDeleteName ] = useState<string>("");
+  const openDeleteOverlay = () => {
+      setIsOverlayDeleteOpen(!isOverlayDeleteOpen);
+  };
   
 
   return (
@@ -154,7 +161,8 @@ function Installations(): React.JSX.Element {
                     </div>
                   </div>
                   <div className={styles.right_box}>
-                    <button className={`${styles.installation_button} ${styles.installation_button_play}`}>Play</button>
+                    {/* TODO: придумать что-то с кнопкой запуска инсталяции либо другие кнопки вставить какие-нибудь */}
+                    {/* <button className={`${styles.installation_button} ${styles.installation_button_play}`}>Play</button> */}
                     {/* <PlayButton></PlayButton> */}
                     <button className={styles.installation_button} onClick={() => openFolder(installation.folder)}>Folder</button>
 
@@ -165,7 +173,12 @@ function Installations(): React.JSX.Element {
                       <div className={`${styles.installation_button_buttons_box} ${moreBtnId == installation.id ? styles.installation_button_buttons_box_visible : <></>}`}>
                         <button className={styles.more_button} onClick={() => navigate(`/installation_settings/${installation.id}`)}>Settings</button>
                         <button className={styles.more_button} onClick={() => createInstallationCopy(installation)}>Copy</button>
-                        <button className={styles.more_button} onClick={() => {deleteInstallation(installation.id)}}>Delete</button>
+                        <button className={`${styles.more_button} ${styles.more_button_danger}`} onClick={() => {
+                          setInstallationIDToDelete(installation.id); 
+                          openDeleteOverlay(); 
+                          setInstallationIDToDeleteName(installation.name); 
+                          setIdForBtn(null);
+                        }}>Delete</button>
                       </div>
                     </div>
                     
@@ -183,6 +196,18 @@ function Installations(): React.JSX.Element {
           </div>
 
         </div>
+
+        {!isOverlayDeleteOpen ? <></> : 
+            <div className={styles.delete_installation_overlay} onClick={() => {openDeleteOverlay()}}>
+                <div className={styles.delete_installation_overlay_box} onClick={(e) => {e.stopPropagation()}}>
+                  <div className={styles.delete_installation_overlay_header}>Are you sure you want to delete "{installationIDToDeleteName}"?</div>
+                  <div className={styles.delete_installation_overlay_btns_box}>
+                    <div className={styles.delete_installation_overlay_btn} onClick={() => {openDeleteOverlay()}}>Cancel</div>
+                    <div className={styles.delete_installation_overlay_btn_primary} onClick={() => {deleteInstallation(installationIDToDelete); openDeleteOverlay()}}>Delete</div>
+                  </div>
+                </div>
+            </div>
+        }
     </>
   )
 }
