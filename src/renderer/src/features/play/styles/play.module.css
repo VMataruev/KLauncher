@@ -74,3 +74,46 @@
     color: var(--text-main);
     outline: none;
 }
+
+
+.bloc_box {
+    height: 153px;
+    width: 272px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 4px;
+    display: flex;
+    transition: .2s;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.bloc_box:hover {
+    background-size: 110%;
+    transition: .2s;
+}
+
+.block_img {
+    transition: .2s;
+}
+
+.block_img:hover {
+    transform: scale(1.1);
+    transition: .2s;
+}
+
+.bloc_text {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    user-select: none;
+}
+
+/* .block_box_editions {
+    background-image: url("../../../assets/game_accounts.png");
+}
+
+.block_box_forum {
+    background-image: url("../../../assets/game_wiki.png");
+} */

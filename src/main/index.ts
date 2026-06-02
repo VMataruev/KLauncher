@@ -26,6 +26,10 @@ function createWindow(): void {
     }
   })
 
+  mainWindow.webContents.setUserAgent(
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36'
+  );
+
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
   })
@@ -71,8 +75,8 @@ async function initAppDataFolder(folderName: string) {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   // Set app user model id for windows
-  electronApp.setAppUserModelId('com.electron')
-
+  electronApp.setAppUserModelId('KLauncher')
+  
   // Default open or close DevTools by F12 in development
   // and ignore CommandOrControl + R in production.
   // see https://github.com/alex8088/electron-toolkit/tree/master/packages/utils

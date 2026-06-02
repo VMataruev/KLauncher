@@ -3,40 +3,13 @@ import PlayButton from "../features/playButton/playButton"
 import ProgressBar from "../features/progressBar/progressBar";
 import SelectInstallations from "../features/selectInstallation/selectInstallation";
 import character from "@renderer/assets/character.png";
+import img_accounts from "../../../assets/game_accounts.png";
+import img_wiki from "../../../assets/game_wiki.png";
 
 function Play(): React.JSX.Element {
-    // type Installation = {
-    //     id: string;
-    //     img: string;
-    //     name: string;
-    //     version: string;
-    //     version_link: string;
-    //     mods: string[];
-    //     folder: string | null;
-    // };
-
-    // const [ installationID, setInstallationID ] = useState<string>();
-    // const [ installations, setInstallations ] = useState<Record<string, Installation>>({});
-    // useEffect(() => {
-    //     const init = async () => {
-    //         const res = await window.api.getStore("installations");
-    //         setInstallations(res);
-
-    //         const saved = await window.api.getStore("installation_to_start");
-
-    //         if (saved && res[saved]) {
-    //             // если есть сохранённый и он существует
-    //             setInstallationID(saved);
-    //         } else {
-    //             // иначе берём первый
-    //             const first = Object.values(res)[0] as Installation | undefined;
-    //             if (first) {
-    //             setInstallationID(first.id);
-    //             }
-    //         }
-    //     };
-    //     init();
-    // }, []);
+    const openExternalLink = async (link: string) => {
+        await window.api.openExternalLink(link);
+    }
 
     return(
         <>
@@ -67,9 +40,9 @@ function Play(): React.JSX.Element {
 
                     </div>
                 </div>
-                <div className={styles.vid_box}>
+                {/* <div className={styles.vid_box}>
                     <iframe
-                    src="https://www.youtube-nocookie.com/embed/NJjifFq1NGY"
+                    src="https://www.youtube.com/embed/NJjifFq1NGY"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerPolicy='strict-origin-when-cross-origin'
                     allowFullScreen
@@ -80,6 +53,18 @@ function Play(): React.JSX.Element {
                     referrerPolicy='strict-origin-when-cross-origin'
                     allowFullScreen
                     />
+                </div> */}
+
+                <div className={styles.vid_box}>
+                    <div className={`${styles.bloc_box} ${styles.block_box_editions}`} onClick={() => {openExternalLink("https://www.vintagestory.at/store/category/1-game-account-game-servers/")}}>
+                        <img src={img_accounts} className={styles.block_img} alt="" />
+                        <div className={styles.bloc_text}>Game Account & Game Servers</div>
+                    </div>
+
+                    <div className={`${styles.bloc_box} ${styles.block_box_forum}`} onClick={() => {openExternalLink("https://wiki.vintagestory.at/Main_Page")}}>
+                        <img src={img_wiki} className={styles.block_img} alt="" />
+                        <div className={styles.bloc_text}>Vintage Story Wiki</div>
+                    </div>
                 </div>
             </div>
         </>

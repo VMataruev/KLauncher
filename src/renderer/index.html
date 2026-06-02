@@ -8,15 +8,15 @@
       http-equiv="Content-Security-Policy"
       content="
         default-src 'self'; 
-        script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://www.youtube.com https://www.youtube-nocookie.com https://s.ytimg.com https://www.youtube.com/s/player/; 
-        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-        frame-src 'self' http://www.youtube.com http://www.youtube-nocookie.com;
-        child-src 'self' http://www.youtube.com http://www.youtube-nocookie.com;
+        script-src 'self'; 
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://www.youtube.com https://www.youtube-nocookie.com https://s.ytimg.com https://www.youtube.com/s/player/; 
+        frame-src 'self' http://www.youtube.com http://www.youtube-nocookie.com https://www.youtube.com https://www.youtube-nocookie.com https: http:;
+        child-src 'self' http://www.youtube.com http://www.youtube-nocookie.com https://www.youtube.com https://www.youtube-nocookie.com https: http:; 
         media-src http://www.youtube.com http://www.youtube-nocookie.com http:;
         
         img-src 'self' data: https: http: blob:;
         font-src 'self' data: https://fonts.gstatic.com;
-        connect-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://www.youtube.com/api/stats/;
+        connect-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://www.youtube.com/api/stats/ https: http:;
       "
     />
   </head>
