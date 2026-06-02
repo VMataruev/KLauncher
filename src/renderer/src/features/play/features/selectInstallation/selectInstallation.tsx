@@ -24,7 +24,7 @@ function SelectInstallations(): React.JSX.Element {
         const getTotalPlayedTime = async () => {
             const time = await window.api.getStore("total_played_time");
             let finalTime = ""
-            if (time > 60) {
+            if (time >= 60) {
                 finalTime = `${(time / 60).toFixed(1)}h`;
             } else {
                 finalTime = `${time}m` 
@@ -83,7 +83,7 @@ function SelectInstallations(): React.JSX.Element {
                         <div className={styles.installation_info_box}>
                             <div className={styles.card_version}>{installationToShow.version}</div>
                             <div className={styles.card_version_icon_box}><Clock className={styles.card_version_icon}></Clock>
-                            {installationToShow.time_played > 60 ? `${(installationToShow.time_played / 60).toFixed(1)}h` : `${installationToShow.time_played}m`}
+                            {installationToShow.time_played >= 60 ? `${(installationToShow.time_played / 60).toFixed(1)}h` : `${installationToShow.time_played}m`}
                             </div>
                             {!(installationToShow.mods.length > 0) ? <></> : <div className={styles.card_version_icon_box}><Wrench className={styles.card_version_icon}></Wrench><div className={styles.card_version}>{installationToShow.mods.length}</div></div>}
                         </div>
@@ -107,7 +107,7 @@ function SelectInstallations(): React.JSX.Element {
                         <div className={styles.installation_info_box}>
                             <div className={styles.card_version}>{installation.version}</div>
                             <div className={styles.card_version_icon_box}><Clock className={styles.card_version_icon}></Clock>
-                            {installation.time_played > 60 ? `${(installation.time_played / 60).toFixed(1)}h` : `${installation.time_played}m`}
+                            {installation.time_played >= 60 ? `${(installation.time_played / 60).toFixed(1)}h` : `${installation.time_played}m`}
                             </div>
                             {!(installation.mods.length > 0) ? <></> : <div className={styles.card_version_icon_box}><Wrench className={styles.card_version_icon}></Wrench><div className={styles.card_version}>{installation.mods.length}</div></div>}
                         </div>
