@@ -69,6 +69,25 @@ function Mod(): React.JSX.Element {
 
     const transformed = transformSpoilers(mod.text);
 
+    const handleExternalLinks = async (e: React.MouseEvent<HTMLDivElement>) => {
+        const target = e.target as HTMLElement;
+        const anchor = target.closest("a");
+
+        if (!anchor) return;
+
+        let href = anchor.getAttribute("href");
+        if (!href) return;
+
+        if (href.startsWith("/")) {
+            href = `https://www.vintagestory.at${href}`;
+        }
+
+        if (href.startsWith("http://") || href.startsWith("https://")) {
+            e.preventDefault();
+            await window.api.openExternalLink(href);
+        }
+    };
+
 
     return (
         <>
@@ -103,7 +122,7 @@ function Mod(): React.JSX.Element {
                         </div>
                     </div>
 
-                    <div className={styles.mod_box_basement}>
+                    <div className={styles.mod_box_basement} onClick={handleExternalLinks}>
                         {/* ВАЖНО: используем dangerouslySetInnerHTML вместо {mod.text} */}
                         <div className={styles.mod_text} dangerouslySetInnerHTML={{ __html: transformed }} />
                     </div>
