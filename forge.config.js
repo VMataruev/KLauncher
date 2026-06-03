@@ -20,6 +20,9 @@ module.exports = {
   packagerConfig: {
     asar: true,
     icon: path.resolve(__dirname, 'build', 'icon'), // абсолютный путь без расширения
+    extraResource: [
+      'resources/tools'  // Копирует в resources/
+    ]
   },
   rebuildConfig: {},
   makers: [
