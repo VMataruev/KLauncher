@@ -6,8 +6,10 @@ import "./ipc";
 import fs from 'fs-extra';
 // import { store } from './store'
 import "./auth"
-const path = require('path');
+// const path = require('path');
+import path from 'path';
 // require('update-electron-app')();
+
 
 function createWindow(): void {
   // Create the browser window.
@@ -25,10 +27,6 @@ function createWindow(): void {
       sandbox: false
     }
   })
-
-  mainWindow.webContents.setUserAgent(
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36'
-  );
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
@@ -76,6 +74,10 @@ async function initAppDataFolder(folderName: string) {
 app.whenReady().then(() => {
   // Set app user model id for windows
   electronApp.setAppUserModelId('KLauncher')
+
+  if (!is.dev) { // Только в production, не в разработке
+    require('update-electron-app')();
+  }
   
   // Default open or close DevTools by F12 in development
   // and ignore CommandOrControl + R in production.

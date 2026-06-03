@@ -19,7 +19,7 @@ module.exports = {
   ],
   packagerConfig: {
     asar: true,
-    // icon: path.resolve(__dirname, 'build', 'icon'), // абсолютный путь без расширения
+    icon: path.resolve(__dirname, 'build', 'icon'), // абсолютный путь без расширения
   },
   rebuildConfig: {},
   makers: [
@@ -27,7 +27,7 @@ module.exports = {
       name: '@electron-forge/maker-squirrel',
       config: {
         name: "KLauncher",
-        // setupIcon: path.resolve(__dirname, 'build', 'icon.ico')
+        setupIcon: path.resolve(__dirname, 'build', 'icon.ico')
       },
     },
     {
