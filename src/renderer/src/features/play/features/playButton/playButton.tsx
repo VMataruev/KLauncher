@@ -61,18 +61,30 @@ function PlayButton(): React.JSX.Element {
 
 
         if (!isVersionFolderExist) {
-            await window.api.createFolder(versionsFolder, cleanedVersion);
-            await window.api.downloadGame(installation.version_link, `${versionsFolder}\\${cleanedVersion}`);
-            await window.api.extractGame(installation.version_link, `${versionsFolder}\\${cleanedVersion}`);
+            try {
+                await window.api.createFolder(versionsFolder, cleanedVersion);
+                await window.api.downloadGame(installation.version_link, `${versionsFolder}\\${cleanedVersion}`);
+                await window.api.extractGame(installation.version_link, `${versionsFolder}\\${cleanedVersion}`);
+            } catch (error) {
+                addNotification({status: "error", msg: String(error)})
+            }
         };
 
         if (isVersionFolderExist && !isInstallationExeExist && !isAppFolderExist) { // если есть игра, то нет смысла качать инсталятор ещё раз. Хз в каким случае такое может случиться, но пусть будет
-            await window.api.downloadGame(installation.version_link, `${versionsFolder}\\${cleanedVersion}`);
-            await window.api.extractGame(installation.version_link, `${versionsFolder}\\${cleanedVersion}`);
+            try {
+                await window.api.downloadGame(installation.version_link, `${versionsFolder}\\${cleanedVersion}`);
+                await window.api.extractGame(installation.version_link, `${versionsFolder}\\${cleanedVersion}`);
+            } catch (error) {
+                addNotification({status: "error", msg: String(error)})
+            }
         };
 
         if (isVersionFolderExist && isInstallationExeExist && !isAppFolderExist) {
-            await window.api.extractGame(installation.version_link, `${versionsFolder}\\${cleanedVersion}`);
+            try {
+                await window.api.extractGame(installation.version_link, `${versionsFolder}\\${cleanedVersion}`);
+            } catch (error) {
+                addNotification({status: "error", msg: String(error)})
+            }
         };
         
 
