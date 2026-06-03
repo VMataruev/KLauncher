@@ -184,8 +184,14 @@
 .add_mod_button_box {
     position: absolute;
     right: 0;
-    top: 0;
+    top: -50px;
     z-index: 10;
+    transition: .2s;
+}
+
+.mod_box:hover .add_mod_button_box {
+    top: 0;
+    transition: .2s;
 }
 
 .mod_info {

@@ -1,8 +1,9 @@
 import { useState } from "react";
 import styles from "./addMod.module.css"
 import Overlay from "./overlay/overlay";
+import { Download } from "iconoir-react";
 
-function AddModButton({mod}): React.JSX.Element {
+function AddModButton({mod, type}): React.JSX.Element {
 
     const [ overlay, setOverlay ] = useState<boolean>(false);
 
@@ -14,7 +15,11 @@ function AddModButton({mod}): React.JSX.Element {
                     e.stopPropagation();
                     setOverlay(true)
                 }}>
-                    Add
+                    {type == "text" ? 
+                        <>Download <Download></Download></> 
+                        : 
+                        <Download></Download>
+                    }
                 </button>
 
                 {/* {isChooseInstallation ?

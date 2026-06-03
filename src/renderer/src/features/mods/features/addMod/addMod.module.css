@@ -9,14 +9,18 @@
 }
 
 .add_mod_button {
-    padding: 0px 10px;
-    background-color: var(--gray-2);
+    padding: 8px;
+    border-radius: 4px;
+    background-color: var(--dark-second);
     border: none;
     color: var(--text-white);
-    padding: 4px 12px;
     cursor: pointer;
+    transition: .2s;
+
+    display: flex;
 }
 
 .add_mod_button:hover {
-    background-color: var(--gray-1);
+    color: var(--link-hover);
+    transition: .2s;
 }

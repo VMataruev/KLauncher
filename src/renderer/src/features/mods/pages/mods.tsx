@@ -335,7 +335,7 @@ function Mods(): React.JSX.Element {
                     displayedMods.map((mod, index) => (
                         <div className={styles.mod_box} style={{ animationDelay: index < BLOCK_SIZE ? `${index * 0.06}s` : ""}} key={mod.modid} onClick={() => handleModClick(mod.modid)}>
                             {mod.logo ? (<img className={styles.mod_img} src={mod.logo} alt="" />) : (<img className={styles.mod_img} src="https://mods.vintagestory.at/web/img/mod-default.png" alt="" />)}
-                            <div className={styles.add_mod_button_box}><AddModButton mod={mod}></AddModButton></div>
+                            <div className={styles.add_mod_button_box}><AddModButton mod={mod} type="icon"></AddModButton></div>
                             <div className={styles.mod_info_box}>
                                 <div className={styles.mod_numbers_info}>
                                     <div className={styles.mod_info}>
