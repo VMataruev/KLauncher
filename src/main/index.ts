@@ -74,10 +74,6 @@ async function initAppDataFolder(folderName: string) {
 app.whenReady().then(() => {
   // Set app user model id for windows
   electronApp.setAppUserModelId('KLauncher')
-
-  if (!is.dev) { // Только в production, не в разработке
-    require('update-electron-app')();
-  }
   
   // Default open or close DevTools by F12 in development
   // and ignore CommandOrControl + R in production.
@@ -94,6 +90,10 @@ app.whenReady().then(() => {
     // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
+
+  if (!is.dev) { // Только в production, не в разработке
+    require('update-electron-app')();
+  }
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common
