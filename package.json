@@ -7,7 +7,7 @@
   "homepage": "https://electron-vite.org",
   "repository": {
     "type": "git",
-    "url": "https://github.com/vmataruev/KLauncher"
+    "url": "https://github.com/VMataruev/KLauncher"
   },
   "scripts": {
     "format": "prettier --write .",
