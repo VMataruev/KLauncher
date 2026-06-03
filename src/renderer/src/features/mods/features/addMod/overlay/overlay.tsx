@@ -29,10 +29,10 @@ function Overlay({onClose, mod}: OverlayProps): React.JSX.Element {
     const [ installationID, setInstallationID ] = useState<string>("");
 
     const [ installations, setInstallations ] = useState<Record<string, Installation>>({});
+
     useEffect(() => {
         const get_installations = async () => {
             const res = await window.api.getStore("installations") as Record<string, Installation>;
-            console.log(res)
 
             // mod already in installation?
             const installations_filtered: Record<string, Installation> = Object.fromEntries(
@@ -43,7 +43,22 @@ function Overlay({onClose, mod}: OverlayProps): React.JSX.Element {
 
             setInstallations(installations_filtered);
             const installationsArray = Object.values(installations_filtered);
-            setInstallationID(installationsArray[0].id)
+            
+            // setInstallationID(installationsArray[0].id)
+
+            if (installationsArray.length > 0) {
+                const savedInstallationId = sessionStorage.getItem(`selected_installation`);
+                console.log(savedInstallationId)
+                console.log(installationID)
+                if (savedInstallationId && installationsArray.some(item => item.id === savedInstallationId)) {
+                    setInstallationID(savedInstallationId);
+                    console.log("here1")
+                } else {
+                    setInstallationID(installationsArray[0].id);
+                    sessionStorage.setItem(`selected_installation`, installationsArray[0].id);
+                    console.log("here2")
+                };
+            }
         };
         get_installations();
     }, []);
@@ -65,11 +80,19 @@ function Overlay({onClose, mod}: OverlayProps): React.JSX.Element {
             setLoading(false);
         }
         getModReleases();
-    }, [])
+    }, [mod.modid])
     
 
 
     const add_mod_to_installation = async (installationID, mod, modID, modLink, modName_, modVersion) => {
+        if (!installationID || !mod || !modID) {
+            addNotification({status: "error", msg: "No installation selected"});
+            return;
+        };
+        if (!mod || !modID || !modLink || !modName_ || !modVersion) {
+            addNotification({status: "error", msg: "Something went wrong"});
+            return;
+        }
         const installation = await window.api.getStore(`installations.${installationID}`);
 
         const currentMods = installation.mods || [];
@@ -111,11 +134,18 @@ function Overlay({onClose, mod}: OverlayProps): React.JSX.Element {
                     </div>
 
                     <div className={styles.overlay_setting_box_name}>Installation</div>
-                    <select onChange={(e) => {setInstallationID(e.target.value)}} name="" id="" className={styles.overlay_select}>
-                        {Object.values(installations).map(installation => (
-                            <option className={styles.overlay_select_option}  value={installation.id} key={installation.id}>{installation.name}</option>
-                        ))}
-                    </select>
+                    {Object.values(installations).length == 0 ? <div className={styles.no_installations}>No suitable installations</div> : 
+                        <select onChange={(e) => {
+                            const id = e.target.value;
+                            setInstallationID(id);
+                            sessionStorage.setItem(`selected_installation`, id);
+                            console.log(id)
+                        }} name="" id="" className={styles.overlay_select} value={installationID}>
+                            {Object.values(installations).map(installation => (
+                                <option className={styles.overlay_select_option}  value={installation.id} key={installation.id}>{installation.name}</option>
+                            ))}
+                        </select>
+                    }
                     <div className={styles.overlay_setting_box_setting}></div>
                 </div>
 

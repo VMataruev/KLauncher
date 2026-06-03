@@ -130,3 +130,9 @@ td {
     width: 100%;
     background-color: var(--dark-first);
 }
+
+.no_installations {
+    background-color: var(--dark-second);
+    padding: 12px 8px;
+    border-radius: 4px;
+}

@@ -113,6 +113,9 @@ function Installations(): React.JSX.Element {
     // Сохраняем новую установку
     await window.api.setStore(`installations.${newID}`, copyInstallation);
 
+    setMoreBtnId("");
+    addNotification({status: "success", msg: `${copyName} created`})
+
     const installationsFolder = await window.api.getStore('installationsFolder');
     await window.api.createFolder(`${installationsFolder}/${copyName}`, copyName);
     await window.api.copyFiles(`${installation.folder}`, `${installationsFolder}/${copyName}`);
@@ -121,8 +124,6 @@ function Installations(): React.JSX.Element {
       ...prev,
       [newID]: copyInstallation
     }))
-    setMoreBtnId("");
-    addNotification({status: "success", msg: `${copyName} created`})
   }
 
   const [ isOverlayDeleteOpen, setIsOverlayDeleteOpen ] = useState<boolean>(false);
