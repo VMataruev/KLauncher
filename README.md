@@ -4,7 +4,7 @@ KLauncher is a tool for downloading VS versions, installing mods and quickly swi
 Also u can read VS blog inside
 More features later maybe...
 
-![alt text](https://i.imgur.com/DI5XN0v.png)
+![alt text](https://i.imgur.com/QaxRgxP.png)
 
 
 
