@@ -52,6 +52,7 @@ function PlayButton(): React.JSX.Element {
             await window.api.clearFolder(modsFolder);
         } catch (error) {
             addNotification({status: "error", msg: `Can't clear mods folder: ${error}`});
+            setButtonProcess('idle');
             return;
         };
 
@@ -59,6 +60,7 @@ function PlayButton(): React.JSX.Element {
             await window.api.copyFiles(`${installation.folder}\\Mods`, modsFolder);
         } catch (error) {
             addNotification({status: "error", msg: `Can't copy mods to folder: ${error}`});
+            setButtonProcess('idle');
             return;
         };
 

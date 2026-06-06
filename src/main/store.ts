@@ -8,7 +8,7 @@ export const store = new Store({
         installations: {},
         installationsFolder: path.join(app.getPath('userData'), 'KLuncher_installations'),
         VS_versions: path.join(app.getPath('userData'), 'KLuncher_VS_versions'),
-        modsFolder: "",
+        modsFolder: path.join(app.getPath('appData'), 'VintagestoryData', 'Mods'),
         backupsFolder: path.join(app.getPath('userData'), 'KLuncher_backups'),
         installation_to_start: "",
         total_played_time: 0
