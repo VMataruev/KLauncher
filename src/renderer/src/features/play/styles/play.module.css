@@ -17,6 +17,8 @@
     right: 0;
     width: 100%;
     z-index: 0;
+    user-select: none;
+    pointer-events: none 
 }
 
 .main_box {
