@@ -48,8 +48,19 @@ function PlayButton(): React.JSX.Element {
             return;
         }
 
-        await window.api.clearFolder(modsFolder);
-        await window.api.copyFiles(`${installation.folder}\\Mods`, modsFolder);
+        try {
+            await window.api.clearFolder(modsFolder);
+        } catch (error) {
+            addNotification({status: "error", msg: `Can't clear mods folder: ${error}`});
+            return;
+        };
+
+        try {
+            await window.api.copyFiles(`${installation.folder}\\Mods`, modsFolder);
+        } catch (error) {
+            addNotification({status: "error", msg: `Can't copy mods to folder: ${error}`});
+            return;
+        };
 
         const cleanedVersion = installation.version.slice(1);
 
