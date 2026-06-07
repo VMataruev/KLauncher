@@ -9,6 +9,7 @@ import "./auth"
 // const path = require('path');
 import path from 'path';
 // require('update-electron-app')();
+import { updateElectronApp } from 'update-electron-app';
 
 
 function createWindow(): void {
@@ -92,7 +93,8 @@ app.whenReady().then(() => {
   })
 
   if (!is.dev) { // Только в production, не в разработке
-    require('update-electron-app')();
+    // require('update-electron-app')();
+    updateElectronApp();
   }
 })
 

@@ -1,4 +1,4 @@
-appId: com.electron.app
+appId: vmataruev.klauncher
 productName: klauncher
 directories:
   buildResources: build
@@ -15,12 +15,18 @@ extraResources:
   - from: resources/tools
     to: tools
 win:
-  executableName: klauncher
+  executableName: KLauncher
+  icon: resources/Logo.ico
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}
   uninstallDisplayName: ${productName}
-  createDesktopShortcut: always
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  allowToChangeInstallationDirectory: true
+  installerIcon: resources/Logo.ico
+  oneClick: false
+  runAfterFinish: true
 mac:
   entitlementsInherit: build/entitlements.mac.plist
   extendInfo:
@@ -42,7 +48,8 @@ appImage:
   artifactName: ${name}-${version}.${ext}
 npmRebuild: false
 publish:
-  provider: generic
-  url: https://example.com/auto-updates
+  provider: github
+  owner: vmataruev
+  repo: klauncher
 electronDownload:
   mirror: https://npmmirror.com/mirrors/electron/
