@@ -11,6 +11,11 @@ import Loader from '@renderer/components/loader/loader';
 function Made_installation(): React.JSX.Element {
     const [ isUserStatusLoading, setIsUserStatusLoading ] = useState<boolean>(true);
     const [ isUserLogged, setIsUserLogged ] = useState<boolean>(false);
+    const [ installationVersion, setInstallationVersion ] = useState<string>("");
+    const [ showStableVersions, setShowStableVersions ] = useState<boolean>(true);
+    const [ showUnstableVersions, setShowUnstableVersions ] = useState<boolean>(false);
+    const [ stableVersions, setStableVersions ] = useState([]);
+    const [ unstableVersions, setUnstableVersions ] = useState([]);
     
     const [ folderPath, setFolderPath ] = useState<string>();
     useEffect(() => {
@@ -64,18 +69,53 @@ function Made_installation(): React.JSX.Element {
                 setIsUserStatusLoading(false);
             }
             const versions_stable = res.versions_stable;
+            for (const version_stable of versions_stable) {
+                version_stable.type = "stable";
+            }
+            setStableVersions(versions_stable);
             const versions_unstable = res.versions_unstable;
-            const combinedVersions = [...versions_stable, ...versions_unstable];
-            setData(combinedVersions);
-            // console.log(versions_stable);
+            for (const version_unstable of versions_unstable) {
+                version_unstable.type = "unstable";
+            }
+            setUnstableVersions(versions_unstable);
+
+            const sortedVersion = versions_stable.sort((a, b) => {
+                // Удаляем 'v' из начала и сравниваем
+                const versionA = a.name.replace('v', '');
+                const versionB = b.name.replace('v', '');
+                return versionB.localeCompare(versionA, undefined, { numeric: true });
+            });
+            setData(sortedVersion);
             setInstallationBuild((prev) => ({
                 ...prev,
                 version: versions_stable[0].name,
                 version_link: versions_stable[0].link
-            }))
+            }));
+            setInstallationVersion(versions_stable[0].name);
         }
         loadData();
     }, [])
+
+    useEffect(() => {
+        let versionsToShow = data;
+        if (showStableVersions && !showUnstableVersions) {
+            versionsToShow = [...stableVersions]
+        } else if (!showStableVersions && showUnstableVersions) {
+            versionsToShow = [...unstableVersions]
+        } else if (showStableVersions && showUnstableVersions) {
+            versionsToShow = [...stableVersions, ...unstableVersions]
+        } else if (!showStableVersions && !showUnstableVersions) {
+            versionsToShow = []
+        }
+        const sortedVersion = versionsToShow.sort((a, b) => {
+            // Удаляем 'v' из начала и сравниваем
+            const versionA = a.name.replace('v', '');
+            const versionB = b.name.replace('v', '');
+            return versionB.localeCompare(versionA, undefined, { numeric: true });
+        });
+        setData(sortedVersion);
+    }, [showStableVersions, showUnstableVersions])
+    
 
 
 
@@ -171,6 +211,16 @@ function Made_installation(): React.JSX.Element {
     const cancel_installation = () => {
         navigate("/installations");
     };
+
+    const setVersion = (version) => {
+        setInstallationBuild((prev) => ({
+            ...prev,
+            version: version.name,
+            version_link: version.link
+        }));
+        setInstallationVersion(version.name);
+    };
+
     
     return(
         <>
@@ -213,21 +263,37 @@ function Made_installation(): React.JSX.Element {
                             <div className={styles.setting_name}>Version</div>
                             {isUserStatusLoading ? <Loader fontSize="18px"></Loader> : 
                                 !isUserLogged ? <div className={styles.loginbox}>Please Log In to see game versions</div> :
-                                <select className={`${styles.version_input} ${styles.input}`} name="" id="" onChange={(e) => {
-                                    const select = e.target;
-                                    const option = select.options[select.selectedIndex];
-                                    const link = option.getAttribute('data-link');
-                                    
-                                    setInstallationBuild((prev) => ({
-                                    ...prev,
-                                    version: e.target.value,
-                                    version_link: link || ""
-                                }))}}>
-
-                                    {data ? data.map((version) => (
-                                        <option key={version.name} data-link={version.link}>{version.name}</option>
-                                    )) : <></>}
-                                </select>
+                                <div className={styles.input}>
+                                    <div className={styles.versions_wrapper}>
+                                        <div className={styles.versions_header}>
+                                            <div className={styles.header_left_box}>Filters</div>
+                                            <div className={styles.header_right_box}>
+                                                <div className={styles.version_info}>Version</div>
+                                                <div className={styles.version_info}>Type</div>
+                                            </div>
+                                        </div>
+                                        <div className={styles.versions_box}>
+                                            <div className={styles.versions_filter_wrapper}>
+                                                <div className={styles.versions_filter}>
+                                                    <input className={styles.versions_filter_checkbox} onChange={() => {setShowStableVersions(!showStableVersions)}} type="checkbox" defaultChecked />
+                                                    <div className={styles.versions_filter_name}>Stable</div>
+                                                </div>
+                                                <div className={styles.versions_filter}>
+                                                    <input className={styles.versions_filter_checkbox} onChange={() => {setShowUnstableVersions(!showUnstableVersions)}} type="checkbox" />
+                                                    <div className={styles.versions_filter_name}>Unstable</div>
+                                                </div>
+                                            </div>
+                                            <div className={styles.versions}>
+                                                {data ? data.map((version) => (
+                                                    <div className={`${installationVersion == version.name ? styles.installationVersion : styles.version}`} onClick={() => {setVersion(version)}}>
+                                                        <div className={styles.version_info}>{version.name}</div>
+                                                        <div className={styles.version_info}>{version.type == "stable" ? <>stable</> : <>unstable</>}</div>
+                                                    </div>
+                                                )) : <></>}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             }
                         </div>
 
