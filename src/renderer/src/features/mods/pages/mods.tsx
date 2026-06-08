@@ -92,10 +92,10 @@ function Mods(): React.JSX.Element {
 
                 switch (selectedSide.toLowerCase()) {
                     case "client":
-                        return side === "client" || side === "both";
+                        return side === "client";
 
                     case "server":
-                        return side === "server" || side === "both";
+                        return side === "server";
 
                     case "both":
                         return side === "both";
@@ -263,7 +263,7 @@ function Mods(): React.JSX.Element {
         if (!displayedMods.length) return;
 
         const fromDetail = sessionStorage.getItem("mods-from-detail");
-        if (!fromDetail) return; // ⬅️ ключевая проверка
+        if (!fromDetail) return; // 
 
         const savedY = Number(sessionStorage.getItem("mods-scroll-y") || 0);
         if (!savedY) return;
@@ -284,6 +284,37 @@ function Mods(): React.JSX.Element {
         }, 0);
     }, [loading, displayedMods.length, hasMore, filteredMods.length]);
 
+    const [ _gameVersions, setGameVersions ] = useState<Array<[]>>([]);
+    const [ _gameVersionsExact, setGameVersionsExact ] = useState<Array<[]>>([]);
+    useEffect(() => {
+        const getGameVersion = async() => {
+            const res = await window.api.getData();
+            const versions_stable = res.versions_stable;
+            const versions_unstable = res.versions_unstable;
+            const versions_combined = [...versions_stable, ...versions_unstable];
+            const sortedVersion = versions_combined.sort((a, b) => {
+                // Удаляем 'v' из начала и сравниваем
+                const versionA = a.name.replace('v', '');
+                const versionB = b.name.replace('v', '');
+                return versionB.localeCompare(versionA, undefined, { numeric: true });
+            });
+            setGameVersions(versions_stable);
+            setGameVersionsExact(sortedVersion);
+        };
+        getGameVersion();
+    }, [])
+
+    const [ _tags, setTags ] = useState();
+    useEffect(() => {
+        const getTags = async() => {
+            const tags = await window.api.getRequest("https://mods.vintagestory.at/api/tags");
+            setTags(tags.res.tags) // {tagid: '467', name: 'Absolute Cinema', color: '#92C96AFF'}
+        }
+        getTags();
+    }, [])
+    
+    
+
     if (loading) {return <div className={styles.loader_wrapper}><Loader></Loader></div>}
   return (
     <>
@@ -294,7 +325,11 @@ function Mods(): React.JSX.Element {
                 <input className={`${styles.header_input} ${styles.cursor_text}`} placeholder="Author" type="text" onChange={(e) =>setSearchAuthor(e.target.value)} value={searchAuthor} />
 
                 <select className={styles.header_input} name="" id="" value={selectedVersion} onChange={(e) =>setSelectedVersion(e.target.value)}>
-                    <option disabled value="">Versions</option>
+                    <option disabled value="">Version</option>
+                </select>
+
+                <select className={styles.header_input} name="" id="" value={selectedVersion} onChange={(e) =>setSelectedVersion(e.target.value)}>
+                    <option disabled value="">Version Exact</option>
                 </select>
 
                 <select className={styles.header_input} name="" id="" value={selectedTag} onChange={(e) =>setSelectedTag(e.target.value)}>
