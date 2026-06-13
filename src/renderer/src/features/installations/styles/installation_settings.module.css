@@ -131,6 +131,10 @@
     object-fit: cover;
 }
 
+.mod_box_to_delete {
+    filter: grayscale(1);
+}
+
 .mod_basement {
     position: absolute;
     width: 100%;
@@ -139,13 +143,12 @@
     flex-direction: column;
 
     bottom: 0;
-    height: 33%;
+
 }
 
 .mod_name {
     padding: 4px;
     text-overflow: ellipsis;
-    overflow: hidden;
     white-space: nowrap;
     color: var(--text-main);
 }
@@ -180,11 +183,19 @@
 }
 
 
-.mod_delete_btn {
+.mod_btn {
     margin-top: auto;
     border: none;
-    background-color: var(--text-main);
+    background-color: var(--dark-fourth);
+    color: var(--text-main);
     cursor: pointer;
+    padding: 4px;
+    transition: .2s;
+}
+
+.mod_btn:hover {
+    background-color: var(--dark-fifth);
+    transition: .2s;
 }
 
 .folder_btn {
@@ -473,4 +484,13 @@
 input[type="checkbox"] {
   accent-color: var(--brand); /* Changes the checked background color */
   border: none;
+}
+
+
+
+
+.loader_wrapper {
+    width: 100%;
+    background-color: var(--dark-second);
+    height: 204px;
 }

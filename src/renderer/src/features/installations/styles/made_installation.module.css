@@ -271,3 +271,11 @@ input[type="checkbox"] {
   accent-color: var(--brand); /* Changes the checked background color */
   border: none;
 }
+
+
+
+.loader_wrapper {
+    width: 100%;
+    background-color: var(--dark-second);
+    height: 204px;
+}

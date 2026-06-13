@@ -261,7 +261,7 @@ function Made_installation(): React.JSX.Element {
                         
                         <div className={styles.setting_box}>
                             <div className={styles.setting_name}>Version</div>
-                            {isUserStatusLoading ? <Loader fontSize="18px"></Loader> : 
+                            {isUserStatusLoading ? <div className={styles.loader_wrapper}><Loader fontSize="32px"></Loader></div> : 
                                 !isUserLogged ? <div className={styles.loginbox}>Please Log In to see game versions</div> :
                                 <div className={styles.input}>
                                     <div className={styles.versions_wrapper}>

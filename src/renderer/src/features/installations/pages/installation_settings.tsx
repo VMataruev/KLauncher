@@ -129,17 +129,24 @@ function Installation_settings(): React.JSX.Element {
 
     const [ modsToDelete, setModsToDelete ] = useState<number[]>([]);
     const deleteMod = async (targetModID) => {
-        const updatedMods = installationBuild.mods.filter((mod: any) => mod.modid !== targetModID);
-        // await window.api.setStore(`installations.${installationBuild.id}.mods`, updatedMods);
-        setInstallationBuild((prev) => ({
-            ...prev,
-            mods: updatedMods
-        }));
+        // Отображение модов
+        // const updatedMods = installationBuild.mods.filter((mod: any) => mod.modid !== targetModID);
+        // setInstallationBuild((prev) => ({
+        //     ...prev,
+        //     mods: updatedMods
+        // }));
 
+        // Очередь на удаление
         setModsToDelete((prev) => (
             prev.includes(targetModID) ? prev : [...prev, targetModID]
         ));
     };
+
+    const restoreMod = async(targetModID) => {
+        setModsToDelete((prev) => 
+            prev.filter(id => id !== targetModID)
+        );
+    }
 
 
     const [ selectedIcon, setSelectedIcon ] = useState("");
@@ -243,6 +250,13 @@ function Installation_settings(): React.JSX.Element {
                 await window.api.deleteFile(`${pathToMods}\\${file}`);
             };
         };
+
+        const finalMods = installationBuild.mods.filter(mod => !modsToDelete.includes(mod.modid));
+        const finalInstallationBuild = {
+            ...updatedInstallationBuild,
+            mods: finalMods
+        };
+        await window.api.setStore(`installations.${finalInstallationBuild.id}`, finalInstallationBuild);
         // ==================================
 
 
@@ -366,7 +380,7 @@ function Installation_settings(): React.JSX.Element {
                             
                             <div className={styles.setting_box}>
                                 <div className={styles.setting_name}>Version</div>
-                                {isUserStatusLoading ? <Loader fontSize="18px"></Loader> : 
+                                {isUserStatusLoading ? <div className={styles.loader_wrapper}><Loader fontSize="32px"></Loader></div> : 
                                     !isUserLogged ? <div className={styles.loginbox}>Please Log In to see game versions</div> :
                                     <div className={styles.input}>
                                     <div className={styles.versions_wrapper}>
@@ -410,13 +424,17 @@ function Installation_settings(): React.JSX.Element {
                                         <div className={styles.mods_grid}>
                                         {installationBuild.mods.length == 0 ? <div>No mods</div> :
                                             installationBuild.mods.map(mod => (
-                                                <div className={styles.mod_box}>
+                                                <div className={`${styles.mod_box} ${ modsToDelete.includes(mod.modid) ? styles.mod_box_to_delete : styles.nothing}`}>
                                                     <img className={styles.mod_img} src={mod.logo} alt="" />
                                                     <Link className={styles.link_to_mod} to={`/mod/${mod.modid}`}><OpenNewWindow></OpenNewWindow></Link>
                                                     <div className={styles.mod_basement}>
                                                         <div className={styles.mod_name}>{mod.name}</div>
                                                         <div className={styles.mod_version}>{mod.version}</div>
-                                                        <button onClick={() => {deleteMod(mod.modid)}} className={styles.mod_delete_btn}>Delete</button>
+                                                        {modsToDelete.includes(mod.modid) ? 
+                                                            <button onClick={() => {restoreMod(mod.modid)}} className={styles.mod_btn}>Restore</button> 
+                                                            : 
+                                                            <button onClick={() => {deleteMod(mod.modid)}} className={styles.mod_btn}>Delete</button>
+                                                        }
                                                     </div>
                                                 </div>
                                             ))
